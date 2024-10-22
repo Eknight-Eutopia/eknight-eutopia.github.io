@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Small Utopia - H0p3 y0u h4v3 4 600d d4y!</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="If it runs, it can be cracked">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Small Utopia">
+<meta property="og:url" content="https://eknight-eutopia.github.io/page/3/index.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="If it runs, it can be cracked">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/avatar.jpg">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":80,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Small Utopia',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-10-22 19:12:42'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Small Utopia</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/ce05e772.html" title="Winnie论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(10).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Winnie论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/ce05e772.html" title="Winnie论文笔记">Winnie论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-19T16:00:00.000Z" title="发表于 2023-12-20 00:00:00">2023-12-20</time></span></div><div class="content">Winnie解决问题对当下Windows系统软件的fuzz没有合适的方法。提出了Winnie对Windows闭源软件进行fuzzing。 主要贡献 提出了Winnie，可以对Windows闭源软件进行模糊测试 实现了windows系统的fork方法，使得可以不用每次执行都得从头开始，提高了fuzzing效率，其中fork新进程的速度达到310次&#x2F;s显著高于windows自带CreateProcess91.9次&#x2F;s，与WSL的fork速度相近。  尚存不足 由于闭源特性，无法全自动，需要人工参与fuzzer代码的生成  具体细节  生成fuzz代码  Target Identification：确认二进制程序中可以用于fuzz的输入点（读取用户输入的api或函数） Call-seq Recovery：恢复目标程序中函数体内对各个相关targetfunction调用的顺序（类似于fudge） Argument...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/6b4c8ab1.html" title="Fuzzware复现"><img class="post-bg" src="/img/cover/default_cover%20(7).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fuzzware复现"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/6b4c8ab1.html" title="Fuzzware复现">Fuzzware复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-19T16:00:00.000Z" title="发表于 2023-12-20 00:00:00">2023-12-20</time></span></div><div class="content">Fuzzware论文复现项目链接：https://github.com/fuzzware-fuzzer/fuzzware 1. 环境Ubuntu22.04 docker 具体过程比较简单，可以直接看github readme 2. 复现1./run_docker.sh examples fuzzware pipeline --skip-afl-cpufreq pw-recovery/ARCH_PRO  由图可以看到刚开始运行时发现新的MMIO寄存器模型，由于MMIO Access Model中并不存在，因此会将其定义为新的模型，然后继续向下运行  建模完毕后，开始进行正常的fuzzing阶段。  一轮fuzzing结束后，根据反馈调整输入，开始下一阶段fuzzing。  </div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/1c19887b.html" title="P2IM论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(11).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="P2IM论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/1c19887b.html" title="P2IM论文笔记">P2IM论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-18T16:00:00.000Z" title="发表于 2023-12-19 00:00:00">2023-12-19</time></span></div><div class="content">P2IM: Scalable and Hardware-independent Firmware Testing via Automatic Peripheral Interface...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/69313c9b.html" title="SFuzz论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SFuzz论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/69313c9b.html" title="SFuzz论文笔记">SFuzz论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-18T16:00:00.000Z" title="发表于 2023-12-19 00:00:00">2023-12-19</time></span></div><div class="content">SFuzz: Slice-based Fuzzing for Real-Time Operating Systems简介RTOS系统当下并没有很好的分析方式，因此作者提出了sfuzz工具，利用RTOS每一项任务的控制流都是独立的特点，从RTOS系统中切出独立的代码块进行fuzzing。 项目地址：https://github.com/NSSL-SJTU/SFuzz 解决问题解决了在当时RTOS领域模糊测试没有很好的分析方式的问题。 主要贡献 提出了RTOS系统的特点：每一项任务的控制流都是相互独立的，通过代码切片获取到独立的代码树，分别进行分析  使用了前向切片与后向切片，根据依赖和函数调用关系获取了代码片段以供fuzz  设计了SFuzz，对RTOS进行灰盒测试。   尚存不足具体内容sfuzzing一共分为四个模块，分别为Forward slicer，Control Flow Nodes Handler，Micro Fuzzing，Concolic Analyzer。  Forward Slicer由上图可知，forward...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/65903227.html" title="uEmu论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(8).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uEmu论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/65903227.html" title="uEmu论文笔记">uEmu论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-18T16:00:00.000Z" title="发表于 2023-12-19 00:00:00">2023-12-19</time></span></div><div class="content">Automatic Firmware Emulation through Invalidity-guided Knowledge...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/5786d6f8.html" title="P2IM复现"><img class="post-bg" src="/img/cover/default_cover%20(9).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="P2IM复现"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/5786d6f8.html" title="P2IM复现">P2IM复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-17T16:00:00.000Z" title="发表于 2023-12-18 00:00:00">2023-12-18</time></span></div><div class="content">P2IM论文复现导师说要多实践，因此将看过的P2IM论文进行复现，同时对源码进行简单查看。 看网上并没有相关的复现教程，因此写下该博客 链接: https://github.com/RiS3-Lab/p2im 1. 环境Ubuntu 16.04 !!!（重中之重！其他版本可能不成功） GNU Arm Embedded Toolchain：https://developer.arm.com/downloads/-/gnu-rm fuzz target: https://github.com/RiS3-Lab/p2im-real_firmware/tree/d4c7456574ce2c2ed038e6f14fea8e3142b3c1f7/binary 2. 过程 首先下载p2im源码 12git clone https://github.com/RiS3-Lab/p2im.gitcd p2im  下载子项目 123# submodules are cloned into externals/git submodule update --initgit submodule...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/8c8037e9.html" title="uEmu复现"><img class="post-bg" src="/img/cover/default_cover%20(7).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uEmu复现"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8c8037e9.html" title="uEmu复现">uEmu复现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-17T16:00:00.000Z" title="发表于 2023-12-18 00:00:00">2023-12-18</time></span></div><div class="content">uEmu复现1. 环境Ubuntu 20.04（最好分配大于20G存储空间，否则可能不够用） gitee链接：https://gitee.com/cpdt/uEmu.git virtualbox 2. 步骤 克隆下载uEmu 1git clone https://gitee.com/cpdt/uEmu.git  使用vagrant Installation方式复现（不推荐，感觉和直接源码安装没区别，还要多出安装虚拟机的步骤，虚拟机套虚拟机。。。还容易崩溃。。。），安装virtualbox 12sudo apt install vagrantsudo apt install virtualbox  启动虚拟机 1vagrant up  需要等几分钟，第一次会下载ubuntu镜像，这里放一个清华源镜像，添加到vagrantfile里：  1config.vm.box_url =...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/5a0832a9.html" title="格式化字符串实验报告"><img class="post-bg" src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="格式化字符串实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/5a0832a9.html" title="格式化字符串实验报告">格式化字符串实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-10T16:00:00.000Z" title="发表于 2023-12-11 00:00:00">2023-12-11</time></span></div><div class="content">Format String1 Overviewprintf函数用于根据指定格式打印出字符串，第一个参数诶格式化字符串format string，格式化字符串中使用了%来作为占位符。如果不使用%占位符而是直接将变量放入格式化字符串，则存在格式化字符串漏洞，可能被恶意利用。 2 Environment Setup2.1 Turning of Countermeasure关闭ASLR 12❯ sudo sysctl -w kernel.randomize_va_space=0kernel.randomize_va_space = 0  2.2 The Vulnerable Program漏洞程序如下 format.c：myprintf存在漏洞printf(msg); 1234567891011121314151617181920212223242526void myprintf(char *msg)&#123;#if __x86_64__    unsigned long int *framep;    // Save the rbp value into framep   ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/53f1e8f.html" title="【SEED Lab2.0】Return_to_Libc实验报告"><img class="post-bg" src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【SEED Lab2.0】Return_to_Libc实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/53f1e8f.html" title="【SEED Lab2.0】Return_to_Libc实验报告">【SEED Lab2.0】Return_to_Libc实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-19T16:00:00.000Z" title="发表于 2023-11-20 00:00:00">2023-11-20</time></span></div><div class="content">Return_to_Libc实验报告Task1：Finding out the Addresses of libc Functions 获取system函数和exit函数地址   gdb批处理命令，新建文件peda-session-retlib.txt，进行批处理操作    Task2：Putting the shell string in the memory 编写getprt.c来获取环境变量地址 getprt.c： 12345678#include&lt;stdlib.h&gt;#include&lt;stdio.h&gt;void main()&#123;char* shell = getenv(&quot;MYSHELL&quot;);if (shell)  printf(&quot;%x\n&quot;, (unsigned int)shell);&#125;  设置/bin/sh的环境变量，获得地址：  将代码加入到retlib.c中，获取到地址，可以发现地址与getprt的地址相同。（如果开启aslr或者两文件名长度不同则会不同）  Task 3:...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/3d8ffbc0.html" title="get_started_3dsctf_2016 WriteUp"><img class="post-bg" src="/img/cover/default_cover%20(11).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="get_started_3dsctf_2016 WriteUp"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/3d8ffbc0.html" title="get_started_3dsctf_2016 WriteUp">get_started_3dsctf_2016 WriteUp</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-09T16:00:00.000Z" title="发表于 2023-11-10 00:00:00">2023-11-10</time></span></div><div class="content">get_started_3dsctf_2016 WriteUp考点 对栈溢出函数带参数的溢出理解  解题内容 使用checksec工具查看基本信息： 1234567❯ ~/.local/bin/checksec ./get_started_3dsctf_2016[*] &#x27;/home/bronya/Documents/ctf/pwn/get_started_3dsctf_2016/get_started_3dsctf_2016&#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found    NX:       NX enabled    PIE:      No PIE...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Eutopia</div><div class="author-info-description">If it runs, it can be cracked</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="/img/cover/default_cover%20(6).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2024-10-22T04:45:41.402Z" title="发表于 2024-10-22 12:45:41">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/df529e66.html" title="Sandboxing"><img src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sandboxing"/></a><div class="content"><a class="title" href="/posts/df529e66.html" title="Sandboxing">Sandboxing</a><time datetime="2024-09-21T16:00:00.000Z" title="发表于 2024-09-22 00:00:00">2024-09-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6252c524.html" title="SJTU2024回顾"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SJTU2024回顾"/></a><div class="content"><a class="title" href="/posts/6252c524.html" title="SJTU2024回顾">SJTU2024回顾</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/81c8e8b2.html" title="CTF常用工具汇总"><img src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF常用工具汇总"/></a><div class="content"><a class="title" href="/posts/81c8e8b2.html" title="CTF常用工具汇总">CTF常用工具汇总</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/96f187a0.html" title="Bochspwn学习"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bochspwn学习"/></a><div class="content"><a class="title" href="/posts/96f187a0.html" title="Bochspwn学习">Bochspwn学习</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/DSE/" style="font-size: 1.14em; color: #999b9d">DSE</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.19em; color: #999da1">格式化字符串漏洞</a> <a href="/tags/%E5%9B%BA%E4%BB%B6%E6%A8%A1%E6%8B%9F/" style="font-size: 1.37em; color: #99a4b2">固件模拟</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.1em; color: #999">内核</a> <a href="/tags/Sandbox/" style="font-size: 1.1em; color: #999">Sandbox</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" style="font-size: 1.1em; color: #999">实验报告</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.41em; color: #99a5b7">教程</a> <a href="/tags/IoT/" style="font-size: 1.37em; color: #99a4b2">IoT</a> <a href="/tags/Format-String/" style="font-size: 1.1em; color: #999">Format String</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 1.1em; color: #999">逆向</a> <a href="/tags/%E6%A0%88%E8%BF%81%E7%A7%BB/" style="font-size: 1.1em; color: #999">栈迁移</a> <a href="/tags/clang/" style="font-size: 1.1em; color: #999">clang</a> <a href="/tags/Return-to-libc/" style="font-size: 1.1em; color: #999">Return to libc</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 1.1em; color: #999">代理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/" style="font-size: 1.1em; color: #999">网络攻防</a> <a href="/tags/Return-to-Libc/" style="font-size: 1.1em; color: #999">Return to Libc</a> <a href="/tags/CTF/" style="font-size: 1.5em; color: #99a9bf">CTF</a> <a href="/tags/SEED-Lab/" style="font-size: 1.1em; color: #999">SEED_Lab</a> <a href="/tags/mitnick/" style="font-size: 1.1em; color: #999">mitnick</a> <a href="/tags/Fuzz/" style="font-size: 1.41em; color: #99a5b7">Fuzz</a> <a href="/tags/PWN/" style="font-size: 1.46em; color: #99a7bb">PWN</a> <a href="/tags/Ret2Shellcode/" style="font-size: 1.1em; color: #999">Ret2Shellcode</a> <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">栈溢出</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/" style="font-size: 1.32em; color: #99a2ae">论文复现</a> <a href="/tags/Fastbin-Attack/" style="font-size: 1.1em; color: #999">Fastbin Attack</a> <a href="/tags/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">模糊测试</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">网络</a> <a href="/tags/wireshark/" style="font-size: 1.1em; color: #999">wireshark</a> <a href="/tags/%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/" style="font-size: 1.19em; color: #999da1">内核模块</a> <a href="/tags/Heap/" style="font-size: 1.1em; color: #999">Heap</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 1.1em; color: #999">格式化字符串</a> <a href="/tags/seed-lab/" style="font-size: 1.1em; color: #999">seed_lab</a> <a href="/tags/ROP%E6%94%BB%E5%87%BB/" style="font-size: 1.14em; color: #999b9d">ROP攻击</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 1.14em; color: #999b9d">密码</a> <a href="/tags/Kernel-Pwn/" style="font-size: 1.1em; color: #999">Kernel Pwn</a> <a href="/tags/SEED-Lab/" style="font-size: 1.14em; color: #999b9d">SEED Lab</a> <a href="/tags/IS/" style="font-size: 1.28em; color: #99a0aa">IS</a> <a href="/tags/LKM/" style="font-size: 1.1em; color: #999">LKM</a> <a href="/tags/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/" style="font-size: 1.1em; color: #999">条件竞争</a> <a href="/tags/Pwn/" style="font-size: 1.23em; color: #999ea6">Pwn</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/" title="查看更多"><i class="fas fa-angle-right"></i></a>
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/10/">
+          <span class="card-archive-list-date">十月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/09/">
+          <span class="card-archive-list-date">九月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/06/">
+          <span class="card-archive-list-date">六月 2024</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/03/">
+          <span class="card-archive-list-date">三月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/02/">
+          <span class="card-archive-list-date">二月 2024</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/01/">
+          <span class="card-archive-list-date">一月 2024</span>
+          <span class="card-archive-list-count">9</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/12/">
+          <span class="card-archive-list-date">十二月 2023</span>
+          <span class="card-archive-list-count">11</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/11/">
+          <span class="card-archive-list-date">十一月 2023</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">46</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-04-08T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">50.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-22T11:12:41.714Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["H0p3 y0u h4v3 4 600d d4y!"])
+  } else {
+    document.getElementById("subtitle").textContent = "H0p3 y0u h4v3 4 600d d4y!"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

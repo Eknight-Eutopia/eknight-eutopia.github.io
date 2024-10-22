@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Small Utopia - H0p3 y0u h4v3 4 600d d4y!</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="If it runs, it can be cracked">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Small Utopia">
+<meta property="og:url" content="https://eknight-eutopia.github.io/page/2/index.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="If it runs, it can be cracked">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/avatar.jpg">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":80,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Small Utopia',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-10-22 19:12:42'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Small Utopia</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/79c0f484.html" title="LKM编程"><img class="post-bg" src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LKM编程"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/79c0f484.html" title="LKM编程">LKM编程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-03T16:00:00.000Z" title="发表于 2024-01-04 00:00:00">2024-01-04</time></span></div><div class="content">LKM编程Chapter 1. Introduction1.1. What Is A Kernel Module?Linux系统内核：宏内核（与微内核相对），使用内核模块实现动态模块的加载运行。     简介 优点 缺点    宏内核 将进程调度核心功能，驱动程序，网络协议、文件系统都放入内核态 效率高 一个出错就崩溃   微内核 只将核心功能放在内核态，其他放在用户态以进程形式运行 驱动程序出错不影响内核运行 效率低   LKM：用于扩展内核的功能，运行在内核态，为ELF二进制文件，如果不使用内核模块，会导致需要给内核添加功能时只能重新编译整个内核，不是很方便。 1.2. How Do Modules Get Into The Kernel?使用lsmod命令查看已经加载到内核的模块（/proc/modules）。 使用modprobe命令加载指定模块到内核（自动查询模块的依赖关系进行加载/lib/modules/version/kernel/*/*.ko） 使用insmod命令加载模块到内核，不会查询依赖关系（modprobe调用该命令） 12345insmod...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/b78b50e.html" title="Linux内核模块"><img class="post-bg" src="/img/cover/default_cover%20(11).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux内核模块"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/b78b50e.html" title="Linux内核模块">Linux内核模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-03T16:00:00.000Z" title="发表于 2024-01-04 00:00:00">2024-01-04</time></span></div><div class="content">Linux内核模块GCCGNC C Compiler —&gt; GNU Compiler Collection  包括编译器、链接器、binutils、glibc、头文件 支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）  Clang编译器的构成  Frontend：源码分析、语法检查，输出中间代码 Optimizer：对中间代码进行优化、使其运行更高效 Backend：将中间代码转换为某一个平台的机器代码  编译器的实现  GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。 LLVM（Low Level Virtual Machine）框架：模块化设计，代码可重用性高；中间语言LLVM IR，类C表达，可扩展各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言 使用LLVM框架的编译器： LLVM...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/34143959.html" title="模糊测试分类"><img class="post-bg" src="/img/cover/default_cover%20(1).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="模糊测试分类"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/34143959.html" title="模糊测试分类">模糊测试分类</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-01-02T16:00:00.000Z" title="发表于 2024-01-03 00:00:00">2024-01-03</time></span></div><div class="content">模糊测试分类根据程序执行反馈的获取情况，可以将模糊测试分为白盒、黑盒和灰盒三类 一、白盒测试白盒测试通过分析被测程序的内部机制和执行被测程序时收集的信息来生成测试用例，白盒测试通常会对程序进行动态污点分析或符号执行以获取精确的程序分析和状态信息。 二、黑盒测试黑盒测试将测试对象当作黑盒，按照指定的规范随机生成测试用例。不提前分析程序内部机制也不接受反馈信息来更新测试用例。 三、灰盒测试灰盒测试的典型特点就是可以使用目标的执行反馈来指导测试用例的生成。  </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/8f883717.html" title="【网络攻防大作业】Magic Padding Oracle实验报告"><img class="post-bg" src="/img/cover/default_cover%20(1).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【网络攻防大作业】Magic Padding Oracle实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8f883717.html" title="【网络攻防大作业】Magic Padding Oracle实验报告">【网络攻防大作业】Magic Padding Oracle实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-31T16:00:00.000Z" title="发表于 2024-01-01 00:00:00">2024-01-01</time></span></div><div class="content">Magic Padding Oracle WriteUp无需搭建环境、直接连接服务器nc 202.120.1.66 1069 服务器程序会判断客户端发送的密文填充是否有效，如果有效，则提取解密的cookie信息，并判断其中的&quot;is_admin&quot;和&quot;exptime&quot;是否符合要求，如果满足要求，则打印flag值。因此本实验任务为构造合适的密文。 Padding Oracle攻击nc 202.120.1.66 1069连接到服务器，输入示例cookie，结果如下。 &#x2F;img&#x2F;posts&#x2F; 可以利用Padding...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/5e4ccf7.html" title="【网络攻防大作业】Open_the_Floodgate实验报告"><img class="post-bg" src="/img/cover/default_cover%20(7).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【网络攻防大作业】Open_the_Floodgate实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/5e4ccf7.html" title="【网络攻防大作业】Open_the_Floodgate实验报告">【网络攻防大作业】Open_the_Floodgate实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-31T16:00:00.000Z" title="发表于 2024-01-01 00:00:00">2024-01-01</time></span></div><div class="content">Open_the_Floodgate WriteUp1. 环境搭建修改Flag为学号 运行docker程序sudo ./dockerHelper.sh -k（注：需要chmod +x修改脚本的权限），访问http://127.0.0.1:3580/，界面如下  2.流量监测执行curl.sh脚本，curl.sh脚本如下：可以看到对web网页的多个网址进行扫描。  抓取数据包如下：  3. WriteUp查看数据包中web端对用户的request请求回复内容： 123456789101112131415161718192021222324252627282930curl http://127.0.0.1:3580/&lt;h1&gt;&lt;center&gt;&lt;a href=&#x27;https://en.wikipedia.org/wiki/Packet_analyzer&#x27; target=&#x27;_blank&#x27;&gt;Packet...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/8f883717.html" title="【网络攻防大作业】Magic Padding Oracle实验报告"><img class="post-bg" src="/img/cover/default_cover%20(10).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【网络攻防大作业】Magic Padding Oracle实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8f883717.html" title="【网络攻防大作业】Magic Padding Oracle实验报告">【网络攻防大作业】Magic Padding Oracle实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-31T16:00:00.000Z" title="发表于 2024-01-01 00:00:00">2024-01-01</time></span></div><div class="content">Padding Oracle实验报告1. OverviewPadding Oracle：一些系统在解密密文时，会先验证其填充是否合法，如果不合法则会抛出异常。针对此行为的攻击即为padding oracle攻击 2. Lab Environment Seed虚拟机 Labsetup.zip  使用dcbuild和dcup命令启动docker环境 3. Task1：Getting Familiar with PaddingPadding：分组加密算法要求明文长度需要为分组长度的整数倍。因此需要padding填充末尾使长度满足要求 使用echo -n创建文件P，长度为5。-n参数表示结尾不带换行符 1echo -n &quot;12345&quot; &gt; P  使用openssl命令对文件进行加密，并且对加密文件解密查看padding 12345# 加密openssl enc -aes-128-cbc -e -in P -out C# 解密openssl enc -aes-128-cbc -d -nopad -in C -out...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/8a8d28bf.html" title="【网络攻防大作业】Return_to_libc实验报告"><img class="post-bg" src="/img/cover/default_cover%20(9).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【网络攻防大作业】Return_to_libc实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/8a8d28bf.html" title="【网络攻防大作业】Return_to_libc实验报告">【网络攻防大作业】Return_to_libc实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-31T16:00:00.000Z" title="发表于 2024-01-01 00:00:00">2024-01-01</time></span></div><div class="content">Return_to_libc WriteUp1.环境搭建 修改flag为学号  构建docker镜像（运行sudo ./build.sh，注意chmod +x修改权限），连接不稳定，可能需要多次尝试  开启docker，禁用ASLR。   使用netstat -antp查看ssh服务状态   登录容器ssh 0.0.0.0 -p 49153 -l seed   2. 漏洞利用运行镜像中vuln程序，vuln有setuid权限，因此可以尝试通过此来获取root shell。  查看vuln源代码： 12345678910111213141516171819202122232425262728293031323334353637383940#include &lt;stdlib.h&gt;#include &lt;stdio.h&gt;#include &lt;string.h&gt;#ifndef BUF_SIZE#define BUF_SIZE 12#endifint bof(char *str)&#123;    char buffer[BUF_SIZE];   ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/fd2ce383.html" title="Fuzzware论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fuzzware论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/fd2ce383.html" title="Fuzzware论文笔记">Fuzzware论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-19T16:00:00.000Z" title="发表于 2023-12-20 00:00:00">2023-12-20</time></span></div><div class="content">Fuzzware: Using Precise MMIO Modeling for Effective Firmware Fuzzing摘要实现了模拟器Fuzzware，特点：减少了fuzz的input开销，节省了时间。 解决问题针对当前几种对固件模拟fuzz的方法的局限性进行了分析  high-level模拟：通过挂钩完全绕过MMIO的模拟。局限：过于high-level，无法发现外设驱动代码的漏洞。 pattern-based...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/d1a2e76c.html" title="linux虚拟机设置github加速"><img class="post-bg" src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux虚拟机设置github加速"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/d1a2e76c.html" title="linux虚拟机设置github加速">linux虚拟机设置github加速</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-19T16:00:00.000Z" title="发表于 2023-12-20 00:00:00">2023-12-20</time></span></div><div class="content">Linux虚拟机设置github加速最近在使用vmware虚拟机跑项目复现，需要频繁使用github，因此在此记录下github加速的简单方法 https://zhuanlan.zhihu.com/p/432414619 </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/edb8c304.html" title="Fudge论文笔记"><img class="post-bg" src="/img/cover/default_cover%20(7).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fudge论文笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/edb8c304.html" title="Fudge论文笔记">Fudge论文笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-19T16:00:00.000Z" title="发表于 2023-12-20 00:00:00">2023-12-20</time></span></div><div class="content">Fudge: Fuzz Driver Generation at Scale摘要google针对c与c++库提出了新的fuzz driver自动化生成方式。 解决问题对C&#x2F;C++库代码片段的slice_based_fuzz。 主要贡献基于google海量代码库进行测试，完成了Fudge可以有效的处理海量的代码。发现其中的安全漏洞 尚存不足fuzz基于源代码，可以考虑在编译源代码为可执行文件后加入动态符号执行等技术。（也在其Future Work中体现（还提到了Machine Learning）） Fudge具体过程Slicing...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Eutopia</div><div class="author-info-description">If it runs, it can be cracked</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="/img/cover/default_cover%20(6).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2024-10-22T04:45:41.402Z" title="发表于 2024-10-22 12:45:41">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/df529e66.html" title="Sandboxing"><img src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sandboxing"/></a><div class="content"><a class="title" href="/posts/df529e66.html" title="Sandboxing">Sandboxing</a><time datetime="2024-09-21T16:00:00.000Z" title="发表于 2024-09-22 00:00:00">2024-09-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6252c524.html" title="SJTU2024回顾"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SJTU2024回顾"/></a><div class="content"><a class="title" href="/posts/6252c524.html" title="SJTU2024回顾">SJTU2024回顾</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/81c8e8b2.html" title="CTF常用工具汇总"><img src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF常用工具汇总"/></a><div class="content"><a class="title" href="/posts/81c8e8b2.html" title="CTF常用工具汇总">CTF常用工具汇总</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/96f187a0.html" title="Bochspwn学习"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bochspwn学习"/></a><div class="content"><a class="title" href="/posts/96f187a0.html" title="Bochspwn学习">Bochspwn学习</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/DSE/" style="font-size: 1.14em; color: #999b9d">DSE</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.19em; color: #999da1">格式化字符串漏洞</a> <a href="/tags/%E5%9B%BA%E4%BB%B6%E6%A8%A1%E6%8B%9F/" style="font-size: 1.37em; color: #99a4b2">固件模拟</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.1em; color: #999">内核</a> <a href="/tags/Sandbox/" style="font-size: 1.1em; color: #999">Sandbox</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" style="font-size: 1.1em; color: #999">实验报告</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.41em; color: #99a5b7">教程</a> <a href="/tags/IoT/" style="font-size: 1.37em; color: #99a4b2">IoT</a> <a href="/tags/Format-String/" style="font-size: 1.1em; color: #999">Format String</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 1.1em; color: #999">逆向</a> <a href="/tags/%E6%A0%88%E8%BF%81%E7%A7%BB/" style="font-size: 1.1em; color: #999">栈迁移</a> <a href="/tags/clang/" style="font-size: 1.1em; color: #999">clang</a> <a href="/tags/Return-to-libc/" style="font-size: 1.1em; color: #999">Return to libc</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 1.1em; color: #999">代理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/" style="font-size: 1.1em; color: #999">网络攻防</a> <a href="/tags/Return-to-Libc/" style="font-size: 1.1em; color: #999">Return to Libc</a> <a href="/tags/CTF/" style="font-size: 1.5em; color: #99a9bf">CTF</a> <a href="/tags/SEED-Lab/" style="font-size: 1.1em; color: #999">SEED_Lab</a> <a href="/tags/mitnick/" style="font-size: 1.1em; color: #999">mitnick</a> <a href="/tags/Fuzz/" style="font-size: 1.41em; color: #99a5b7">Fuzz</a> <a href="/tags/PWN/" style="font-size: 1.46em; color: #99a7bb">PWN</a> <a href="/tags/Ret2Shellcode/" style="font-size: 1.1em; color: #999">Ret2Shellcode</a> <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">栈溢出</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/" style="font-size: 1.32em; color: #99a2ae">论文复现</a> <a href="/tags/Fastbin-Attack/" style="font-size: 1.1em; color: #999">Fastbin Attack</a> <a href="/tags/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">模糊测试</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">网络</a> <a href="/tags/wireshark/" style="font-size: 1.1em; color: #999">wireshark</a> <a href="/tags/%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/" style="font-size: 1.19em; color: #999da1">内核模块</a> <a href="/tags/Heap/" style="font-size: 1.1em; color: #999">Heap</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 1.1em; color: #999">格式化字符串</a> <a href="/tags/seed-lab/" style="font-size: 1.1em; color: #999">seed_lab</a> <a href="/tags/ROP%E6%94%BB%E5%87%BB/" style="font-size: 1.14em; color: #999b9d">ROP攻击</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 1.14em; color: #999b9d">密码</a> <a href="/tags/Kernel-Pwn/" style="font-size: 1.1em; color: #999">Kernel Pwn</a> <a href="/tags/SEED-Lab/" style="font-size: 1.14em; color: #999b9d">SEED Lab</a> <a href="/tags/IS/" style="font-size: 1.28em; color: #99a0aa">IS</a> <a href="/tags/LKM/" style="font-size: 1.1em; color: #999">LKM</a> <a href="/tags/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/" style="font-size: 1.1em; color: #999">条件竞争</a> <a href="/tags/Pwn/" style="font-size: 1.23em; color: #999ea6">Pwn</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/" title="查看更多"><i class="fas fa-angle-right"></i></a>
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/10/">
+          <span class="card-archive-list-date">十月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/09/">
+          <span class="card-archive-list-date">九月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/06/">
+          <span class="card-archive-list-date">六月 2024</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/03/">
+          <span class="card-archive-list-date">三月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/02/">
+          <span class="card-archive-list-date">二月 2024</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/01/">
+          <span class="card-archive-list-date">一月 2024</span>
+          <span class="card-archive-list-count">9</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/12/">
+          <span class="card-archive-list-date">十二月 2023</span>
+          <span class="card-archive-list-count">11</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/11/">
+          <span class="card-archive-list-date">十一月 2023</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">46</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-04-08T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">50.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-22T11:12:41.714Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["H0p3 y0u h4v3 4 600d d4y!"])
+  } else {
+    document.getElementById("subtitle").textContent = "H0p3 y0u h4v3 4 600d d4y!"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

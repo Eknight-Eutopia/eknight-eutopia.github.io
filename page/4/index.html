@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Small Utopia - H0p3 y0u h4v3 4 600d d4y!</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="If it runs, it can be cracked">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Small Utopia">
+<meta property="og:url" content="https://eknight-eutopia.github.io/page/4/index.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="If it runs, it can be cracked">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/avatar.jpg">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":80,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Small Utopia',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-10-22 19:12:42'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-post"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-time"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Small Utopia</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/637eab0b.html" title="【SEED Lab2.0】缓冲区溢出实验报告"><img class="post-bg" src="/img/cover/default_cover%20(11).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【SEED Lab2.0】缓冲区溢出实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/637eab0b.html" title="【SEED Lab2.0】缓冲区溢出实验报告">【SEED Lab2.0】缓冲区溢出实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-24T16:00:00.000Z" title="发表于 2023-10-25 00:00:00">2023-10-25</time></span></div><div class="content">缓冲区溢出实验报告stack_overflow(setuid)环境配置配置环境，关闭ASLR地址随机化，将&#x2F;bin&#x2F;sh链接到&#x2F;bin&#x2F;zsh（&#x2F;bin&#x2F;dash以及&#x2F;bin&#x2F;bash都实现了一种安全对策， 防止自己在Set-UID进程中执行。 基本上，如果它们检测到它们是在一个Set-UID进程中执行的， 它们会立即将有效的用户ID更改为该进程的真实用户ID， 基本上会放弃特权  ） 123❯ sudo sysctl -w kernel.randomize_va_space=0 kernel.randomize_va_space = 0❯ sudo ln -sf /bin/zsh /bin/sh  Task1： 熟悉shellcodeshellcode C代码实现： 12345678#include &lt;stddef.h&gt;void main()&#123;    char *name[2];    name[0] = &quot;/bin/sh&quot;;    name[1] =...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/d053c6e6.html" title="1stStep"><img class="post-bg" src="/img/cover/default_cover%20(8).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="1stStep"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/d053c6e6.html" title="1stStep">1stStep</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">1stStep考点 ida、ROPgadget工具的使用 多次栈溢出攻击的原理的理解 对汇编语言的理解  解题过程 使用checksec、file工具查看文件./1stStep信息：    ​		可见./1stStep文件为64位程序，启动了DEP保护，使用静态链接。  使用ida工具打开文件，进行反编译，main函数如下，可见main函数内有两个函数banner、vuln，查看两个函数内部逻辑。 main    ​		banner：输出提示信息  ​		vuln：接收用户输入，read函数存在栈溢出漏洞。   经过ida静态分析，发现文件内部并没有system和&quot;/bin/sh&quot;字符串可供利用，因此尝试通过寻找syscall函数来执行命令exceve(&quot;/bin/sh&quot;, 0, 0)，exceve命令为0x3d，&quot;/bin/sh&quot;命令可以通过read函数传入文件数据存储区域中（.bss或.data，要求可读可写）。通过ida工具获取重要地址，通过ROPgadget工具获取pop rdi,...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/daa10577.html" title="ciscn_2019_c_1 WriteUp"><img class="post-bg" src="/img/cover/default_cover%20(1).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ciscn_2019_c_1 WriteUp"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/daa10577.html" title="ciscn_2019_c_1 WriteUp">ciscn_2019_c_1 WriteUp</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">ciscn_2019_c_1 WriteUp考点 libc版本泄漏 ROP攻击 onegadget使用  解题过程 使用checksec工具进行查看，程序为64位，NX保护    使用ida工具反编译。  main:  encrypt：  ​		可以看出程序功能为对输入字符串进行加密，而加密encrypt函数中的get存在栈溢出漏洞。  由于在程序中找不到system函数和/bin/sh字符串，所以需要进行ROP攻击，泄漏其libc地址，使用onegadget工具直接获取shell。 使用ROPgadget工具获取泄漏libc地址所需的指令地址(pop rdi; )，然后获取程序中put_got表和put_plt表地址，执行栈溢出payload构造如下  1payload = flat(b&quot;\0&quot;, b&quot;a&quot;*(0x50-1), 0x0, pop_rdi, puts_got, puts_plt,...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/e2482cb8.html" title="BUUCTF 第五空间PWN5"><img class="post-bg" src="/img/cover/default_cover%20(13).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BUUCTF 第五空间PWN5"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/e2482cb8.html" title="BUUCTF 第五空间PWN5">BUUCTF 第五空间PWN5</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">第五空间2019 决赛PWN5考点 格式化字符串漏洞  解题过程 首先使用checksec工具查看基本信息   ​		为32位，canary，dep防护  使用ida工具进行静态分析。  main  ​		main函数主要代码如上图所示，可以看见print((int)v7)存在格式化字符串输出漏洞，因此可以考虑进行利用（注：由于输入read限制了输入长度，导致无法通过泄漏canary方法来进行栈溢出攻击。）  构造python脚本如下，主要思路为修改printf的got表plt地址为要执行的代码地址（若开启full relro则无法使用），然后再代码执行到下一次调用printf函数时会转去执行目标代码。获得shell。  1234567891011121314151617181920from pwn import *context(arch=&quot;i386&quot;, log_level=&quot;debug&quot;)# p = process(&quot;./pwn&quot;)p = remote(&quot;node4.buuoj.cn&quot;,...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/6d53b6de.html" title="messageboard writeup"><img class="post-bg" src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="messageboard writeup"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/6d53b6de.html" title="messageboard writeup">messageboard writeup</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">messageboard考点 Canary绕过原理 PIE绕过原理 对gdb调试器的使用  解题过程 使用checksec进行检查：   ​		可知程序为64位，有DEP、ASLR、Canary、PIE等保护。Canary是一种栈溢出保护手段，会在栈中压入随机值，如果进行栈溢出攻击，会导致随机值改变，导致验证失败，从而程序不会执行。PIE(position-independent executable, 地址无关可执行文件)技术就是一个针对代码段.text, 数据段.*data，.bss等固定地址的一个防护技术。同ASLR一样，应用了PIE的程序会在每次加载时都变换加载基址，从而使位于程序本身的gadget也失效。  使用ldd命令查看程序的依赖库libc和ld：   ​		使用patchelf进行修改： 1patchelf --replace-needed libc.so.6 ./libc-2.31.so ./message_board  1patchelf --set-interpreter...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/5290eb16.html" title="PWN3"><img class="post-bg" src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN3"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/5290eb16.html" title="PWN3">PWN3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">pwn3题目考点 堆栈溢出原理 ROP攻击 Ida、pwndbg工具的使用 熟悉汇编语言   解题思路首先使用checksec工具检查pwn3文件基本信息，基本信息如下：  然后./pwn3运行一下，查看效果（注：权限可能需要修改以保证可以正常执行）  尝试输入较长字符串，查看结果，说明存在栈溢出漏洞。  使用ida工具逆向分析：  ROP攻击思路，将栈溢出到old_ebp下，后面覆盖要执行的system(&quot;bin/sh&quot;)代码：   经过静态分析，得到system函数地址：  &quot;/bin/sh&quot;地址：  对pwn3进行动态调试，查看要填充多少字节才可以发生堆栈溢出： 在stack_overflow函数地址0x800484F3下断点:  查看stack_overflow内部read函数前设置了0x28字节的参数，因此需要输入28位以上才可以产生栈溢出覆盖返回地址。 构造EXP.py攻击pwn3  通过向pwn3发送超过0x28+4字节的输入，可以覆盖到返回地址，从而影响函数执行，使pwn3转去执行其他的函数  结果 成功弹出shell。 </div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/af718253.html" title="某二次元游戏私服搭建总结"><img class="post-bg" src="/img/cover/default_cover%20(9).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="某二次元游戏私服搭建总结"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/af718253.html" title="某二次元游戏私服搭建总结">某二次元游戏私服搭建总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">某二次元游戏私服搭建总结简述经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。 需要的环境Genshin...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/9e08527c.html" title="pwn4 writeup"><img class="post-bg" src="/img/cover/default_cover%20(3).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pwn4 writeup"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/9e08527c.html" title="pwn4 writeup">pwn4 writeup</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">题目：pwn4考点： 64位ROP攻击 栈溢出攻击  解题思路： 首先使用checksec工具查看pwn4状态  由图可知pwn4为64位程序，且开启了DEP机制，因此可以使用ROP攻击，只不过由于64位程序函数前6个参数会存储在寄存器rdi，rsi，rdx，rcx，r8，r9中，因此需要使用ROPgadget工具寻找可用片段将参数传入寄存器rdi中。  使用ida64工具打开，获取到重要地址stack_flow, system, &quot;/bin/sh&quot;的地址，使用ROPgadget工具获取到pop rdi, ret片段的地址：      函数或字符串 地址    stack_flow 0x040061B   system 0x0400480   “&#x2F;bin&#x2F;sh” 0x04006FF   pop rdi,...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/2ba0cfe.html" title="PWN5 WriteUp"><img class="post-bg" src="/img/cover/default_cover%20(1).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN5 WriteUp"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/2ba0cfe.html" title="PWN5 WriteUp">PWN5 WriteUp</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-22T16:00:00.000Z" title="发表于 2023-10-23 00:00:00">2023-10-23</time></span></div><div class="content">PWN5考点 对ldd, patchelf命令以及依赖库版本的了解 对ASLR机制的理解 one_gadget工具使用  解题过程 首先使用checksec, files查看程序基本信息：    ​		可见程序为64位，开启DEP保护，为动态链接的程序。  使用ldd命令检查程序运行所需的依赖库，其中包括程序所依赖的C函数库libc.so.6以及动态链接器 ld-linux-x86-64.so.2 的路径    使用 patchelf 替换 libc 与 ld 到指定版本，该步骤目的是将本地运行环境调整到与预期一致。 libc 与 ld 的版本必须匹配，题中给定了 libc-2.23.so ，因此需要2.23版本的 ld 。     使用ida打开，反编译：  main:   stack_flow:...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/bb9aef07.html" title="格式化字符串漏洞实验报告"><img class="post-bg" src="/img/cover/default_cover%20(10).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="格式化字符串漏洞实验报告"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/bb9aef07.html" title="格式化字符串漏洞实验报告">格式化字符串漏洞实验报告</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-11T16:00:00.000Z" title="发表于 2023-10-12 00:00:00">2023-10-12</time></span></div><div class="content">格式化字符串漏洞实验报告考点 格式化字符串漏洞利用 对64程序与32位程序区别的理解 覆写got表地址  实验过程 使用checksec, file, ldd等命令查看程序信息：   ​		可见程序为64位，启动了DEP保护，动态链接。  使用patchelf修改libc文件。    使用ida库打开程序，反编译。   ​		可以发现printf(buf)代码存在格式化字符串漏洞。  构造python脚本进行gdb调试：  12345678910from pwn import *context(arch=&quot;amd64&quot;, log_level=&quot;debug&quot;)p = process(&quot;./format_string&quot;)payload = flat(b&quot;%1$p&quot;)gdb.attach(p, &quot;b *0x4006AD&quot;)p.sendlineafter(&quot;Format String\n&quot;,...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Eutopia</div><div class="author-info-description">If it runs, it can be cracked</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Eknight-Eutopia" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="/img/cover/default_cover%20(6).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2024-10-22T04:45:41.402Z" title="发表于 2024-10-22 12:45:41">2024-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/df529e66.html" title="Sandboxing"><img src="/img/cover/default_cover%20(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sandboxing"/></a><div class="content"><a class="title" href="/posts/df529e66.html" title="Sandboxing">Sandboxing</a><time datetime="2024-09-21T16:00:00.000Z" title="发表于 2024-09-22 00:00:00">2024-09-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6252c524.html" title="SJTU2024回顾"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SJTU2024回顾"/></a><div class="content"><a class="title" href="/posts/6252c524.html" title="SJTU2024回顾">SJTU2024回顾</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/81c8e8b2.html" title="CTF常用工具汇总"><img src="/img/cover/default_cover%20(12).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF常用工具汇总"/></a><div class="content"><a class="title" href="/posts/81c8e8b2.html" title="CTF常用工具汇总">CTF常用工具汇总</a><time datetime="2024-06-18T16:00:00.000Z" title="发表于 2024-06-19 00:00:00">2024-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/96f187a0.html" title="Bochspwn学习"><img src="/img/cover/default_cover%20(4).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bochspwn学习"/></a><div class="content"><a class="title" href="/posts/96f187a0.html" title="Bochspwn学习">Bochspwn学习</a><time datetime="2024-03-07T16:00:00.000Z" title="发表于 2024-03-08 00:00:00">2024-03-08</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/DSE/" style="font-size: 1.14em; color: #999b9d">DSE</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.19em; color: #999da1">格式化字符串漏洞</a> <a href="/tags/%E5%9B%BA%E4%BB%B6%E6%A8%A1%E6%8B%9F/" style="font-size: 1.37em; color: #99a4b2">固件模拟</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.1em; color: #999">内核</a> <a href="/tags/Sandbox/" style="font-size: 1.1em; color: #999">Sandbox</a> <a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" style="font-size: 1.1em; color: #999">实验报告</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.41em; color: #99a5b7">教程</a> <a href="/tags/IoT/" style="font-size: 1.37em; color: #99a4b2">IoT</a> <a href="/tags/Format-String/" style="font-size: 1.1em; color: #999">Format String</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 1.1em; color: #999">逆向</a> <a href="/tags/%E6%A0%88%E8%BF%81%E7%A7%BB/" style="font-size: 1.1em; color: #999">栈迁移</a> <a href="/tags/clang/" style="font-size: 1.1em; color: #999">clang</a> <a href="/tags/Return-to-libc/" style="font-size: 1.1em; color: #999">Return to libc</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 1.1em; color: #999">代理</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/" style="font-size: 1.1em; color: #999">网络攻防</a> <a href="/tags/Return-to-Libc/" style="font-size: 1.1em; color: #999">Return to Libc</a> <a href="/tags/CTF/" style="font-size: 1.5em; color: #99a9bf">CTF</a> <a href="/tags/SEED-Lab/" style="font-size: 1.1em; color: #999">SEED_Lab</a> <a href="/tags/mitnick/" style="font-size: 1.1em; color: #999">mitnick</a> <a href="/tags/Fuzz/" style="font-size: 1.41em; color: #99a5b7">Fuzz</a> <a href="/tags/PWN/" style="font-size: 1.46em; color: #99a7bb">PWN</a> <a href="/tags/Ret2Shellcode/" style="font-size: 1.1em; color: #999">Ret2Shellcode</a> <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">栈溢出</a> <a href="/tags/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/" style="font-size: 1.32em; color: #99a2ae">论文复现</a> <a href="/tags/Fastbin-Attack/" style="font-size: 1.1em; color: #999">Fastbin Attack</a> <a href="/tags/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">模糊测试</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">网络</a> <a href="/tags/wireshark/" style="font-size: 1.1em; color: #999">wireshark</a> <a href="/tags/%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/" style="font-size: 1.19em; color: #999da1">内核模块</a> <a href="/tags/Heap/" style="font-size: 1.1em; color: #999">Heap</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 1.1em; color: #999">格式化字符串</a> <a href="/tags/seed-lab/" style="font-size: 1.1em; color: #999">seed_lab</a> <a href="/tags/ROP%E6%94%BB%E5%87%BB/" style="font-size: 1.14em; color: #999b9d">ROP攻击</a> <a href="/tags/%E5%AF%86%E7%A0%81/" style="font-size: 1.14em; color: #999b9d">密码</a> <a href="/tags/Kernel-Pwn/" style="font-size: 1.1em; color: #999">Kernel Pwn</a> <a href="/tags/SEED-Lab/" style="font-size: 1.14em; color: #999b9d">SEED Lab</a> <a href="/tags/IS/" style="font-size: 1.28em; color: #99a0aa">IS</a> <a href="/tags/LKM/" style="font-size: 1.1em; color: #999">LKM</a> <a href="/tags/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/" style="font-size: 1.1em; color: #999">条件竞争</a> <a href="/tags/Pwn/" style="font-size: 1.23em; color: #999ea6">Pwn</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/" title="查看更多"><i class="fas fa-angle-right"></i></a>
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/10/">
+          <span class="card-archive-list-date">十月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/09/">
+          <span class="card-archive-list-date">九月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/06/">
+          <span class="card-archive-list-date">六月 2024</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/03/">
+          <span class="card-archive-list-date">三月 2024</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/02/">
+          <span class="card-archive-list-date">二月 2024</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/01/">
+          <span class="card-archive-list-date">一月 2024</span>
+          <span class="card-archive-list-count">9</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/12/">
+          <span class="card-archive-list-date">十二月 2023</span>
+          <span class="card-archive-list-count">11</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/11/">
+          <span class="card-archive-list-date">十一月 2023</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">46</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-04-08T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">50.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-22T11:12:41.714Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["H0p3 y0u h4v3 4 600d d4y!"])
+  } else {
+    document.getElementById("subtitle").textContent = "H0p3 y0u h4v3 4 600d d4y!"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
