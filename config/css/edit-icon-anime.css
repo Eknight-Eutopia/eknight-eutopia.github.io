@@ -1,0 +1,8 @@
+/* 修改社交媒体图标动画为缩放 */
+#aside-content .card-info .card-info-social-icons .social-icon :hover{
+    transform: scale(1.5);
+}
+
+#aside-content .avatar-img :hover{
+    transform: none;
+}
