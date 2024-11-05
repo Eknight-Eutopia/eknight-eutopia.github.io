@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>暗影精灵5安装黑苹果过程记录 | Small Utopia</title><meta name="robots" content="noindex"><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="众所周知，黑苹果系统安装对硬件设备限制很多，之前一直不敢尝试，而最近找到了一个相同型号的黑苹果安装记录，Mac可以支持到Ventura版本，不过其安装过程并没有很详细。因此笔者尝试一下，在此记录下安装的过程。 参考链接：  暗影精灵5之OpenCore引导黑苹果  OpenCore Install Guide   2024&#x2F;11&#x2F;01更新换成了更新的EFI，见链接https:&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暗影精灵5安装黑苹果过程记录">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/2c9d5f9e.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="众所周知，黑苹果系统安装对硬件设备限制很多，之前一直不敢尝试，而最近找到了一个相同型号的黑苹果安装记录，Mac可以支持到Ventura版本，不过其安装过程并没有很详细。因此笔者尝试一下，在此记录下安装的过程。 参考链接：  暗影精灵5之OpenCore引导黑苹果  OpenCore Install Guide   2024&#x2F;11&#x2F;01更新换成了更新的EFI，见链接https:&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(15).jpg">
+<meta property="article:published_time" content="2024-10-30T05:08:53.000Z">
+<meta property="article:modified_time" content="2024-11-05T09:15:57.761Z">
+<meta property="article:author" content="Eutopia">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="装机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(15).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/2c9d5f9e.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '暗影精灵5安装黑苹果过程记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-05 17:15:57'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">暗影精灵5安装黑苹果过程记录</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">暗影精灵5安装黑苹果过程记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-30T05:08:53.000Z" title="发表于 2024-10-30 13:08:53">2024-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-05T09:15:57.761Z" title="更新于 2024-11-05 17:15:57">2024-11-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>众所周知，黑苹果系统安装对硬件设备限制很多，之前一直不敢尝试，而最近找到了一个相同型号的黑苹果安装记录，Mac可以支持到Ventura版本，不过其安装过程并没有很详细。因此笔者尝试一下，在此记录下安装的过程。</p>
+<p>参考链接：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.hibobmaster.com/2020/10/26/hp-15-dc1010nr-hackintosh/">暗影精灵5之OpenCore引导黑苹果</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/installer-guide/">OpenCore Install Guide</a></p>
+</li>
+</ul>
+<h4 id="2024-11-01更新"><a href="#2024-11-01更新" class="headerlink" title="2024&#x2F;11&#x2F;01更新"></a>2024&#x2F;11&#x2F;01更新</h4><p>换成了更新的EFI，见链接<a target="_blank" rel="noopener" href="https://github.com/Darkspeed294/HP-Omen-15-DC-1xxxx-Hackintosh-Opencore">https://github.com/Darkspeed294/HP-Omen-15-DC-1xxxx-Hackintosh-Opencore</a></p>
+<h2 id="本机配置"><a href="#本机配置" class="headerlink" title="本机配置"></a>本机配置</h2><p><strong>电脑型号</strong>：暗影精灵5</p>
+<table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>i7-9750H</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iGPU</td>
+<td>Intel UHD Graphics 630</td>
+</tr>
+<tr>
+<td>dGPU</td>
+<td>GTX1650</td>
+</tr>
+<tr>
+<td>Audio</td>
+<td>Realtek ALC295</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>HP SSD EX920 + Netac SSD</td>
+</tr>
+<tr>
+<td>Wireless</td>
+<td>Wireless-AC 9560&#x2F;BCM94352z</td>
+</tr>
+<tr>
+<td>Ethernet</td>
+<td>Realtek 8111&#x2F;8168&#x2F;8411 PCI Express Gigabit Ethernet</td>
+</tr>
+</tbody></table>
+<h2 id="制作U盘系统安装器"><a href="#制作U盘系统安装器" class="headerlink" title="制作U盘系统安装器"></a>制作U盘系统安装器</h2><p>[]</p>
+<p>首先安装几个需要的工具</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/acidanthera/OpenCorePkg/releases">OpenCorePkg</a>：按照官方文档提示是推荐安装debug版本，可以方便后续问题解决；</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/corpnewt/ProperTree">ProperTree</a>：用于修改后续生成的.plist文件。</li>
+</ul>
+<p>然后开始制作安装器，有在线安装和离线安装两种方式，离线安装需要在MacOS上运行；而在线安装可以支持任意系统。因此本文选择在线安装方式：</p>
+<p>准备几个工具：</p>
+<ul>
+<li>4GB大小的U盘</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/acidanthera/OpenCorePkg/releases">macrecovery.py</a>(需要Python3环境)</li>
+</ul>
+<h3 id="制作USB启动器"><a href="#制作USB启动器" class="headerlink" title="制作USB启动器"></a>制作USB启动器</h3><h4 id="下载macOS"><a href="#下载macOS" class="headerlink" title="下载macOS"></a>下载macOS</h4><p>在下载的OpenCore目录下<code>/Utilities/macrecovery/</code>打开终端。然后运行以下命令（根据你想要下载的MacOS版本挑选一个即可）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Lion (10.7):</span></span><br><span class="line">py macrecovery.py -b Mac-2E6FAB96566FE58C -m 00000000000F25Y00 download</span><br><span class="line">py macrecovery.py -b Mac-C3EC7CD22292981F -m 00000000000F0HM00 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Mountain Lion (10.8):</span></span><br><span class="line">py macrecovery.py -b Mac-7DF2A3B5E5D671ED -m 00000000000F65100 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Mavericks (10.9):</span></span><br><span class="line">py macrecovery.py -b Mac-F60DEB81FF30ACF6 -m 00000000000FNN100 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Yosemite (10.10):</span></span><br><span class="line">py macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000GDVW00 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">El Capitan (10.11):</span></span><br><span class="line">py macrecovery.py -b Mac-FFE5EF870D7BA81A -m 00000000000GQRX00 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Sierra (10.12):</span></span><br><span class="line">py macrecovery.py -b Mac-77F17D7DA9285301 -m 00000000000J0DX00 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">High Sierra (10.13)</span></span><br><span class="line">py macrecovery.py -b Mac-7BA5B2D9E42DDD94 -m 00000000000J80300 download</span><br><span class="line">py macrecovery.py -b Mac-BE088AF8C5EB4FA2 -m 00000000000J80300 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Mojave (10.14)</span></span><br><span class="line">py macrecovery.py -b Mac-7BA5B2DFE22DDD8C -m 00000000000KXPG00 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Catalina (10.15)</span></span><br><span class="line">py macrecovery.py -b Mac-00BE6ED71E35EB86 -m 00000000000000000 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Big Sur (11)</span></span><br><span class="line">py macrecovery.py -b Mac-42FD25EABCABB274 -m 00000000000000000 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Monterey (12)</span></span><br><span class="line">py macrecovery.py -b Mac-FFE5EF870D7BA81A -m 00000000000000000 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Ventura (13)</span></span><br><span class="line">py macrecovery.py -b Mac-4B682C642B45593E -m 00000000000000000 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Sonoma (14)</span></span><br><span class="line">py macrecovery.py -b Mac-226CB3C6A851A671 -m 00000000000000000 download</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Latest version</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ie. Sequoia (15)</span></span><br><span class="line">py macrecovery.py -b Mac-937A206F2EE63C01 -m 00000000000000000 download</span><br></pre></td></tr></table></figure>
+
+<p>由于MacOS Monterey版本比较稳定，也在上述博文中已实现的版本列表中，因此本文选择Monterey版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Monterey (12)</span></span><br><span class="line">python3 macrecovery.py -b Mac-FFE5EF870D7BA81A -m 00000000000000000 download</span><br></pre></td></tr></table></figure>
+
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030133852847.png" alt="image-20241030133852847"></p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><p><strong>对于MacOS 12以上的版本，需要使用USBToolBox对U盘进行处理。</strong></p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://tonymacx86.com/threads/how-to-usb-ports-map-for-macos-with-usbtoolbox.324437/">USB ports map for macOS with USBToolBox</a></p>
+<p>下载工具<a target="_blank" rel="noopener" href="https://github.com/USBToolBox/tool/releases/tag/0.2">USBToolBox</a>，选择Windows.exe安装<img src="/./2024-10-30-black-apple.assets/image-20241030141251705.png" alt="image-20241030141251705"></p>
+<p>安装后终端里运行，选择C修改配置信息如下：</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030141323667.png" alt="image-20241030141323667"></p>
+<p>选择D展示所有发现的USB端口设备，绿色表示已连接，其余为白色，可以发现共有24个端口，高于苹果的15个端口的限制，因此应该进行映射来避免问题。</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030141412316.png" alt="image-20241030141412316"></p>
+<p>其中很多端口其实电脑都用不到的，因为笔记本一共就三个USB接口，一个Type-C接口。可以用U盘和雷电接口的设备接下每个接口，看实际使用的接口有哪些。</p>
+<p>结束后按B返回，然后选择S重排端口，将使用过的端口排在前面。使用<code>c:x:name</code>命令，x代表端口号，名字为你想要设置的名字（不必要，主要是为了清晰）。</p>
+<p>可以按N禁用所有映射，按P将所有已知端口映射。最后按K生成kext文件。</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030144825210.png" alt="image-20241030144825210"></p>
+<p>最后下载<a target="_blank" rel="noopener" href="https://github.com/USBToolBox/kext/releases/tag/1.1.1">USBToolBox.kext</a>文件，两个kext文件夹应同时存在，以备后续使用。</p>
+</li>
+<li><p><strong>在启动时需要关闭XhciPortLimit选项</strong>，后续会提到</p>
+</li>
+</ul>
+<h4 id="制作U盘系统启动器"><a href="#制作U盘系统启动器" class="headerlink" title="制作U盘系统启动器"></a>制作U盘系统启动器</h4><ul>
+<li><p>根据官方文档有两种方式，我们选择第一种Disk Management method</p>
+</li>
+<li><p>右键Win开始键，选择磁盘管理工具，选择接入的U盘，右键格式化为FAT32格式，此处分区大小需要小于32GB才能够以FAT32格式化，需要注意。另外还需要创建一个EFI分区，同样是FAT32格式化。</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030151201098.png" alt="image-20241030151201098"></p>
+</li>
+<li><p>然后在U盘根目录下创建<code>com.apple.recovery.boot</code>文件夹，将下载好的BaseSystem文件移入该目录下，注意dmg和chunklist两个文件都需要复制。</p>
+</li>
+<li><p>然后打开之前下载的<code>OpenCorePkg</code>目录，选择X64文件夹打开，然后将其中EFI文件复制过去，此时你的U盘目录应为：</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030151648919.png" alt="image-20241030151648919"></p>
+</li>
+</ul>
+<h3 id="添加基本的OpenCore文件"><a href="#添加基本的OpenCore文件" class="headerlink" title="添加基本的OpenCore文件"></a>添加基本的OpenCore文件</h3><ul>
+<li><p>打开U盘中的EFI文件夹，OC目录中有大量的文件，其中有很多都是我们不需要的，具体可以参考<a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/installer-guide/opencore-efi.html">官方文档</a>。这里直接采用默认方法，参考下图：</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030152526130.png" alt="image-20241030152526130"></p>
+</li>
+<li><p>然后将你需要的各种设备驱动文件填入对应目录下，这里我参考了对应博文的内容，由于版本不一致，还是推荐阅读<a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/ktext.html#virtualsmc-plugins">官方文档</a>。</p>
+<table>
+<thead>
+<tr>
+<th>驱动</th>
+<th>描述信息</th>
+<th>安装路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HfsPlus.efi</td>
+<td>通用驱动，必备</td>
+<td>&#x2F;OC&#x2F;Drivers</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><code>kext</code>目录：</p>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241030155219695.png" alt="image-20241030155219695"></p>
+<p><code>SSDT</code>这里选择直接复制博文提供的ACPI，感觉没差。</p>
+</li>
+</ul>
+<h3 id="配置config-plist"><a href="#配置config-plist" class="headerlink" title="配置config.plist"></a>配置config.plist</h3><h4 id="新建自定义的config-plist"><a href="#新建自定义的config-plist" class="headerlink" title="新建自定义的config.plist"></a>新建自定义的config.plist</h4><p>首先从&#x2F;OpenCore&#x2F;Docs&#x2F;目录选取Sample.plist，将其复制到U盘&#x2F;OC目录中，并重命名为config.plist</p>
+<p>安装工具<a target="_blank" rel="noopener" href="https://github.com/corpnewt/ProperTree">ProperTree</a>和<a target="_blank" rel="noopener" href="https://github.com/corpnewt/GenSMBIOS">GenSMBIOS</a></p>
+<p>按Ctrl+O打开config.plist文件</p>
+<p>打开后，按<strong>Ctrl + Shift + R</strong>键令其指向&#x2F;EFI&#x2F;OC创建一个<code>Clean Snapshot</code>，这会将你的配置项全部加载并写入到config.plist中。</p>
+<h4 id="选择笔记本平台"><a href="#选择笔记本平台" class="headerlink" title="选择笔记本平台"></a>选择笔记本平台</h4><p>选择了<code>Coffee Lake and Whiskey Lake</code>型号。</p>
+<p>根据<a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake.html#laptop-coffee-lake-and-whiskey-lake">官方文档</a>进行配置：</p>
+<p><strong>2021-9-12</strong>: 请自行按下面的说明修改<code>config.plist</code>（没有发布新的EFI，开学了等有时间把OC升级到0.7.3再补上，目前请手动修改），解决OC引导windows后显示型号为mac*，manufacture为Acidanthera的问题，这样在windows下 <strong>omen game hub</strong> 才能正常的对系统资源进行监控和操作。<br><code>Kernel&gt; Quirks&gt; CustomSMBIOSGuid&gt; True (default is False)</code><br><code>PlatformInfo&gt; UpdateSMBIOSMode&gt; Custom (default is Create)</code></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li>卡在exit：ACPI没有用最新的。</li>
+<li>卡在xpc.launchd：<ol>
+<li><p>尝试禁用GPU独显（无果）</p>
+</li>
+<li><p>也有说是USB没有定制的问题，不过我本身就已经定制好了，而且关不关好像对启动都没啥影响，所以也不是这个问题</p>
+</li>
+<li><p>有文章说问题不是出在xpc这里，xpc报错不会影响，但是换了好几个EFI都存在这一问题，因此也不行</p>
+<ol>
+<li><p>注意到开始出现com.xpc.launchd时并没有报错，可能确实无关？这里发现一直运行到了AppleALC这一步，启动过程参考：<a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/boot.html">https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/boot.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/extended/kernel-issues.html#stuck-on-or-near-ioconsoleusers-gioscreenlock-giolockstate-3">https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/extended/kernel-issues.html#stuck-on-or-near-ioconsoleusers-gioscreenlock-giolockstate-3</a></p>
+<p>根据该问题进行修改。</p>
+<ul>
+<li>按照这个方法加上参数</li>
+</ul>
+<p><img src="/./2024-10-30-black-apple.assets/image-20241101230347258.png" alt="image-20241101230347258"></p>
+</li>
+</ol>
+</li>
+<li><p>CSM也已经关闭，BIOS设置无误</p>
+</li>
+<li><p>尝试仿冒CPU（按理说也不行，因为本人的电脑型号按官方教程是不需要的，不过也尝试看看）</p>
+</li>
+<li><p>还有一个说可以把蓝牙，WIFI什么的先都去掉，等安装上之后再装，后续也可以试一试。</p>
+</li>
+</ol>
+</li>
+</ol>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/2c9d5f9e.html">https://eknight-eutopia.github.io/posts/2c9d5f9e.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/%E8%A3%85%E6%9C%BA/">装机</a></div><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(15).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/feb04467.html" title="鼠标右键添加新建md文档"><img class="cover" src="/img/cover/default_cover%20(26).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-10</div><div class="info-item-2">鼠标右键添加新建md文档</div></div><div class="info-2"><div class="info-item-1">直接上链接： 鼠标右键添加新建.md文档（亲测有效） Windows下右键新建.md文件教程（转）_右键新建md文件_MercyDean的博客-CSDN博客](https://blog.csdn.net/qq_43564374/article/details/109471694)) </div></div></div></a><a class="pagination-related" href="/posts/75b509d1.html" title="AI绘图工具以及使用教程"><img class="cover" src="/img/cover/default_cover%20(25).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-20</div><div class="info-item-2">AI绘图工具以及使用教程</div></div><div class="info-2"><div class="info-item-1">结果展示先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~        大概就是这样，模型可以在civatai（需魔法）和[Hugging Face](Hugging Face – The AI community building the future.)中找。 stable-diffusion-webui工具安装[stable-diffusion官网](AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI...</div></div></div></a><a class="pagination-related" href="/posts/d053c6e6.html" title="1stStep"><img class="cover" src="/img/cover/default_cover%20(28).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-23</div><div class="info-item-2">1stStep</div></div><div class="info-2"><div class="info-item-1">考点 ida、ROPgadget工具的使用 多次栈溢出攻击的原理的理解 对汇编语言的理解  解题过程 使用checksec、file工具查看文件./1stStep信息：    ​		可见./1stStep文件为64位程序，启动了DEP保护，使用静态链接。  使用ida工具打开文件，进行反编译，main函数如下，可见main函数内有两个函数banner、vuln，查看两个函数内部逻辑。 main    ​		banner：输出提示信息  ​		vuln：接收用户输入，read函数存在栈溢出漏洞。   经过ida静态分析，发现文件内部并没有system和&quot;/bin/sh&quot;字符串可供利用，因此尝试通过寻找syscall函数来执行命令exceve(&quot;/bin/sh&quot;, 0, 0)，exceve命令为0x3d，&quot;/bin/sh&quot;命令可以通过read函数传入文件数据存储区域中（.bss或.data，要求可读可写）。通过ida工具获取重要地址，通过ROPgadget工具获取pop rdi,...</div></div></div></a><a class="pagination-related" href="/posts/e2482cb8.html" title="BUUCTF 第五空间PWN5"><img class="cover" src="/img/cover/default_cover%20(19).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-23</div><div class="info-item-2">BUUCTF 第五空间PWN5</div></div><div class="info-2"><div class="info-item-1">考点 格式化字符串漏洞  解题过程 首先使用checksec工具查看基本信息   ​		为32位，canary，dep防护  使用ida工具进行静态分析。  main  ​		main函数主要代码如上图所示，可以看见print((int)v7)存在格式化字符串输出漏洞，因此可以考虑进行利用（注：由于输入read限制了输入长度，导致无法通过泄漏canary方法来进行栈溢出攻击。）  构造python脚本如下，主要思路为修改printf的got表plt地址为要执行的代码地址（若开启full relro则无法使用），然后再代码执行到下一次调用printf函数时会转去执行目标代码。获得shell。  1234567891011121314151617181920from pwn import *context(arch=&quot;i386&quot;, log_level=&quot;debug&quot;)# p = process(&quot;./pwn&quot;)p = remote(&quot;node4.buuoj.cn&quot;, 29338)elf =...</div></div></div></a><a class="pagination-related" href="/posts/5290eb16.html" title="PWN3"><img class="cover" src="/img/cover/default_cover%20(22).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-23</div><div class="info-item-2">PWN3</div></div><div class="info-2"><div class="info-item-1">题目考点 堆栈溢出原理 ROP攻击 Ida、pwndbg工具的使用 熟悉汇编语言   解题思路首先使用checksec工具检查pwn3文件基本信息，基本信息如下：  然后./pwn3运行一下，查看效果（注：权限可能需要修改以保证可以正常执行）  尝试输入较长字符串，查看结果，说明存在栈溢出漏洞。  使用ida工具逆向分析：  ROP攻击思路，将栈溢出到old_ebp下，后面覆盖要执行的system(&quot;bin/sh&quot;)代码：   经过静态分析，得到system函数地址：  &quot;/bin/sh&quot;地址：  对pwn3进行动态调试，查看要填充多少字节才可以发生堆栈溢出： 在stack_overflow函数地址0x800484F3下断点:  查看stack_overflow内部read函数前设置了0x28字节的参数，因此需要输入28位以上才可以产生栈溢出覆盖返回地址。 构造EXP.py攻击pwn3  通过向pwn3发送超过0x28+4字节的输入，可以覆盖到返回地址，从而影响函数执行，使pwn3转去执行其他的函数  结果 成功弹出shell。 </div></div></div></a><a class="pagination-related" href="/posts/6d53b6de.html" title="messageboard writeup"><img class="cover" src="/img/cover/default_cover%20(31).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-23</div><div class="info-item-2">messageboard writeup</div></div><div class="info-2"><div class="info-item-1">考点 Canary绕过原理 PIE绕过原理 对gdb调试器的使用  解题过程 使用checksec进行检查：   ​		可知程序为64位，有DEP、ASLR、Canary、PIE等保护。Canary是一种栈溢出保护手段，会在栈中压入随机值，如果进行栈溢出攻击，会导致随机值改变，导致验证失败，从而程序不会执行。PIE(position-independent executable, 地址无关可执行文件)技术就是一个针对代码段.text, 数据段.*data，.bss等固定地址的一个防护技术。同ASLR一样，应用了PIE的程序会在每次加载时都变换加载基址，从而使位于程序本身的gadget也失效。  使用ldd命令查看程序的依赖库libc和ld：   ​		使用patchelf进行修改： 1patchelf --replace-needed libc.so.6 ./libc-2.31.so ./message_board  1patchelf --set-interpreter...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#2024-11-01%E6%9B%B4%E6%96%B0"><span class="toc-number">1.</span> <span class="toc-text">2024&#x2F;11&#x2F;01更新</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA%E9%85%8D%E7%BD%AE"><span class="toc-number"></span> <span class="toc-text">本机配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9CU%E7%9B%98%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E5%99%A8"><span class="toc-number"></span> <span class="toc-text">制作U盘系统安装器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9CUSB%E5%90%AF%E5%8A%A8%E5%99%A8"><span class="toc-number"></span> <span class="toc-text">制作USB启动器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDmacOS"><span class="toc-number">1.</span> <span class="toc-text">下载macOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B6%E4%BD%9CU%E7%9B%98%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">制作U盘系统启动器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%9F%BA%E6%9C%AC%E7%9A%84OpenCore%E6%96%87%E4%BB%B6"><span class="toc-number"></span> <span class="toc-text">添加基本的OpenCore文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEconfig-plist"><span class="toc-number"></span> <span class="toc-text">配置config.plist</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84config-plist"><span class="toc-number">1.</span> <span class="toc-text">新建自定义的config.plist</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%B9%B3%E5%8F%B0"><span class="toc-number">2.</span> <span class="toc-text">选择笔记本平台</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number"></span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number"></span> <span class="toc-text">问题解决</span></a></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: 'bcfd2e791413dcc097926691d59f9519',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
