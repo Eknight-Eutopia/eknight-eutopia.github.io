@@ -3228,4 +3228,49 @@
         <category>PemukulPaku</category>
       </categories>
   </entry>
+  <entry>
+    <title>国内外安卓应用市场对比调研</title>
+    <url>/posts/73ae95ad.html</url>
+    <content><![CDATA[<p>分析国内外安卓应用市场的差异，可以用作相关论文的背景素材</p>
+<h2 id="1-应用市场规模成碎片化特点"><a href="#1-应用市场规模成碎片化特点" class="headerlink" title="1. 应用市场规模成碎片化特点"></a>1. 应用市场规模成碎片化特点</h2><ul>
+<li>安卓市场规模巨大（&gt;77%）</li>
+<li>应用市场多达400个，其中有25个主流应用市场<br><strong>佐证材料：</strong></li>
+<li><a href="https://www.statista.com/statistics/1058612/china-android-app-store-market-share/">Statista数据——Market share of the Android app stores in China as of May 2022</a><blockquote>
+<p>As of May 2022, Huawei AppGallery was the top Android app store in China with a market share of about 44 percent. <strong>China’s technological advancement</strong> combined its <strong>ban on Google</strong> has caused its Android market to be flooded with several competing smartphone manufacturers each with its own app store.（国内市场碎片化的原因：GooglePlay被禁，国内技术发展）<br>In China, Android is the dominating mobile operating system As the Google Play Store is not available in the country, various Android stores have been developed, resulting in a <strong>fragmented app store landscape</strong>. As of the time of writing, there were <strong>25 major Android app stores in mainland China</strong>.（安卓应用市场现状：碎片化、25个主流安卓应用市场）</p>
+</blockquote>
+</li>
+<li><a href="https://www.statista.com/statistics/262176/market-share-held-by-mobile-operating-systems-in-china/">Statista数据——Market share of mobile operating systems in China from September 2014 to September 2024</a><blockquote>
+<p>In September 2024, the <strong>Android smartphone operating system</strong> had a market share of <strong>over 77 percent in China</strong>. In contrast, its biggest rival, the Apple iOS had a market share of around 22 percent. The Chinese smartphone market is dominated by domestic brands which operate on the Android operating system. （安卓应用市场占比77%）</p>
+</blockquote>
+</li>
+<li><a href="https://gs.statcounter.com/vendor-market-share/mobile/china/2022">Statcounter数据——Mobile Vendor Market Share China</a><blockquote>
+<p>![[2025-01-19-国内外安卓应用市场对比调研&#x2F;file-20250119091308783.png]]<br>![[2025-01-19-国内外安卓应用市场对比调研&#x2F;file-20250119091358855.png]]<br>（安卓市场占有率超过70%）</p>
+</blockquote>
+</li>
+<li><a href="https://www.goclickchina.com/blog/breakdown-of-china-android-market/">文章blog——A Breakdown of China’s Android Market</a><blockquote>
+<p>Android is open-source software free to be utilized by any smartphone company. In recent years, <strong>nearly 77% of Chinese smartphones ran the operating system;</strong> however, apps must be offered through a 3rd party rather than Google. There are currently <strong>over 400 Android app stores,</strong> with only 10 taking 90% of the market share.（77%的安卓比例+400多个安卓应用市场）<br>![[2025-01-19-国内外安卓应用市场对比调研&#x2F;file-20250119091712180.png]]</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-审核内容机制严格"><a href="#2-审核内容机制严格" class="headerlink" title="2. 审核内容机制严格"></a>2. 审核内容机制严格</h2><ul>
+<li>对含有赌博、色情、暴力等违规内容的App进行限制和下架<br><strong>佐证材料：</strong></li>
+<li><a href="https://english.www.gov.cn/news/topnews/202103/24/content_WS605b1b19c6d0719374afb586.html">文章news新华社2021——China removes over 520 apps for irregularities, vulgar content</a><blockquote>
+<p>BEIJING — <strong>The Cyberspace Administration of China (CAC) has removed more than 520 apps in its latest crackdown targeting irregularities and vulgar content</strong>, the internet regulator announced on March 24.</p>
+</blockquote>
+</li>
+<li><a href="https://europe.chinadaily.com.cn/a/202305/02/WS645057c2a310b6054fad0af5.html">文章News2023——Websites, apps penalized for misconduct</a><blockquote>
+<p>During the first quarter of this year(2023), Chinese cyberspace regulators at various levels shut down more than 4,200 websites and <strong>banned nearly 70 apps suspected of engaging in criminal activities such as providing illegal news services and spreading pornography</strong>.<br>According to a news release published on Sunday by the Cyberspace Administration of China, the nation’s top cyberspace watchdog, leaders of more than 2,000 websites were summoned and instructed to rectify their actions, and 48 websites were banned from offering or upgrading services.<br><strong>In addition, 55 mobile apps were removed from app stores and 12 were shut down,</strong> the news release said, adding that some 4,200 websites were shuttered and had their licenses revoked.</p>
+</blockquote>
+</li>
+<li><a href="https://www.yahoo.com/news/china-takes-5-500-porn-003224058.html">文章News2017——China takes 5,500 porn, violent apps offline - Xinhua</a><blockquote>
+<p>SHANGHAI (Reuters) - China’s internet supervisors have taken down more than <strong>5,500 illegal apps</strong> for disseminating pornographic and violent content among other things, the official Xinhua news agency said on Tuesday.<br>The move is the latest step taken by Beijing to clean up its cyberspace, having launched a crackdown on virtual private network services that allow users to bypass censorship on Monday.<br><strong>More than 1,600 mobile video apps circulating pornographic and violent content were taken offline</strong>, said the cyberspace administration in China’s southern province of Guangdong on Monday.</p>
+</blockquote>
+</li>
+<li><a href="https://appinchina.co/services/localization/content-regulations/">文章Blog——Rules &amp; Content Restrictions for Publishing an App in China</a><blockquote>
+<p>Every app submitted to a Chinese app store must go through an approval process before it can be accepted for publication and receive a game license and approval number (ISBN), and various <strong>Chinese governing bodies and agencies have outlined a number of regulations and content restrictions for those apps</strong>.</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
