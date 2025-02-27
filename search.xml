@@ -2987,6 +2987,8 @@
 <li><a href="/posts/2a86d11c.html" title="PemukulPaku-EquipmentSellReqHandler">EquipmentSellReq</a></li>
 <li><a href="/posts/8fbda5e4.html" title="PemukulPaku-IslandDisjoinEquipmentReqHandler">IslandDisjoinEquipmentReq</a></li>
 <li><a href="/posts/783a5418.html" title="PemukulPaku-EquipmentEvoReqHandler">EquipmentEvoReq</a></li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetEquipmentForgeDataReq">PemukulPaku-GetEquipmentForgeDataReq</a></li>
+<li><a href="/posts/null.html" title="PemukukPaku-ForgeEquipmentReq">ForgeEquipmentReq</a></li>
 </ul>
 <h3 id="商店与充值功能"><a href="#商店与充值功能" class="headerlink" title="商店与充值功能"></a>商店与充值功能</h3><ul>
 <li><a href="/posts/6b761fa9.html" title="GetShopListReq">GetShopListReq</a></li>
@@ -2994,6 +2996,8 @@
 <li><a href="/posts/8bee2b6e.html" title="PemukulPaku-GetProductListReqHandler">GetProductListReq</a></li>
 <li><a href="/posts/dc044fb2.html" title="PemukulPaku-BuyProductReq">BuyProductReq</a></li>
 <li><a href="/posts/8063f392.html" title="PemukulPaku-GetShoppingMallListReqHandler">GetShoppingMallListReq</a></li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetVipRewardDataReq">GetVipRewardData</a></li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetVipRewardReqHandler">GetVipRewardReq</a></li>
 </ul>
 <h3 id="深渊功能"><a href="#深渊功能" class="headerlink" title="深渊功能"></a>深渊功能</h3><ul>
 <li><a href="/posts/ddb0d42f.html" title="PemukulPaku-GetMissionRewardReqHandler">GetMissionRewardReq</a></li>
@@ -3004,7 +3008,10 @@
 </ul>
 <h3 id="日常功能"><a href="#日常功能" class="headerlink" title="日常功能"></a>日常功能</h3><ul>
 <li>LoginWishGetMainDataReq(每日登录领取奖励)</li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetSignInRewardStatusReq">GetSignInRewardStatusReq</a></li>
 <li>GetWeeklyRoutineActivityReq</li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetInviteActivityInviteeDataReq">GetInviteActivityInviterDataReq</a></li>
+<li><a href="/posts/null.html" title="PemukulPaku-GetInviteActivityInviterDataReq">GetInviteActivityInviterDataReq</a></li>
 </ul>
 <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><ul>
 <li>GetHasGotItemIdListReq</li>
@@ -3184,5 +3191,41 @@
         <tag>CTF</tag>
         <tag>Sandbox</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>LARA论文阅读笔记</title>
+    <url>/posts/e3c41b31.html</url>
+    <content><![CDATA[<h2 id="论文概述"><a href="#论文概述" class="headerlink" title="论文概述"></a>论文概述</h2><p><a href="https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf">https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf</a></p>
+<p>（SaTC + 大模型）：使用污点分析技术来检测嵌入式系统漏洞的方法</p>
+<p>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217200349708.png]]</p>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><ul>
+<li>嵌入式固件中代码（<strong>输入处理函数</strong>）与数据（<strong>URI，KEY</strong>）的<strong>语义联系</strong>有助于识别污点分析的source点</li>
+<li>将用户输入条目分为URI和KEY两类，并进行两类的mapping工作，有助于发现隐藏的URI和KEY<ul>
+<li>关系图：<br>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217204623878.png]]<ul>
+<li>提取：先从前端获取一部分，然后在后端识别URI或KEY处理代码，再扩展</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分为两个模块：<ul>
+<li>pattern-based静态分析</li>
+<li>LLM辅助分析：代码语义分析（大模型在总结代码语义上有很好的效果）</li>
+<li>（sink点提取）</li>
+</ul>
+</li>
+</ul>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>添加大模型，通过语义理解的方式来辅助判断，显著提升了关键字识别的准确率</li>
+<li>降低了漏洞检测假阳率</li>
+<li>大模型与基于pattern匹配两种模式的结合</li>
+<li>URI、KEY分离的思想</li>
+</ul>
+<h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>（猜测）引入大模型，两套分析模式的结合存在挑战（例如效率上，以及是否存在实验数据错误等）</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>203个设备，21个厂商<br>相较于SaTC，KARONTE分别多发现了556，602个漏洞，降低假阳率57.0%，54.3%</p>
+<p>57个设备中发现了245个0-day，162个CVE</p>
+]]></content>
+      <categories>
+        <category>PemukulPaku</category>
+      </categories>
   </entry>
 </search>
