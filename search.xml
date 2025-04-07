@@ -261,25 +261,6 @@
       </tags>
   </entry>
   <entry>
-    <title>某二次元游戏私服搭建总结</title>
-    <url>/posts/af718253.html</url>
-    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
-<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
-<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
-<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
-<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
-<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
-<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
-<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
-<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
-<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
-<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
-]]></content>
-      <tags>
-        <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ciscn_2019_c_1 WriteUp</title>
     <url>/posts/daa10577.html</url>
     <content><![CDATA[<h2 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h2><ul>
@@ -324,6 +305,25 @@
       </categories>
       <tags>
         <tag>PWN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>某二次元游戏私服搭建总结</title>
+    <url>/posts/af718253.html</url>
+    <content><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>经过大概几个小时的配置环境并debug，终于把Genshin Impact和星穹铁道的私服配置好了。中间也学到了很多东西，以下对整个过程做一个总结。</p>
+<h2 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a><strong>需要的环境</strong></h2><p>Genshin Impact3.4客户端（光是这个就很难找，最后在迅雷上找到了种子），Grasscutter1.4.6最新版，Fiddler最新版，Grasscutter-resources3.4版本，mongod数据库最新版</p>
+<h2 id="需要用到的知识"><a href="#需要用到的知识" class="headerlink" title="需要用到的知识"></a><strong>需要用到的知识</strong></h2><p>（非必要，但懂的话做起来更顺利，懂的话就能够进行简单的debug）：<br>1.了解网络代理，证书的相关知识与原理；<br>2.C，JavaScript，shell语言；（能看懂即可）<br>3.了解数据库的运行机制和内部构造；<br>4.了解服务器与客户端与数据库的数据交互过程与方法，网络端口通信；<br>5.会使用命令行，会配置环境变量；<br>6.能科学上网（主要用来上github，不过有时github不用魔法也能打开~）<br>上面所提到的知识主要用于在搭建过程中出现了问题时debug，当然网上也有各种教程，不过网上教程不一定就可以解决你搭建过程出现的问题。所以up强烈建议有上面的知识基础的可以去搞，没有的话搭建起来会很痛苦（来自up本人一年前和一年后的学完上面知识后的亲身体验）。</p>
+<h2 id="私服运行主要原理"><a href="#私服运行主要原理" class="headerlink" title="私服运行主要原理"></a><strong>私服运行主要原理</strong></h2><p>原神由于之前工作人员失误导致了私服的产生，目前私服的运行主要由三部分组成，分别是服务器端，客户端和网络代理端，服务器端是Grasscutter大佬自己手搓出来的，客户端是官方的版本包，网络代理用于阻断客户端与官方服务器的连接，并将连接重定向到本地搭建的Grasscutter，也就是私服。</p>
+<h2 id="配置环境主要步骤"><a href="#配置环境主要步骤" class="headerlink" title="配置环境主要步骤"></a><strong>配置环境主要步骤</strong></h2><p>1.从github上下载Grasscutter最新版1.4.6版本，还需要gitlab上与之配套的resources和proto，注意版本对应（不对应会导致编译出错等问题，即使成功可能在后面也会有一些问题），resources指Grasscutter搭建所需的资源，proto主要可以修复进入游戏后角色技能不能治疗的bug。<br>2.根据github内Grasscutter的ReadMe文档将服务器搭建好。并且根据其WiKi搭好Fiddler（用于实现网络代理功能）和mongod数据库。<br>3.从网上下载Genshin Impact3.4包，注意版本对应，Grasscutter1.4.6对应原神3.4版本。版本不对应可能会导致创建账号后卡在进入界面，一直白屏。</p>
+<h2 id="运行主要步骤"><a href="#运行主要步骤" class="headerlink" title="运行主要步骤"></a><strong>运行主要步骤</strong></h2><p>1.在github上Grasscutter有教程，不仔细展开，在mongod.exe所在目录terminal，运行命令打开数据库，只要terminal界面运行不中断就表明数据库配置成功。<br>2.在Grasscutter文件夹打开命令行，输入命令启动服务器。显示服务器以成功运行，没有报错即表示服务器启动成功，注意要先开数据库，再开服务器，否则服务器端会报错。服务器端开启后在命令行输入命令创建账户，命令在github上都有，不再列出。<br>3.打开Fiddler，添加Grasscutter提供的配置规则，并且修改设置允许https解密，修改默认端口为任意值（只要不是默认8888就可，up也不知道为什么~）。<br>4.打开原神3.4客户端，注意此处为自己下载的客户端内部的yuanshen.exe。进入登录页面Fiddler会有弹窗点击确认即可，这里是指是否信任对方证书，而此时对方是我们自己搭建的服务器，所以直接信任就可。点击确认后，就可以正常登陆自己在服务器创建的用户了。</p>
+<h2 id="崩坏：星穹铁道私服"><a href="#崩坏：星穹铁道私服" class="headerlink" title="崩坏：星穹铁道私服"></a><strong>崩坏：星穹铁道私服</strong></h2><p>总体思路与原神差不多，并且要比原神简单很多（因为客户端是测试服的包，所以加密防护做的并没有原神好，不需要打补丁），具体过程只需把客户端改为星穹铁道测试服版本，然后运行数据库，运行服务器（这里你需要去网上找资源，Grasscutter服务器是java搭建的，而星穹铁道是用node搭建的，up因为用过node，所以很快就配置完成了），但由于网上基本没有资源，并且教程也极少，而且其也即将开服等等原因，就不再赘述了。</p>
+<h2 id="搭建过程中遇到的问题"><a href="#搭建过程中遇到的问题" class="headerlink" title="搭建过程中遇到的问题"></a><strong>搭建过程中遇到的问题</strong></h2><p><strong>星穹铁道：</strong><br>  1.运行服务器端报错显示版本不对；<br>  解决办法：将显示版本不对的包更新。<br>  2.打开客户端后显示全局分发错误。<br>  解决办法：是代理出现问题，更改其规则并且修改设置中开放端口。<br>  3.同2的另一种原因。似乎是使用了校园网，更改后问题解决。</p>
+<p><strong>原神：</strong><br>  1.进入后显示4214报错；<br>  原因：原神在2.8版本后就开始增加了客户端对服务器的检测，目的就是打击私服<br>  解决办法：Grasscutter大佬已经打了补丁，不过不同版本补丁也不尽相同，并且目前最新版本3.5版本也暂时没有，3.4版本似乎是使用了公私钥加密来做了密钥协商，不过Grasscutter大佬还是把补丁搓出来了（膜~~~）根据github上教程安装补丁即可<br>  2.打补丁后发现可以登录但进不去，卡在进入界面，一直白屏；<br>  原因：大概率是因为版本不对应，网上有说是因为udp连接端口没打开，代理有问题的基本全是错的（如果你是服务器在自己本地的话）。<br>  解决方法：检查一遍各个资源版本是否对应。<br>  3.更换资源后编译服务器报错；<br>  原因：之前已经编译过的话，服务器内部就已经存储了数据和配置，需要把这些都删掉再编译；<br>  解决办法：删去data，cache文件夹，还是不行就重新下载Grasscutter，重新编译。</p>
+<p>另外还需要检查是否关闭了vpn，debug时建议查看数据库，服务器端和fiddler的输出信息来判断。</p>
+<h2 id="总结感想"><a href="#总结感想" class="headerlink" title="总结感想"></a><strong>总结感想</strong></h2><p>整个私服配置下来还是很繁琐的，并且搭建过程中需要大量的时间debug，up在搭建过程中就遇到了各种各样的问题，并且网上教程解决方案较少，并且大多数都是不对的，如果了解上面所提到的那些知识的话，debug的时间就会大幅缩小，并且你也会在搭建过程中作很好的实践，并学到很多新东西。up也是在多次查询博客教程无果后选择自己去解决，然后发现大学学的课程还真有用~~~。<br>本篇文章主要用作up本人学习总结用，也希望能给正在搭建私服的人思路，并且up在此也建议没有计算机基础的同学尽量不要碰，否则会变得不幸。</p>
+]]></content>
+      <tags>
+        <tag>教程</tag>
       </tags>
   </entry>
   <entry>
@@ -1123,52 +1123,6 @@
       </tags>
   </entry>
   <entry>
-    <title>uEmu论文笔记</title>
-    <url>/posts/65903227.html</url>
-    <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>设计了μEmu，使用动态符号执行的方式规避了P2IM需要人工参与基于Access-Pattern对MMIO进行分类的问题，但是存在了路径消失的问题。</p>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>当前已有的对固件模拟方法有在硬件上进行模拟，完全脱离硬件模拟等方式，但都有其缺点。例如结合硬件会使fuzzing效率降低，模拟外设P2IM存在寄存器错分类。</p>
-<p>uEmu采用动态符号执行技术对固件进行fuzz。</p>
-<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
-<li>提出了固件的模拟执行会同时受到多个外设寄存器的影响。更加重视寄存器在执行时序上的依赖关系。（P2IM相较于此则是规定了固定的MMIO访问规则。实际上并不必须）</li>
-<li>采用动态符号执行求解寄存器的依赖关系和满足条件解。</li>
-<li>使用深度优先搜索进行动态执行，从而避免了路径爆炸的问题，不过也一定程度上造成了路径消失的问题。</li>
-<li>提出了将寄存器约束求解存储到知识库的概念，知识库的树状结构。</li>
-</ul>
-<h2 id="尚存不足"><a href="#尚存不足" class="headerlink" title="尚存不足"></a>尚存不足</h2><p>存在路径消失</p>
-<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>分为两个阶段：知识提取阶段和动态分析阶段</p>
-<p>使用了S2E平台与Qemu工具，具体结构如下</p>
-<img src="/posts/65903227/Figure_2.png" class="" title="Figure_2">
-
-<h3 id="知识提取阶段"><a href="#知识提取阶段" class="headerlink" title="知识提取阶段"></a>知识提取阶段</h3><p>通过挂钩固件对MMIO的写操作，将MMIO寄存器存入知识库（KB）。之后再根据符号化执行来增加MMIO的约束，根据约束求解MMIO特定值并且根据不同MMIO值进入不同分支，在此过程中需要保持固件运行状态为valid（有评价指标），如果MMIO进入分支是invalid，则更换MMIO值，切换到另一分支，在此过程中MMIO分配的值会以分层cache的形式存储在KB中。</p>
-<h4 id="根据不同情况，将cache形式分为4类。"><a href="#根据不同情况，将cache形式分为4类。" class="headerlink" title="根据不同情况，将cache形式分为4类。"></a>根据不同情况，将cache形式分为4类。</h4><ul>
-<li><p>T0：严格来说并不是一个匹配规则，而是对大部分外设寄存器存储建模，对MMIO进行写操作时，将对应的值存储到KB中，再之后需要读取时返回相应的值即可。如果导致程序进入invalid状态，则更新到T1。</p>
-</li>
-<li><p>T1：不只记录值，而且记录其寄存器地址和PC（Program Counter）值加以区分。（由于大部分外设寄存器在特定PC处值是固定的），当进入到invalid状态时，更新到T2规则进行匹配</p>
-</li>
-<li><p>T2：当寄存器地址与PC均相同时，需要T2进行区分，添加了对上下文参数（上三级调用函数PC值+函数参数）的哈希值。如下图<code>UART_WaitOnFlagUntilTimeout</code>函数，两个函数如果都用T1规则匹配，会返回相同值，但是会导致系统异常。因此需要T2规则，因为调用者的PC不同（line3，line7）.</p>
-<img src="/posts/65903227/Listing_2.png" class="" title="Listing_2">
-</li>
-<li><p>T3：当上下文也相同时，将读取操作分为一个列表，按字符单位逐步读取（符号化执行也是使用了按字节分为多个符号）。如下图，若使用T2规则，由于上下文完全相同，导致返回给该函数的四个字节只能是“OOOO”，所以需要按照字节为单位生成四个符号。读取时逐步读取。</p>
-<img src="/posts/65903227/image-20231205111046993.png" class="" title="image-20231205111046993"></li>
-</ul>
-<h4 id="invalid执行状态判断标准"><a href="#invalid执行状态判断标准" class="headerlink" title="invalid执行状态判断标准"></a>invalid执行状态判断标准</h4><ul>
-<li>死循环：如果寄存器包含符号变量，uEmu将其解为具体值并作比较，如果发现重复则证明是死循环。（检查范围为30个代码基本块，main函数）</li>
-<li>长循环：固件在等待某种特定操作，导致超时。如果发现循环次数超过2000即认为为长循环</li>
-<li><strong>非法读写</strong>：非法访问未装载内存，装载的内存包括（ROM，RAM，系统区域和外设区域）</li>
-<li>用户定义：例如断言失败操作。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>IoT</tag>
-        <tag>Fuzz</tag>
-        <tag>固件模拟</tag>
-        <tag>论文复现</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Fudge论文笔记</title>
     <url>/posts/edb8c304.html</url>
     <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>google针对c与c++库提出了新的fuzz driver自动化生成方式。</p>
@@ -1281,6 +1235,52 @@
       <tags>
         <tag>论文复现</tag>
         <tag>DSE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>uEmu论文笔记</title>
+    <url>/posts/65903227.html</url>
+    <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>设计了μEmu，使用动态符号执行的方式规避了P2IM需要人工参与基于Access-Pattern对MMIO进行分类的问题，但是存在了路径消失的问题。</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>当前已有的对固件模拟方法有在硬件上进行模拟，完全脱离硬件模拟等方式，但都有其缺点。例如结合硬件会使fuzzing效率降低，模拟外设P2IM存在寄存器错分类。</p>
+<p>uEmu采用动态符号执行技术对固件进行fuzz。</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><ul>
+<li>提出了固件的模拟执行会同时受到多个外设寄存器的影响。更加重视寄存器在执行时序上的依赖关系。（P2IM相较于此则是规定了固定的MMIO访问规则。实际上并不必须）</li>
+<li>采用动态符号执行求解寄存器的依赖关系和满足条件解。</li>
+<li>使用深度优先搜索进行动态执行，从而避免了路径爆炸的问题，不过也一定程度上造成了路径消失的问题。</li>
+<li>提出了将寄存器约束求解存储到知识库的概念，知识库的树状结构。</li>
+</ul>
+<h2 id="尚存不足"><a href="#尚存不足" class="headerlink" title="尚存不足"></a>尚存不足</h2><p>存在路径消失</p>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>分为两个阶段：知识提取阶段和动态分析阶段</p>
+<p>使用了S2E平台与Qemu工具，具体结构如下</p>
+<img src="/posts/65903227/Figure_2.png" class="" title="Figure_2">
+
+<h3 id="知识提取阶段"><a href="#知识提取阶段" class="headerlink" title="知识提取阶段"></a>知识提取阶段</h3><p>通过挂钩固件对MMIO的写操作，将MMIO寄存器存入知识库（KB）。之后再根据符号化执行来增加MMIO的约束，根据约束求解MMIO特定值并且根据不同MMIO值进入不同分支，在此过程中需要保持固件运行状态为valid（有评价指标），如果MMIO进入分支是invalid，则更换MMIO值，切换到另一分支，在此过程中MMIO分配的值会以分层cache的形式存储在KB中。</p>
+<h4 id="根据不同情况，将cache形式分为4类。"><a href="#根据不同情况，将cache形式分为4类。" class="headerlink" title="根据不同情况，将cache形式分为4类。"></a>根据不同情况，将cache形式分为4类。</h4><ul>
+<li><p>T0：严格来说并不是一个匹配规则，而是对大部分外设寄存器存储建模，对MMIO进行写操作时，将对应的值存储到KB中，再之后需要读取时返回相应的值即可。如果导致程序进入invalid状态，则更新到T1。</p>
+</li>
+<li><p>T1：不只记录值，而且记录其寄存器地址和PC（Program Counter）值加以区分。（由于大部分外设寄存器在特定PC处值是固定的），当进入到invalid状态时，更新到T2规则进行匹配</p>
+</li>
+<li><p>T2：当寄存器地址与PC均相同时，需要T2进行区分，添加了对上下文参数（上三级调用函数PC值+函数参数）的哈希值。如下图<code>UART_WaitOnFlagUntilTimeout</code>函数，两个函数如果都用T1规则匹配，会返回相同值，但是会导致系统异常。因此需要T2规则，因为调用者的PC不同（line3，line7）.</p>
+<img src="/posts/65903227/Listing_2.png" class="" title="Listing_2">
+</li>
+<li><p>T3：当上下文也相同时，将读取操作分为一个列表，按字符单位逐步读取（符号化执行也是使用了按字节分为多个符号）。如下图，若使用T2规则，由于上下文完全相同，导致返回给该函数的四个字节只能是“OOOO”，所以需要按照字节为单位生成四个符号。读取时逐步读取。</p>
+<img src="/posts/65903227/image-20231205111046993.png" class="" title="image-20231205111046993"></li>
+</ul>
+<h4 id="invalid执行状态判断标准"><a href="#invalid执行状态判断标准" class="headerlink" title="invalid执行状态判断标准"></a>invalid执行状态判断标准</h4><ul>
+<li>死循环：如果寄存器包含符号变量，uEmu将其解为具体值并作比较，如果发现重复则证明是死循环。（检查范围为30个代码基本块，main函数）</li>
+<li>长循环：固件在等待某种特定操作，导致超时。如果发现循环次数超过2000即认为为长循环</li>
+<li><strong>非法读写</strong>：非法访问未装载内存，装载的内存包括（ROM，RAM，系统区域和外设区域）</li>
+<li>用户定义：例如断言失败操作。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>IoT</tag>
+        <tag>Fuzz</tag>
+        <tag>固件模拟</tag>
+        <tag>论文复现</tag>
       </tags>
   </entry>
   <entry>
@@ -1559,6 +1559,31 @@
       </tags>
   </entry>
   <entry>
+    <title>DSE论文笔记</title>
+    <url>/posts/25083369.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
+<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><img src="/posts/25083369/image-20240105122737426.png" class="" title="image-20240105122737426">
+
+<img src="/posts/25083369/image-20240105122751384.png" class="" title="image-20240105122751384">
+
+<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
+<p><strong>两种错误：</strong></p>
+<ul>
+<li>overtainted：假阳性</li>
+<li>undertainting：假阴性</li>
+</ul>
+<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
+<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
+<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>DSE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LKM编程</title>
     <url>/posts/79c0f484.html</url>
     <content><![CDATA[<h2 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1. Introduction"></a>Chapter 1. Introduction</h2><h3 id="1-1-What-Is-A-Kernel-Module"><a href="#1-1-What-Is-A-Kernel-Module" class="headerlink" title="1.1. What Is A Kernel Module?"></a>1.1. What Is A Kernel Module?</h3><p><strong>Linux系统内核：</strong>宏内核（与微内核相对），使用内核模块实现动态模块的加载运行。</p>
@@ -1832,31 +1857,6 @@
       </tags>
   </entry>
   <entry>
-    <title>DSE论文笔记</title>
-    <url>/posts/25083369.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>通过建立一个比较简单的语法简单中间语言（A simple intermediate language，SIMPIL）。对Dynamic taint analysis和forward symbolic execution进行了讲解。</p>
-<h3 id="SIMPIL"><a href="#SIMPIL" class="headerlink" title="SIMPIL"></a>SIMPIL</h3><img src="/posts/25083369/image-20240105122737426.png" class="" title="image-20240105122737426">
-
-<img src="/posts/25083369/image-20240105122751384.png" class="" title="image-20240105122751384">
-
-<h2 id="动态污点分析"><a href="#动态污点分析" class="headerlink" title="动态污点分析"></a>动态污点分析</h2><p><strong>动态污点分析</strong>：跟踪源头与sink点的信息流。任何由污染源推导的值都是污点（T），其他值看作未污染。</p>
-<p><strong>两种错误：</strong></p>
-<ul>
-<li>overtainted：假阳性</li>
-<li>undertainting：假阴性</li>
-</ul>
-<h3 id="动态污点分析策略"><a href="#动态污点分析策略" class="headerlink" title="动态污点分析策略"></a>动态污点分析策略</h3><h4 id="Taint-Introduction"><a href="#Taint-Introduction" class="headerlink" title="Taint Introduction"></a>Taint Introduction</h4><p>将用户输入作为污染源</p>
-<h4 id="Taint-Propagation"><a href="#Taint-Propagation" class="headerlink" title="Taint Propagation"></a>Taint Propagation</h4><h4 id="Taint-Checking"><a href="#Taint-Checking" class="headerlink" title="Taint Checking"></a>Taint Checking</h4><p>查看是否污染</p>
-<h2 id="前向符号执行"><a href="#前向符号执行" class="headerlink" title="前向符号执行"></a>前向符号执行</h2><p>前向符号性可以通过建立逻辑表达式分析程序在不同输入下的行为。属于静态分析。</p>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>DSE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2024 ZJUCTF WriteUp</title>
     <url>/posts/dc126860.html</url>
     <content><![CDATA[<p>本次校赛题目质量不错，难度设置比较合适，属于是看到感觉可以试一试的程度。其中*A口算很有趣！强烈推荐！！！</p>
@@ -2029,6 +2029,39 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客导航栏美化</title>
+    <url>/posts/a5aaf96c.html</url>
+    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
+<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><img src="/posts/a5aaf96c/image-20241027222855421.png" class="" title="image-20241027222855421">
+
+<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
+<ol>
+<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
+<img src="/posts/a5aaf96c/image-20241027223321828.png" class="" title="image-20241027223321828">
+</li>
+<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加自定义css文件</p>
+<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><img src="/posts/a5aaf96c/image-20241027225811317.png" class="" title="image-20241027225811317">
+]]></content>
+      <tags>
+        <tag>教程</tag>
+        <tag>Hexo</tag>
+        <tag>建站</tag>
+        <tag>美化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2024-Beichen-CTF-WP</title>
     <url>/posts/709ed7e9.html</url>
     <content><![CDATA[<p>今年暑假参加了信大举办的北辰计划夏令营，其中最后一天举行了一次CTF比赛，第一批的题目比较难，当时没做出来，现在重新做一下，在此记录。</p>
@@ -2068,39 +2101,6 @@
       </categories>
       <tags>
         <tag>CTF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客导航栏美化</title>
-    <url>/posts/a5aaf96c.html</url>
-    <content><![CDATA[<p>目前网站还是有一些问题，例如导航栏图标不全，还有样式比较丑…</p>
-<h2 id="初始效果"><a href="#初始效果" class="headerlink" title="初始效果"></a>初始效果</h2><img src="/posts/a5aaf96c/image-20241027222855421.png" class="" title="image-20241027222855421">
-
-<h2 id="改进方法"><a href="#改进方法" class="headerlink" title="改进方法"></a>改进方法</h2><h3 id="添加导航栏图标"><a href="#添加导航栏图标" class="headerlink" title="添加导航栏图标"></a>添加导航栏图标</h3><p>查找<a href="https://fontawesome.com.cn/"><code>fontawesome</code></a>图标库</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="comment"># Navigation bar logo image</span></span><br><span class="line">  <span class="attr">logo:</span></span><br><span class="line">  <span class="attr">display_title:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Whether to fix navigation bar</span></span><br><span class="line">  <span class="attr">fixed:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span>   <span class="string">/</span>           <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">文章||far</span> <span class="attr">fa-folder-open:</span></span><br><span class="line">    <span class="string">归档:</span>   <span class="string">/archives/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-archive</span></span><br><span class="line">    <span class="string">标签:</span>   <span class="string">/tags/</span>      <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-tags</span></span><br><span class="line">    <span class="string">分类:</span>   <span class="string">/categories/</span>  <span class="string">||</span>  <span class="string">fas</span> <span class="string">fa-folder-open</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">时间轴:</span> <span class="string">/sitetime</span>   <span class="string">||</span>  <span class="string">fad</span> <span class="string">fa-hourglass-end</span></span><br><span class="line">  <span class="string">清单||fas</span> <span class="attr">fa-heartbeat:</span></span><br><span class="line">    <span class="string">音乐:</span> <span class="string">/music/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-music</span></span><br><span class="line">    <span class="string">照片:</span> <span class="string">/Gallery/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-images</span></span><br><span class="line">    <span class="string">电影:</span> <span class="string">/movies/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-video</span></span><br><span class="line">    <span class="string">关于:</span> <span class="string">/about/</span> <span class="string">||</span>  <span class="string">far</span> <span class="string">fa-paper-plane</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="鼠标移入菜单效果"><a href="#鼠标移入菜单效果" class="headerlink" title="鼠标移入菜单效果"></a>鼠标移入菜单效果</h3><p>原本是鼠标悬浮后标签下出现蓝条，现在改为放大效果，通过添加自定义CSS实现</p>
-<ol>
-<li><p>在博客根目录source目录下创建好css、js、img文件夹，用来存放自定义的文件，这里我将这些文件夹统一放在&#x2F;source&#x2F;config目录下：</p>
-<img src="/posts/a5aaf96c/image-20241027223321828.png" class="" title="image-20241027223321828">
-</li>
-<li><p>引入自定义的js、css文件<br>直接在主题配置文件中配置即可，这里我的配置文件为_config.butterfly.yml，在文件中找到inject</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Inject</span></span><br><span class="line"><span class="comment"># ps：引入自定义css、js</span></span><br><span class="line"><span class="comment">#     css文件在head引入，js文件在bottom里引入，有的js要求在head引入，不然无法生效</span></span><br><span class="line"><span class="comment"># Insert the code to head (before &#x27;&lt;/head&gt;&#x27; tag) and the bottom (before &#x27;&lt;/body&gt;&#x27; tag)</span></span><br><span class="line"><span class="comment"># ps: 插入代码到头部 &lt;/head&gt; 之前 和 底部 &lt;/body&gt; 之前</span></span><br><span class="line"><span class="attr">inject:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="comment">#注入自定义css</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&lt;link</span> <span class="string">rel=&quot;stylesheet&quot;</span> <span class="string">href=&quot;/config/css/style.css&quot;&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;link rel=&quot;stylesheet&quot; href=&quot;/xxx.css&quot;&gt;</span></span><br><span class="line">  <span class="attr">bottom:</span> <span class="comment">#注入自定义js</span></span><br><span class="line">    <span class="comment">#  - &lt;script src=&quot;/config/js/script.js?v1&quot;&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="comment"># - &lt;script src=&quot;/xxxx&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加自定义css文件</p>
-<p>在&#x2F;source&#x2F;config&#x2F;css中新建style.css文件，添加如下内容：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 去除导航栏选项中底下的蓝条 */</span></span><br><span class="line"><span class="selector-id">#nav</span> *<span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: transparent<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 导航栏菜单鼠标移入字体放大 */</span></span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#site-name</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-class">.menus_item</span><span class="selector-pseudo">:hover</span>, </span><br><span class="line"><span class="selector-id">#nav</span> <span class="selector-id">#search-button</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>:<span class="number">28px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以成功实现效果，不过有点不协调，如果导航栏居中的话可以使用这一效果（类似于mac的dork效果）。</p>
-<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><img src="/posts/a5aaf96c/image-20241027225811317.png" class="" title="image-20241027225811317">
-]]></content>
-      <tags>
-        <tag>教程</tag>
-        <tag>Hexo</tag>
-        <tag>建站</tag>
-        <tag>美化</tag>
       </tags>
   </entry>
   <entry>
@@ -2786,9 +2786,11 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[wsl2]</span><br><span class="line">memory=32GB</span><br></pre></td></tr></table></figure>
 
 <p>然后重启WSL2即可</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO:"></a>TODO:</h2><ul>
-<li><input checked="" disabled="" type="checkbox"> 添加代理：拿到Windows网关ip，将ALL_PROXY环境变量设置为对应Windows主机ip+Windows主机上的梯子端口号即可。</li>
-</ul>
+<h2 id="添加代理"><a href="#添加代理" class="headerlink" title="添加代理"></a>添加代理</h2><p> 拿到Windows网关ip，将ALL_PROXY环境变量设置为对应Windows主机ip+Windows主机上的梯子端口号即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">host_ip=$(cat /etc/resolv.conf |grep &quot;nameserver&quot; |cut -f 2 -d &quot; &quot;)</span><br><span class="line">export ALL_PROXY=&quot;http://$host_ip:7890&quot;</span><br><span class="line">echo &quot;ALL_PROXY was set to http://$host_ip:7890&quot;</span><br></pre></td></tr></table></figure>
+
+
+
 ]]></content>
       <tags>
         <tag>WSL</tag>
@@ -2987,8 +2989,8 @@
 <li><a href="/posts/2a86d11c.html" title="PemukulPaku-EquipmentSellReqHandler">EquipmentSellReq</a></li>
 <li><a href="/posts/8fbda5e4.html" title="PemukulPaku-IslandDisjoinEquipmentReqHandler">IslandDisjoinEquipmentReq</a></li>
 <li><a href="/posts/783a5418.html" title="PemukulPaku-EquipmentEvoReqHandler">EquipmentEvoReq</a></li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetEquipmentForgeDataReq">PemukulPaku-GetEquipmentForgeDataReq</a></li>
-<li><a href="/posts/null.html" title="PemukukPaku-ForgeEquipmentReq">ForgeEquipmentReq</a></li>
+<li><a href="/posts/7c3da2f0.html" title="PemukulPaku-GetEquipmentForgeDataReq">PemukulPaku-GetEquipmentForgeDataReq</a></li>
+<li><a href="/posts/fcfb0211.html" title="PemukukPaku-ForgeEquipmentReq">ForgeEquipmentReq</a></li>
 </ul>
 <h3 id="商店与充值功能"><a href="#商店与充值功能" class="headerlink" title="商店与充值功能"></a>商店与充值功能</h3><ul>
 <li><a href="/posts/6b761fa9.html" title="GetShopListReq">GetShopListReq</a></li>
@@ -2996,8 +2998,8 @@
 <li><a href="/posts/8bee2b6e.html" title="PemukulPaku-GetProductListReqHandler">GetProductListReq</a></li>
 <li><a href="/posts/dc044fb2.html" title="PemukulPaku-BuyProductReq">BuyProductReq</a></li>
 <li><a href="/posts/8063f392.html" title="PemukulPaku-GetShoppingMallListReqHandler">GetShoppingMallListReq</a></li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetVipRewardDataReq">GetVipRewardData</a></li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetVipRewardReqHandler">GetVipRewardReq</a></li>
+<li><a href="/posts/10d8291a.html" title="PemukulPaku-GetVipRewardDataReq">GetVipRewardData</a></li>
+<li><a href="/posts/3292b628.html" title="PemukulPaku-GetVipRewardReqHandler">GetVipRewardReq</a></li>
 </ul>
 <h3 id="深渊功能"><a href="#深渊功能" class="headerlink" title="深渊功能"></a>深渊功能</h3><ul>
 <li><a href="/posts/ddb0d42f.html" title="PemukulPaku-GetMissionRewardReqHandler">GetMissionRewardReq</a></li>
@@ -3008,10 +3010,10 @@
 </ul>
 <h3 id="日常功能"><a href="#日常功能" class="headerlink" title="日常功能"></a>日常功能</h3><ul>
 <li>LoginWishGetMainDataReq(每日登录领取奖励)</li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetSignInRewardStatusReq">GetSignInRewardStatusReq</a></li>
+<li><a href="/posts/7a0445a.html" title="PemukulPaku-GetSignInRewardStatusReq">GetSignInRewardStatusReq</a></li>
 <li>GetWeeklyRoutineActivityReq</li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetInviteActivityInviteeDataReq">GetInviteActivityInviterDataReq</a></li>
-<li><a href="/posts/null.html" title="PemukulPaku-GetInviteActivityInviterDataReq">GetInviteActivityInviterDataReq</a></li>
+<li><a href="/posts/788ed292.html" title="PemukulPaku-GetInviteActivityInviteeDataReq">GetInviteActivityInviterDataReq</a></li>
+<li><a href="/posts/ef0eaa0.html" title="PemukulPaku-GetInviteActivityInviterDataReq">GetInviteActivityInviterDataReq</a></li>
 </ul>
 <h3 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h3><ul>
 <li>GetHasGotItemIdListReq</li>
@@ -3024,6 +3026,42 @@
       <tags>
         <tag>教程</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>LARA论文阅读笔记</title>
+    <url>/posts/e3c41b31.html</url>
+    <content><![CDATA[<h2 id="论文概述"><a href="#论文概述" class="headerlink" title="论文概述"></a>论文概述</h2><p><a href="https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf">https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf</a></p>
+<p>（SaTC + 大模型）：使用污点分析技术来检测嵌入式系统漏洞的方法</p>
+<p>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217200349708.png]]</p>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><ul>
+<li>嵌入式固件中代码（<strong>输入处理函数</strong>）与数据（<strong>URI，KEY</strong>）的<strong>语义联系</strong>有助于识别污点分析的source点</li>
+<li>将用户输入条目分为URI和KEY两类，并进行两类的mapping工作，有助于发现隐藏的URI和KEY<ul>
+<li>关系图：<br>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217204623878.png]]<ul>
+<li>提取：先从前端获取一部分，然后在后端识别URI或KEY处理代码，再扩展</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分为两个模块：<ul>
+<li>pattern-based静态分析</li>
+<li>LLM辅助分析：代码语义分析（大模型在总结代码语义上有很好的效果）</li>
+<li>（sink点提取）</li>
+</ul>
+</li>
+</ul>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>添加大模型，通过语义理解的方式来辅助判断，显著提升了关键字识别的准确率</li>
+<li>降低了漏洞检测假阳率</li>
+<li>大模型与基于pattern匹配两种模式的结合</li>
+<li>URI、KEY分离的思想</li>
+</ul>
+<h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>（猜测）引入大模型，两套分析模式的结合存在挑战（例如效率上，以及是否存在实验数据错误等）</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>203个设备，21个厂商<br>相较于SaTC，KARONTE分别多发现了556，602个漏洞，降低假阳率57.0%，54.3%</p>
+<p>57个设备中发现了245个0-day，162个CVE</p>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
   </entry>
   <entry>
     <title>【ciscn_2019_es_2】WriteUp</title>
@@ -3193,42 +3231,6 @@
       </tags>
   </entry>
   <entry>
-    <title>LARA论文阅读笔记</title>
-    <url>/posts/e3c41b31.html</url>
-    <content><![CDATA[<h2 id="论文概述"><a href="#论文概述" class="headerlink" title="论文概述"></a>论文概述</h2><p><a href="https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf">https://www.usenix.org/system/files/usenixsecurity24-zhao.pdf</a></p>
-<p>（SaTC + 大模型）：使用污点分析技术来检测嵌入式系统漏洞的方法</p>
-<p>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217200349708.png]]</p>
-<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><ul>
-<li>嵌入式固件中代码（<strong>输入处理函数</strong>）与数据（<strong>URI，KEY</strong>）的<strong>语义联系</strong>有助于识别污点分析的source点</li>
-<li>将用户输入条目分为URI和KEY两类，并进行两类的mapping工作，有助于发现隐藏的URI和KEY<ul>
-<li>关系图：<br>![[2024-12-17-LARA论文阅读笔记&#x2F;file-20241217204623878.png]]<ul>
-<li>提取：先从前端获取一部分，然后在后端识别URI或KEY处理代码，再扩展</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>分为两个模块：<ul>
-<li>pattern-based静态分析</li>
-<li>LLM辅助分析：代码语义分析（大模型在总结代码语义上有很好的效果）</li>
-<li>（sink点提取）</li>
-</ul>
-</li>
-</ul>
-<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
-<li>添加大模型，通过语义理解的方式来辅助判断，显著提升了关键字识别的准确率</li>
-<li>降低了漏洞检测假阳率</li>
-<li>大模型与基于pattern匹配两种模式的结合</li>
-<li>URI、KEY分离的思想</li>
-</ul>
-<h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>（猜测）引入大模型，两套分析模式的结合存在挑战（例如效率上，以及是否存在实验数据错误等）</p>
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>203个设备，21个厂商<br>相较于SaTC，KARONTE分别多发现了556，602个漏洞，降低假阳率57.0%，54.3%</p>
-<p>57个设备中发现了245个0-day，162个CVE</p>
-]]></content>
-      <categories>
-        <category>PemukulPaku</category>
-      </categories>
-  </entry>
-  <entry>
     <title>国内外安卓应用市场对比调研</title>
     <url>/posts/73ae95ad.html</url>
     <content><![CDATA[<p>分析国内外安卓应用市场的差异，可以用作相关论文的背景素材</p>
@@ -3272,5 +3274,216 @@
 </li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>微信网址逆向实战</title>
+    <url>/posts/8ee664e8.html</url>
+    <content><![CDATA[<p>最近发现了有些网址只能在微信客户端打开，不能在浏览器中打开</p>
+<h2 id="方法1：PC-安卓adb"><a href="#方法1：PC-安卓adb" class="headerlink" title="方法1：PC+安卓adb"></a>方法1：PC+安卓adb</h2><p>安卓手机开启adb调试</p>
+<p>手机微信打开：<a href="http://debugxweb.qq.com/?inspector=true%EF%BC%8C%E5%BC%B9%E5%87%BA%E6%89%A7%E8%A1%8C%E6%88%90%E5%8A%9F%E5%8D%B3%E5%8F%AF">http://debugxweb.qq.com/?inspector=true，弹出执行成功即可</a></p>
+<p>在这里下载adb工具：<a href="https://developer.android.com/tools/releases/platform-tools?hl=zh-cn">https://developer.android.com/tools/releases/platform-tools?hl=zh-cn</a></p>
+<p>电脑端Chrome访问chrome:&#x2F;&#x2F;inspect ，点击该网页的inspect，弹出一个新的窗口，在窗口中可正常显示手机页面，上方可以输入任意地址访问，控制台同Chrome浏览器</p>
+<p>然后在手机端打开要打开的网页，并在电脑端的chrome中查看是否显示，点击inspect即可</p>
+<p>参考网址：</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_37651894/article/details/127964618">ADB调试–详细教程（附华为手机无法显示设备解决方法）</a></li>
+<li><a href="https://blog.csdn.net/qq_44839815/article/details/131015693">2023年微信内置浏览器调试的五种方法</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SaTC源码阅读</title>
+    <url>/posts/1134d98d.html</url>
+    <content><![CDATA[<p>阅读下SaTC的源码。<br><a href="https://github.com/NSSL-SJTU/SaTC">工作链接</a></p>
+<p>主要关注<code>src</code>目录下内容：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">src</span><br><span class="line">|-front_anaylysise</span><br><span class="line">|-headless: ghidra脚本，用于提取sink函数等信息</span><br><span class="line">|	|-call2sink.py</span><br><span class="line">|	|-ref2share.py</span><br><span class="line">|	|-ref2sink_bof.py</span><br><span class="line">|	|-ref2sink_cmdi.py</span><br><span class="line">|	|-share2sink.py</span><br><span class="line">|	|-main.py</span><br><span class="line">|-jsparse</span><br><span class="line">|-taint_check: 基于angr、KARONTE工具的代码</span><br><span class="line">|	|-taint_analysis</span><br><span class="line">|		|-coretaint.py: 污点分析主要逻辑</span><br><span class="line">|-main.py</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="TODO-前端分析"><a href="#TODO-前端分析" class="headerlink" title="TODO: 前端分析"></a>TODO: 前端分析</h2><h2 id="Ghidra静态分析"><a href="#Ghidra静态分析" class="headerlink" title="Ghidra静态分析"></a>Ghidra静态分析</h2><p>逻辑主要在<code>headless</code>目录下，根据定义好的sink点分为<code>ref2share.py</code>、<code>ref2sink_bof.py</code>、<code>ref2sink_cmdi.py</code>等多种类型（这里三个文件中存在冗余，有重构空间），寻找从source到sink点的函数调用路径</p>
+<h2 id="污点分析"><a href="#污点分析" class="headerlink" title="污点分析"></a>污点分析</h2><p>使用符号化执行来进行污点分析</p>
+<p>关键数据对象：<code>CoreTaint</code><br>关键函数：<code>flat_explore</code>：</p>
+<ul>
+<li>符号化执行，</li>
+<li>污点传播逻辑：如果函数调用存在返回值，则只污染返回值；否则污染全部的参数</li>
+</ul>
+<h3 id="污点传播相关代码"><a href="#污点传播相关代码" class="headerlink" title="污点传播相关代码"></a>污点传播相关代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">flat_explore</span>()</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> <span class="variable language_">self</span>.get_state(next_path).history.jumpkind == <span class="string">&#x27;Ijk_Call&#x27;</span> <span class="keyword">and</span> ...</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.is_summarized():</span><br><span class="line">			<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>._follow_call() <span class="comment"># 检查是否需要跟入函数，即是否存在污点相关操作</span></span><br><span class="line">            </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment"># ret</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">in</span> : <span class="comment"># 检查函数是否在followTarget集合中，以及self._p.loader.main_object.plt.values</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> xrange(nargs):</span><br><span class="line">                val_arg = <span class="built_in">getattr</span>(<span class="variable language_">self</span>.get_state(next_path).regs, name)</span><br><span class="line">                <span class="keyword">if</span> <span class="variable language_">self</span>.is_or_points_to_tainted_data(val_arg, next_path)</span><br><span class="line">                    <span class="keyword">if</span> (...):</span><br><span class="line">                        <span class="string">&quot;return something, only taint r0&quot;</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="string">&quot;taint all writable args&quot;</span></span><br><span class="line">                        cfg = getBugFindingCFG()???</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">            <span class="comment"># check memset</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">pass</span>	</span><br><span class="line">					</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LLMIF源码阅读</title>
+    <url>/posts/95a45f3a.html</url>
+    <content><![CDATA[<h1 id="LLMIF-论文整理"><a href="#LLMIF-论文整理" class="headerlink" title="LLMIF 论文整理"></a>LLMIF 论文整理</h1><p>论文LLMIF（LLMIF: Augmented Large Language Model for Fuzzing IoT Devices  ）</p>
+<ul>
+<li>论文作者：Jincheng Wang（The Hong Kong Polytechnic University）</li>
+<li>论文链接：<a href="https://ieeexplore.ieee.org/xpl/conhome/10646615/proceeding">2024 IEEE Symposium on Security and Privacy (SP)</a></li>
+<li>工作源码：<a href="https://github.com/anonymousAnalyst22/LLMIF">https://github.com/anonymousAnalyst22/LLMIF</a></li>
+</ul>
+<h2 id="1-解决问题"><a href="#1-解决问题" class="headerlink" title="1. 解决问题"></a>1. 解决问题</h2><ul>
+<li>Obfuscated Message Formats（<strong>复杂的消息格式</strong>）: IoT消息格式比较复杂。缺失消息格式会导致以下两个问题：<ol>
+<li>种子生成受到消息格式的限制</li>
+<li>难以生成有效的变异输入（格式问题）</li>
+</ol>
+</li>
+<li>Unresolved Message Dependencies （未解析<strong>消息依赖</strong>）: IoT协议不同消息对应了设备的不同状态，也就是某些漏洞需要特定的消息序列使设备处于特征状态才能触发。</li>
+<li>Lack of Testing Case Evaluations（缺乏案例评估）: <strong>黑盒测试</strong>，缺乏对模糊测试定义合理反馈（代码覆盖率？），导致可能难以提升模糊测试效果。</li>
+</ul>
+<h2 id="2-核心思路"><a href="#2-核心思路" class="headerlink" title="2. 核心思路"></a>2. 核心思路</h2><p><strong>协议规范提供了丰富且准确的消息格式描述，而复杂繁多的协议描述信息可以由LLM自动化完成</strong></p>
+<ul>
+<li>协议规范中对<strong>消息header与payload</strong>部分的描述有助于帮助生成正确格式的消息结构，从而有助于提取消息覆盖率、制定有效的变异策略</li>
+<li>协议规范会描述与设备交互的具体信息，有助于提取消息之间的依赖关系。<br>eg：<ul>
+<li>Zigbee Identify message &lt;-&gt;“This then starts the device’s identification procedure”</li>
+<li>AddGroupIfIdentifying message &lt;-&gt; “The message allows the device to <strong>add a group</strong> <strong>on the condition</strong> that it is <strong>identifying</strong> itself”</li>
+</ul>
+</li>
+<li>协议规范展示了消息处理的工作流，可以用于评估测试输入是否达到目标效果</li>
+</ul>
+<h2 id="3-技术实现"><a href="#3-技术实现" class="headerlink" title="3. 技术实现"></a>3. 技术实现</h2><p>基于LLM实现，LLM辅助分为两个部分：Protocol Information Extraction（协议信息提取），  Device Response Reasoning  （设备响应归因）</p>
+<ul>
+<li><p><strong>协议信息提取</strong>：LLM提取有效的协议信息：<strong>消息格式</strong>，field value，header structure，<strong>消息依赖关系</strong>。</p>
+</li>
+<li><p><strong>设备响应推理</strong>：LLM基于协议规范，对给定的test case和设备response判断test case是否导致了设备状态转换。</p>
+</li>
+</ul>
+<h3 id="3-1-大模型增强"><a href="#3-1-大模型增强" class="headerlink" title="3.1 大模型增强"></a>3.1 大模型增强</h3><p>具备相关领域知识的LLM被称为增强语言模型（ALM）</p>
+<blockquote>
+<p>专业知识嵌入到上下文+CoT</p>
+</blockquote>
+<h5 id="3-1-1-为什么需要大模型增强"><a href="#3-1-1-为什么需要大模型增强" class="headerlink" title="3.1.1 为什么需要大模型增强"></a>3.1.1 为什么需要大模型增强</h5><p>该工作向我们展示了LLM在IoT Protocol领域相关知识的缺乏，表明了使用ALM的必要性</p>
+<ol>
+<li>Message identification：LLM需要给出正确的消息名</li>
+<li>Format inference：LLM需要输出正确的field name以及field data types</li>
+</ol>
+<img src="/posts/95a45f3a/image-20250317141742067.png" class="" title="image-20250317141742067">
+
+<p>96个消息类型中，大模型平均只成功构建了15个消息格式，召回率（15.6%）（和表格不一致？和实验评估里chatAFL的结果一致）。</p>
+<h5 id="3-1-2-大模型增强方法"><a href="#3-1-2-大模型增强方法" class="headerlink" title="3.1.2 大模型增强方法"></a>3.1.2 大模型增强方法</h5><p>使用知识提取器提取任务相关知识，然后将其作为上下文传递给大模型，有利于后续的任务解决。</p>
+<p>该工作提取<strong>协议规范</strong>作为相关知识。</p>
+<p>由于一般协议规范都有良好的格式，可以通过根据不同标题、大纲来制作索引；</p>
+<p>使用了<code>background-augmented prompting</code>技术，感觉就是把专业知识和问题凑到一起…</p>
+<h3 id="3-2-基于LLM指导的模糊测试"><a href="#3-2-基于LLM指导的模糊测试" class="headerlink" title="3.2 基于LLM指导的模糊测试"></a>3.2 基于LLM指导的模糊测试</h3><p><strong>整体流程</strong>：</p>
+<ul>
+<li>使用LLM提取有效信息并根据这些信息生成种子；</li>
+<li>发送到设备进行测试，获取设备响应；</li>
+<li>使用LLM根据响应判断种子有效性。对于造成设备状态改变的，LLMIF会保留该输入并基于消息依赖关系构建新的种子。</li>
+</ul>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317142629193" style="zoom:67%;" />
+
+<h4 id="3-2-1-协议信息提取"><a href="#3-2-1-协议信息提取" class="headerlink" title="3.2.1 协议信息提取"></a>3.2.1 协议信息提取</h4><h5 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h5><p>针对消息描述可能过长的问题，该工作先划定范围，通过LLM总结协议规范指定范围的每一页，然后再合成每一页的总结描述来构成<code>&#123;message_descriptions&#125;</code></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">message</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;payload&quot;</span><span class="punctuation">:</span> <span class="string">&quot;leet&quot;</span>;</span><br><span class="line">  <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="number">0xdeadbeef</span>;</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145032496" style="zoom:67%;" />
+
+<h5 id="Interesting-Field-Value"><a href="#Interesting-Field-Value" class="headerlink" title="Interesting Field Value"></a>Interesting Field Value</h5><p>感兴趣的目标值，有两种：dangerous value（不合法的值），functioning value（定义功能的值）</p>
+<p>如下图：Effect Identifier &#x3D; 0x00; Effect Variant &#x3D; 0x00时对应了”Fade to off in 0.8 seconds”的功能。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317144616498" style="zoom:67%;" />
+
+<h5 id="消息头结构"><a href="#消息头结构" class="headerlink" title="消息头结构"></a>消息头结构</h5><p>提取消息头结构，和前面类似，也是提取相关bit的功能和类型</p>
+<h5 id="消息依赖"><a href="#消息依赖" class="headerlink" title="消息依赖"></a>消息依赖</h5><p>该工作对消息依赖的定义：A-&gt;B，传入A消息后更新部分设备属性，在传入B消息时会进行检查这些对应属性。</p>
+<p>使用了CoT方法引导LLM进行推理，构建了21609个提示词，结果成功构建了968个消息依赖关系</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145041592" style="zoom:67%;" />
+
+<h4 id="3-2-2-种子生成"><a href="#3-2-2-种子生成" class="headerlink" title="3.2.2 种子生成"></a>3.2.2 种子生成</h4><p>为每一个消息格式定义了MID， MID &#x3D; (clusterID, cmdID)</p>
+<p>生成种子时，从消息模版中挑选一类消息，然后根据其MID从上述阶段中提取的Interesting Value进行赋值，如果没有则随机赋值，组合成为种子，用于后续种子变异以及模糊测试输入。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145717099" style="zoom:67%;" />
+
+<h4 id="3-2-3-种子变异"><a href="#3-2-3-种子变异" class="headerlink" title="3.2.3 种子变异"></a>3.2.3 种子变异</h4><p>变异器分为两类：基于数据类型和基于消息头</p>
+<h5 id="基于数据类型的变异器"><a href="#基于数据类型的变异器" class="headerlink" title="基于数据类型的变异器"></a>基于数据类型的变异器</h5><ul>
+<li>对于定长数据：一般为数值型，设置为极限值0,0xffff</li>
+<li>对于变长数据：一般为字符串，第一字节为长度，1）增加字符串长度和对应变量长度位；2）仅修改变量长度位，可能会有不一致问题。</li>
+<li>还会随机去除消息中的field来构造不合法输入</li>
+</ul>
+<h5 id="基于消息头的变异器"><a href="#基于消息头的变异器" class="headerlink" title="基于消息头的变异器"></a>基于消息头的变异器</h5><ul>
+<li>随机指定command identifier field</li>
+<li>位翻转：翻转特定比特，可能会出现解析问题</li>
+</ul>
+<h4 id="3-2-4-响应推理"><a href="#3-2-4-响应推理" class="headerlink" title="3.2.4 响应推理"></a>3.2.4 响应推理</h4><p>根据响应判断设备在接收输入后的状态，并据此选择是否保留输入。</p>
+<p>判断是否应该保留输入的标准：</p>
+<ul>
+<li>输入成功执行并使得设备状态改变</li>
+<li>输入造成的响应非预期。eg：不合法输入并没有导致设备返回Invalid value，而是被成功执行。</li>
+</ul>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317151042282" style="zoom:67%;" />
+
+<h4 id="3-2-5-测试集扩充"><a href="#3-2-5-测试集扩充" class="headerlink" title="3.2.5 测试集扩充"></a>3.2.5 测试集扩充</h4><p>根据上一步消息响应结果来生成新的种子。</p>
+<p>具体来讲：目前已有一个测试集输入s &#x3D; [m<sub>1</sub>, …, m<sub>n</sub>]，该测试集输入后可以让设备处于特定状态，此时，如果存在m<sub>n+1</sub>满足上述提取的消息依赖关系，那么就可以将m<sub>n+1</sub>作为新的输入加进该测试集。</p>
+<blockquote>
+<p>注：此处论文中标明依赖关系是仅根据前一个消息来提取的，是不是可以有更好的方法，考虑m<sub>1</sub>到m<sub>n</sub>整个序列对设备造成的影响，比如应该有个设备属性集合，作消息与设备属性的映射。</p>
+</blockquote>
+<h4 id="3-2-6-模糊测试工具实现"><a href="#3-2-6-模糊测试工具实现" class="headerlink" title="3.2.6 模糊测试工具实现"></a>3.2.6 模糊测试工具实现</h4><p>该工作设计了两个部分：Fuzzing controller和stack controller。</p>
+<ul>
+<li>Fuzzing controller：LLMIF本体</li>
+<li>stack controller：与Zigbee设备进行交互，与Fuzzing controller用UART串口连接</li>
+</ul>
+<h2 id="4-实验结果"><a href="#4-实验结果" class="headerlink" title="4. 实验结果"></a>4. 实验结果</h2><ul>
+<li>相较于baseline（BOOFUZZ，Z-FUZZER，BEEHIVE，chatAFL），消息覆盖率提升55.2%，代码覆盖率提升53.9%，其中消息覆盖率达到100%。</li>
+<li>挖掘了11个Zigbee设备漏洞，8个0-day，7个无法被其他fuzzer检测到。</li>
+</ul>
+<p>作者自己构造了模拟工具对提供源码的ZStack品牌设备进行编译插桩，进行代码覆盖率分析，由于消息覆盖率达到100%，代码覆盖率也得以有很大提升。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317160808247" style="zoom:67%;" />
+
+<h2 id="5-优势"><a href="#5-优势" class="headerlink" title="5. 优势"></a>5. 优势</h2><ul>
+<li>能够成功提取Zigbee的各类消息格式（100%）</li>
+<li>显著提升了代码覆盖率（提升了53.9%）</li>
+<li>更定制化地利用了LLM工具（相较于chatAFL，基于提示词工程）</li>
+</ul>
+<h2 id="6-不足"><a href="#6-不足" class="headerlink" title="6. 不足"></a>6. 不足</h2>]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Unicorn模拟执行RTOS固件</title>
+    <url>/posts/73fe8f33.html</url>
+    <content><![CDATA[<h1 id="Unicorn模拟执行RTOS固件"><a href="#Unicorn模拟执行RTOS固件" class="headerlink" title="Unicorn模拟执行RTOS固件"></a>Unicorn模拟执行RTOS固件</h1><p>unicorn是一种指令级cpu模拟器，可以支持多架构二进制程序的执行。由于RTOS固件通常难以进行调试，因此采用通过unicorn模拟器的方式来完成模拟调试。</p>
+<h2 id="实验对象"><a href="#实验对象" class="headerlink" title="实验对象"></a>实验对象</h2><p>Fast 1900R设备，RTOS，ARM架构</p>
+<h2 id="测试漏洞"><a href="#测试漏洞" class="headerlink" title="测试漏洞"></a>测试漏洞</h2><p>CVE-2022-26987</p>
+<p>漏洞位置：</p>
+<p><code>tWlanTask</code>函数中接受最大长度为3072的输入，随后调用<code>MmtAtePrase</code>函数将输入复制给长度548的栈上变量。导致存在栈溢出漏洞。</p>
+<p><code>tWlanTask</code>函数：</p>
+<img src="/posts/73fe8f33/image-20250320143220938.png" class="" title="image-20250320143220938">
+
+<p><code>MmtAtePrase</code>函数：</p>
+<img src="/posts/73fe8f33/image-20250320143247413.png" class="" title="image-20250320143247413">
+
+<p>其中<code>spliter</code>相当于strcpy函数，将分隔符<code>&#39;\n&#39;</code>前的字符串复制给v11栈上变量。</p>
+<h2 id="模拟片段"><a href="#模拟片段" class="headerlink" title="模拟片段"></a>模拟片段</h2><ol>
+<li><p>使用binwalk，010Editor等工具查看该固件的加载基址。该固件为<code>0x40205000</code>，常见RTOS固件的加载基址如何确定可见另一篇文章</p>
+</li>
+<li><p>使用IDA查看<code>tWlanTask</code>函数的加载函数栈：</p>
+<p>查看调用<code>tWlanTask</code>函数的<code>apps_init</code>：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">apps_init</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v0; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v2; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v3; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">bool</span> v4; <span class="comment">// cc</span></span><br><span class="line">  _DWORD v6[<span class="number">4</span>]; <span class="comment">// [sp+2Ch] [bp-28h] BYREF</span></span><br><span class="line">  <span class="type">int</span> v7[<span class="number">6</span>]; <span class="comment">// [sp+3Ch] [bp-18h] BYREF</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(<span class="number">1079933252</span>, <span class="number">0</span>, <span class="number">8236</span>);</span><br><span class="line">  v0 = apps_wpsInit(<span class="number">1079933516</span>);</span><br><span class="line">  apps_upnpInit(v0);</span><br><span class="line">  v7[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  v1 = socket(<span class="number">2</span>, <span class="number">2</span>, <span class="number">17</span>);</span><br><span class="line">  MEMORY[<span class="number">0x405E7944</span>] = v1;</span><br><span class="line">  <span class="keyword">if</span> ( v1 == <span class="number">-1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( (MEMORY[<span class="number">0x4061657C</span>] &amp; <span class="number">2</span>) != <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v2 = <span class="string">&quot;Unable to create wlan event socket\n&quot;</span>;</span><br><span class="line">LABEL_12:</span><br><span class="line">      my_printf(v2);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( setsockopt(v1, <span class="number">0xFFFF</span>, <span class="number">512</span>, v7, <span class="number">4</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(v6, <span class="number">0</span>, <span class="keyword">sizeof</span>(v6));</span><br><span class="line">    v6[<span class="number">0</span>] = <span class="number">604242448</span>;</span><br><span class="line">    v6[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ( bind(MEMORY[<span class="number">0x405E7944</span>], v6, <span class="number">16</span>) &lt; <span class="number">0</span> &amp;&amp; (MEMORY[<span class="number">0x4061657C</span>] &amp; <span class="number">2</span>) != <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v2 = <span class="string">&quot;Unable to bind wlan event socket\n&quot;</span>;</span><br><span class="line">      <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( (MEMORY[<span class="number">0x4061657C</span>] &amp; <span class="number">2</span>) != <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v2 = <span class="string">&quot;Unable to setsockopt to wlan event socket\n&quot;</span>;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_12;</span><br><span class="line">  &#125;</span><br><span class="line">  apps_ateInitSock(<span class="number">1079937388</span>);</span><br><span class="line">  apps_wpsInitSock(<span class="number">1079933516</span>);</span><br><span class="line">  apps_wssInit(<span class="number">1079937384</span>);</span><br><span class="line">  bzero(<span class="number">1079933260</span>, <span class="number">256</span>);</span><br><span class="line">  MEMORY[<span class="number">0x405E7948</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( MEMORY[<span class="number">0x405E7944</span>] &gt; <span class="number">0</span> )</span><br><span class="line">    MEMORY[<span class="number">0x405E7948</span>] = MEMORY[<span class="number">0x405E7944</span>];</span><br><span class="line">  v3 = MEMORY[<span class="number">0x405E88CC</span>];</span><br><span class="line">  *(_DWORD *)(<span class="number">4</span> * (MEMORY[<span class="number">0x405E7944</span>] &gt;&gt; <span class="number">5</span>) + <span class="number">0x405E794C</span>) |= <span class="number">1</span> &lt;&lt; (MEMORY[<span class="number">0x405E7944</span>] &amp; <span class="number">0x1F</span>);</span><br><span class="line">  v4 = (<span class="type">int</span>)v3 &lt;= MEMORY[<span class="number">0x405E7948</span>];</span><br><span class="line">  *(_DWORD *)(<span class="number">4</span> * (v3 &gt;&gt; <span class="number">5</span>) + <span class="number">0x405E794C</span>) |= <span class="number">1</span> &lt;&lt; (v3 &amp; <span class="number">0x1F</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !v4 )</span><br><span class="line">    MEMORY[<span class="number">0x405E7948</span>] = v3;</span><br><span class="line">  <span class="keyword">if</span> ( MEMORY[<span class="number">0x405E896C</span>] &gt; MEMORY[<span class="number">0x405E7948</span>] )</span><br><span class="line">    MEMORY[<span class="number">0x405E7948</span>] = MEMORY[<span class="number">0x405E896C</span>];</span><br><span class="line">  *(_DWORD *)(<span class="number">4</span> * (MEMORY[<span class="number">0x405E896C</span>] &gt;&gt; <span class="number">5</span>) + <span class="number">0x405E794C</span>) |= <span class="number">1</span> &lt;&lt; (MEMORY[<span class="number">0x405E896C</span>] &amp; <span class="number">0x1F</span>);</span><br><span class="line">  taskSpawn(<span class="string">&quot;tWlanTask&quot;</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0x4000</span>, tWlanTask, <span class="number">1079933252</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  regAppList(<span class="number">4</span>, wlanTmpHandle);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其创建了监听在1060端口的udp连接socket，并使用taskSpawn函数创建该任务，其中定义了该函数栈大小为0x4000。</p>
+</li>
+<li><p>使用unicorn加载该固件到内存：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> unicorn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> unicorn.arm_const <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">fast = Uc(UC_ARCH_ARM, UC_MODE_ARM)</span><br><span class="line">BASE_ADDR = <span class="number">0x40200000</span></span><br><span class="line">BASE_SIZE = <span class="number">0x300000</span></span><br><span class="line">STACK_ADDR = <span class="number">0x40500000</span></span><br><span class="line">STACK_SIZE = <span class="number">0x400000</span></span><br><span class="line"></span><br><span class="line">fast.mem_map(BASE_ADDR, BASE_SIZE)</span><br><span class="line">fast.mem_map(STACK_ADDR, STACK_SIZE)</span><br><span class="line">fast.mem_write(BASE_ADDR, read(<span class="string">&#x27;./Fast FAC 1900R/FAC1900R千兆版 V1.0升级软件20190827_2.0.2/data_10400&#x27;</span>))</span><br><span class="line">fast.reg_write(UC_ARM_REG_SP, STACK_ADDR + STACK_SIZE-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hook_code</span>(<span class="params">mu, address, size, user_data</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt; Traceing instruction at 0x%x, instruction size = 0x%x&quot;</span> %(address, size))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func_source = <span class="number">0x402CE868</span></span><br><span class="line">func_ret = <span class="number">0x402CE8D0</span></span><br><span class="line">fast.hook_add(UC_HOOK_CODE, hook_code)</span><br><span class="line">fast.emu_start(func_source, func_ret)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用capstone库进行反汇编辅助调试：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> capstone <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> capstone.arm <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bytesToOpcodeStr</span>(<span class="params">curBytes</span>):</span><br><span class="line">    opcodeByteStr = <span class="string">&#x27;&#x27;</span>.join(<span class="string">&#x27;&#123;:02X&#125; &#x27;</span>.<span class="built_in">format</span>(eachByte) <span class="keyword">for</span> eachByte <span class="keyword">in</span> curBytes)</span><br><span class="line">    <span class="keyword">return</span> opcodeByteStr</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hook_code</span>(<span class="params">mu, address, size, user_data</span>):</span><br><span class="line">    <span class="comment"># print(&quot;&gt;&gt;&gt; Traceing instruction at 0x%x, instruction size = 0x%x&quot; %(address, size))</span></span><br><span class="line">    opcodeBytes = mu.mem_read(address, BYTES_PER_LINE)</span><br><span class="line">    opcodeByteStr = bytesToOpcodeStr(opcodeBytes)</span><br><span class="line">    decodedInsnGenerator = cs.disasm(opcodeBytes, address)</span><br><span class="line">    <span class="comment"># if gSingleLineCode:</span></span><br><span class="line">    <span class="keyword">for</span> eachDecodedInsn <span class="keyword">in</span> decodedInsnGenerator:</span><br><span class="line">        eachInstructionName = eachDecodedInsn.mnemonic</span><br><span class="line">        info(<span class="string">&quot;--- 0x%08X: %s -&gt; %s\t%s&quot;</span>, address, opcodeByteStr, eachInstructionName, eachDecodedInsn.op_str)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>从source点模拟执行到sink点，hook <code>recvfrom</code>函数，当执行该函数时，向目标buffer里填充payload：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hook_recvfrom</span>(<span class="params">mu, address, size, user_data</span>):</span><br><span class="line">    <span class="keyword">if</span> address == <span class="number">0x402CE880</span>:</span><br><span class="line">        info(<span class="string">&quot;recvfrom hooked&quot;</span>)</span><br><span class="line">        target_addr = mu.reg_read(UC_ARM_REG_R1)</span><br><span class="line">        size = mu.reg_read(UC_ARM_REG_R2)</span><br><span class="line">        info(<span class="string">f&quot;ret_addr: <span class="subst">&#123;<span class="built_in">hex</span>(mu.reg_read(UC_ARM_REG_LR))&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> size &gt; <span class="built_in">len</span>(user_data):</span><br><span class="line">            size = <span class="built_in">len</span>(user_data)</span><br><span class="line">        mu.mem_write(target_addr, user_data[:size])</span><br><span class="line">        info(<span class="string">f&quot;write <span class="subst">&#123;size&#125;</span> bytes to <span class="subst">&#123;<span class="built_in">hex</span>(target_addr)&#125;</span>&quot;</span>)</span><br><span class="line">        info(<span class="string">f&quot;target_addr: <span class="subst">&#123;mu.mem_read(target_addr, size)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="comment"># ret</span></span><br><span class="line">        mu.reg_write(UC_ARM_REG_PC, address+<span class="number">4</span>)</span><br><span class="line">        mu.reg_write(UC_ARM_REG_R0, size)</span><br></pre></td></tr></table></figure>
+
+<p>该漏洞利用方法为利用ROP调用<code>strncpy(group_addr, passwd_addr, 0x21)</code>函数，从而实现泄露passwd目的。</p>
+<p>passwd_addr可以在<code>httpGetPassword</code>中获取到，在模拟中我们可以将该地址map为有效密码<code>0KcgeXhc9TefbwK</code>。</p>
+<img src="/posts/73fe8f33/image-20250320171631953.png" class="" title="image-20250320171631953">
+
+<p>然后通过hook <code>recvfrom</code> 函数写入payload，获取到目标密码。</p>
+<img src="/posts/73fe8f33/image-20250320173044012.png" class="" title="image-20250320173044012">
+]]></content>
+      <categories>
+        <category>漏洞挖掘</category>
+      </categories>
   </entry>
 </search>

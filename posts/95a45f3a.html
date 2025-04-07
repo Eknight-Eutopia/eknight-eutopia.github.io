@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LLMIF源码阅读 | Small Utopia</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="LLMIF 论文整理论文LLMIF（LLMIF: Augmented Large Language Model for Fuzzing IoT Devices  ）  论文作者：Jincheng Wang（The Hong Kong Polytechnic University） 论文链接：2024 IEEE Symposium on Security and Privacy (SP) 工作源码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLMIF源码阅读">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/95a45f3a.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="LLMIF 论文整理论文LLMIF（LLMIF: Augmented Large Language Model for Fuzzing IoT Devices  ）  论文作者：Jincheng Wang（The Hong Kong Polytechnic University） 论文链接：2024 IEEE Symposium on Security and Privacy (SP) 工作源码：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(6).jpg">
+<meta property="article:published_time" content="2025-03-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-07T07:38:52.202Z">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(6).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/95a45f3a.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LLMIF源码阅读',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-07 15:38:52'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">60</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">LLMIF源码阅读</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">LLMIF源码阅读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-16T16:00:00.000Z" title="发表于 2025-03-17 00:00:00">2025-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-07T07:38:52.202Z" title="更新于 2025-04-07 15:38:52">2025-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="LLMIF-论文整理"><a href="#LLMIF-论文整理" class="headerlink" title="LLMIF 论文整理"></a>LLMIF 论文整理</h1><p>论文LLMIF（LLMIF: Augmented Large Language Model for Fuzzing IoT Devices  ）</p>
+<ul>
+<li>论文作者：Jincheng Wang（The Hong Kong Polytechnic University）</li>
+<li>论文链接：<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/xpl/conhome/10646615/proceeding">2024 IEEE Symposium on Security and Privacy (SP)</a></li>
+<li>工作源码：<a target="_blank" rel="noopener" href="https://github.com/anonymousAnalyst22/LLMIF">https://github.com/anonymousAnalyst22/LLMIF</a></li>
+</ul>
+<h2 id="1-解决问题"><a href="#1-解决问题" class="headerlink" title="1. 解决问题"></a>1. 解决问题</h2><ul>
+<li>Obfuscated Message Formats（<strong>复杂的消息格式</strong>）: IoT消息格式比较复杂。缺失消息格式会导致以下两个问题：<ol>
+<li>种子生成受到消息格式的限制</li>
+<li>难以生成有效的变异输入（格式问题）</li>
+</ol>
+</li>
+<li>Unresolved Message Dependencies （未解析<strong>消息依赖</strong>）: IoT协议不同消息对应了设备的不同状态，也就是某些漏洞需要特定的消息序列使设备处于特征状态才能触发。</li>
+<li>Lack of Testing Case Evaluations（缺乏案例评估）: <strong>黑盒测试</strong>，缺乏对模糊测试定义合理反馈（代码覆盖率？），导致可能难以提升模糊测试效果。</li>
+</ul>
+<h2 id="2-核心思路"><a href="#2-核心思路" class="headerlink" title="2. 核心思路"></a>2. 核心思路</h2><p><strong>协议规范提供了丰富且准确的消息格式描述，而复杂繁多的协议描述信息可以由LLM自动化完成</strong></p>
+<ul>
+<li>协议规范中对<strong>消息header与payload</strong>部分的描述有助于帮助生成正确格式的消息结构，从而有助于提取消息覆盖率、制定有效的变异策略</li>
+<li>协议规范会描述与设备交互的具体信息，有助于提取消息之间的依赖关系。<br>eg：<ul>
+<li>Zigbee Identify message &lt;-&gt;“This then starts the device’s identification procedure”</li>
+<li>AddGroupIfIdentifying message &lt;-&gt; “The message allows the device to <strong>add a group</strong> <strong>on the condition</strong> that it is <strong>identifying</strong> itself”</li>
+</ul>
+</li>
+<li>协议规范展示了消息处理的工作流，可以用于评估测试输入是否达到目标效果</li>
+</ul>
+<h2 id="3-技术实现"><a href="#3-技术实现" class="headerlink" title="3. 技术实现"></a>3. 技术实现</h2><p>基于LLM实现，LLM辅助分为两个部分：Protocol Information Extraction（协议信息提取），  Device Response Reasoning  （设备响应归因）</p>
+<ul>
+<li><p><strong>协议信息提取</strong>：LLM提取有效的协议信息：<strong>消息格式</strong>，field value，header structure，<strong>消息依赖关系</strong>。</p>
+</li>
+<li><p><strong>设备响应推理</strong>：LLM基于协议规范，对给定的test case和设备response判断test case是否导致了设备状态转换。</p>
+</li>
+</ul>
+<h3 id="3-1-大模型增强"><a href="#3-1-大模型增强" class="headerlink" title="3.1 大模型增强"></a>3.1 大模型增强</h3><p>具备相关领域知识的LLM被称为增强语言模型（ALM）</p>
+<blockquote>
+<p>专业知识嵌入到上下文+CoT</p>
+</blockquote>
+<h5 id="3-1-1-为什么需要大模型增强"><a href="#3-1-1-为什么需要大模型增强" class="headerlink" title="3.1.1 为什么需要大模型增强"></a>3.1.1 为什么需要大模型增强</h5><p>该工作向我们展示了LLM在IoT Protocol领域相关知识的缺乏，表明了使用ALM的必要性</p>
+<ol>
+<li>Message identification：LLM需要给出正确的消息名</li>
+<li>Format inference：LLM需要输出正确的field name以及field data types</li>
+</ol>
+<img src="/posts/95a45f3a/image-20250317141742067.png" class="" title="image-20250317141742067">
+
+<p>96个消息类型中，大模型平均只成功构建了15个消息格式，召回率（15.6%）（和表格不一致？和实验评估里chatAFL的结果一致）。</p>
+<h5 id="3-1-2-大模型增强方法"><a href="#3-1-2-大模型增强方法" class="headerlink" title="3.1.2 大模型增强方法"></a>3.1.2 大模型增强方法</h5><p>使用知识提取器提取任务相关知识，然后将其作为上下文传递给大模型，有利于后续的任务解决。</p>
+<p>该工作提取<strong>协议规范</strong>作为相关知识。</p>
+<p>由于一般协议规范都有良好的格式，可以通过根据不同标题、大纲来制作索引；</p>
+<p>使用了<code>background-augmented prompting</code>技术，感觉就是把专业知识和问题凑到一起…</p>
+<h3 id="3-2-基于LLM指导的模糊测试"><a href="#3-2-基于LLM指导的模糊测试" class="headerlink" title="3.2 基于LLM指导的模糊测试"></a>3.2 基于LLM指导的模糊测试</h3><p><strong>整体流程</strong>：</p>
+<ul>
+<li>使用LLM提取有效信息并根据这些信息生成种子；</li>
+<li>发送到设备进行测试，获取设备响应；</li>
+<li>使用LLM根据响应判断种子有效性。对于造成设备状态改变的，LLMIF会保留该输入并基于消息依赖关系构建新的种子。</li>
+</ul>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317142629193" style="zoom:67%;" />
+
+<h4 id="3-2-1-协议信息提取"><a href="#3-2-1-协议信息提取" class="headerlink" title="3.2.1 协议信息提取"></a>3.2.1 协议信息提取</h4><h5 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h5><p>针对消息描述可能过长的问题，该工作先划定范围，通过LLM总结协议规范指定范围的每一页，然后再合成每一页的总结描述来构成<code>&#123;message_descriptions&#125;</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;payload&quot;</span><span class="punctuation">:</span> <span class="string">&quot;leet&quot;</span>;</span><br><span class="line">  <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="number">0xdeadbeef</span>;</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145032496" style="zoom:67%;" />
+
+<h5 id="Interesting-Field-Value"><a href="#Interesting-Field-Value" class="headerlink" title="Interesting Field Value"></a>Interesting Field Value</h5><p>感兴趣的目标值，有两种：dangerous value（不合法的值），functioning value（定义功能的值）</p>
+<p>如下图：Effect Identifier &#x3D; 0x00; Effect Variant &#x3D; 0x00时对应了”Fade to off in 0.8 seconds”的功能。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317144616498" style="zoom:67%;" />
+
+<h5 id="消息头结构"><a href="#消息头结构" class="headerlink" title="消息头结构"></a>消息头结构</h5><p>提取消息头结构，和前面类似，也是提取相关bit的功能和类型</p>
+<h5 id="消息依赖"><a href="#消息依赖" class="headerlink" title="消息依赖"></a>消息依赖</h5><p>该工作对消息依赖的定义：A-&gt;B，传入A消息后更新部分设备属性，在传入B消息时会进行检查这些对应属性。</p>
+<p>使用了CoT方法引导LLM进行推理，构建了21609个提示词，结果成功构建了968个消息依赖关系</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145041592" style="zoom:67%;" />
+
+<h4 id="3-2-2-种子生成"><a href="#3-2-2-种子生成" class="headerlink" title="3.2.2 种子生成"></a>3.2.2 种子生成</h4><p>为每一个消息格式定义了MID， MID &#x3D; (clusterID, cmdID)</p>
+<p>生成种子时，从消息模版中挑选一类消息，然后根据其MID从上述阶段中提取的Interesting Value进行赋值，如果没有则随机赋值，组合成为种子，用于后续种子变异以及模糊测试输入。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317145717099" style="zoom:67%;" />
+
+<h4 id="3-2-3-种子变异"><a href="#3-2-3-种子变异" class="headerlink" title="3.2.3 种子变异"></a>3.2.3 种子变异</h4><p>变异器分为两类：基于数据类型和基于消息头</p>
+<h5 id="基于数据类型的变异器"><a href="#基于数据类型的变异器" class="headerlink" title="基于数据类型的变异器"></a>基于数据类型的变异器</h5><ul>
+<li>对于定长数据：一般为数值型，设置为极限值0,0xffff</li>
+<li>对于变长数据：一般为字符串，第一字节为长度，1）增加字符串长度和对应变量长度位；2）仅修改变量长度位，可能会有不一致问题。</li>
+<li>还会随机去除消息中的field来构造不合法输入</li>
+</ul>
+<h5 id="基于消息头的变异器"><a href="#基于消息头的变异器" class="headerlink" title="基于消息头的变异器"></a>基于消息头的变异器</h5><ul>
+<li>随机指定command identifier field</li>
+<li>位翻转：翻转特定比特，可能会出现解析问题</li>
+</ul>
+<h4 id="3-2-4-响应推理"><a href="#3-2-4-响应推理" class="headerlink" title="3.2.4 响应推理"></a>3.2.4 响应推理</h4><p>根据响应判断设备在接收输入后的状态，并据此选择是否保留输入。</p>
+<p>判断是否应该保留输入的标准：</p>
+<ul>
+<li>输入成功执行并使得设备状态改变</li>
+<li>输入造成的响应非预期。eg：不合法输入并没有导致设备返回Invalid value，而是被成功执行。</li>
+</ul>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317151042282" style="zoom:67%;" />
+
+<h4 id="3-2-5-测试集扩充"><a href="#3-2-5-测试集扩充" class="headerlink" title="3.2.5 测试集扩充"></a>3.2.5 测试集扩充</h4><p>根据上一步消息响应结果来生成新的种子。</p>
+<p>具体来讲：目前已有一个测试集输入s &#x3D; [m<sub>1</sub>, …, m<sub>n</sub>]，该测试集输入后可以让设备处于特定状态，此时，如果存在m<sub>n+1</sub>满足上述提取的消息依赖关系，那么就可以将m<sub>n+1</sub>作为新的输入加进该测试集。</p>
+<blockquote>
+<p>注：此处论文中标明依赖关系是仅根据前一个消息来提取的，是不是可以有更好的方法，考虑m<sub>1</sub>到m<sub>n</sub>整个序列对设备造成的影响，比如应该有个设备属性集合，作消息与设备属性的映射。</p>
+</blockquote>
+<h4 id="3-2-6-模糊测试工具实现"><a href="#3-2-6-模糊测试工具实现" class="headerlink" title="3.2.6 模糊测试工具实现"></a>3.2.6 模糊测试工具实现</h4><p>该工作设计了两个部分：Fuzzing controller和stack controller。</p>
+<ul>
+<li>Fuzzing controller：LLMIF本体</li>
+<li>stack controller：与Zigbee设备进行交互，与Fuzzing controller用UART串口连接</li>
+</ul>
+<h2 id="4-实验结果"><a href="#4-实验结果" class="headerlink" title="4. 实验结果"></a>4. 实验结果</h2><ul>
+<li>相较于baseline（BOOFUZZ，Z-FUZZER，BEEHIVE，chatAFL），消息覆盖率提升55.2%，代码覆盖率提升53.9%，其中消息覆盖率达到100%。</li>
+<li>挖掘了11个Zigbee设备漏洞，8个0-day，7个无法被其他fuzzer检测到。</li>
+</ul>
+<p>作者自己构造了模拟工具对提供源码的ZStack品牌设备进行编译插桩，进行代码覆盖率分析，由于消息覆盖率达到100%，代码覆盖率也得以有很大提升。</p>
+<img src="/posts/95a45f3a.html2025-03-17-LLMIF论文阅读"  alt="image-20250317160808247" style="zoom:67%;" />
+
+<h2 id="5-优势"><a href="#5-优势" class="headerlink" title="5. 优势"></a>5. 优势</h2><ul>
+<li>能够成功提取Zigbee的各类消息格式（100%）</li>
+<li>显著提升了代码覆盖率（提升了53.9%）</li>
+<li>更定制化地利用了LLM工具（相较于chatAFL，基于提示词工程）</li>
+</ul>
+<h2 id="6-不足"><a href="#6-不足" class="headerlink" title="6. 不足"></a>6. 不足</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/95a45f3a.html">https://eknight-eutopia.github.io/posts/95a45f3a.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(6).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/73fe8f33.html" title="Unicorn模拟执行RTOS固件"><img class="cover" src="/img/cover/default_cover%20(18).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Unicorn模拟执行RTOS固件</div></div><div class="info-2"><div class="info-item-1">Unicorn模拟执行RTOS固件unicorn是一种指令级cpu模拟器，可以支持多架构二进制程序的执行。由于RTOS固件通常难以进行调试，因此采用通过unicorn模拟器的方式来完成模拟调试。 实验对象Fast...</div></div></div></a><a class="pagination-related" href="/posts/1134d98d.html" title="SaTC源码阅读"><img class="cover" src="/img/cover/default_cover%20(28).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">SaTC源码阅读</div></div><div class="info-2"><div class="info-item-1">阅读下SaTC的源码。工作链接 主要关注src目录下内容： 1234567891011121314src|-front_anaylysise|-headless: ghidra脚本，用于提取sink函数等信息|	|-call2sink.py|	|-ref2share.py|	|-ref2sink_bof.py|	|-ref2sink_cmdi.py|	|-share2sink.py|	|-main.py|-jsparse|-taint_check: 基于angr、KARONTE工具的代码|	|-taint_analysis|		|-coretaint.py: 污点分析主要逻辑|-main.py   TODO:...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLMIF-%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">LLMIF 论文整理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">1. 解决问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">2. 核心思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">3. 技术实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%A2%9E%E5%BC%BA"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 大模型增强</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%A2%9E%E5%BC%BA"><span class="toc-number">1.3.1.0.1.</span> <span class="toc-text">3.1.1 为什么需要大模型增强</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%A2%9E%E5%BC%BA%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.1.0.2.</span> <span class="toc-text">3.1.2 大模型增强方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9F%BA%E4%BA%8ELLM%E6%8C%87%E5%AF%BC%E7%9A%84%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 基于LLM指导的模糊测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E5%8D%8F%E8%AE%AE%E4%BF%A1%E6%81%AF%E6%8F%90%E5%8F%96"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">3.2.1 协议信息提取</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.3.2.1.1.</span> <span class="toc-text">消息格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Interesting-Field-Value"><span class="toc-number">1.3.2.1.2.</span> <span class="toc-text">Interesting Field Value</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E5%A4%B4%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.2.1.3.</span> <span class="toc-text">消息头结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.2.1.4.</span> <span class="toc-text">消息依赖</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E7%A7%8D%E5%AD%90%E7%94%9F%E6%88%90"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">3.2.2 种子生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E7%A7%8D%E5%AD%90%E5%8F%98%E5%BC%82"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">3.2.3 种子变异</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E5%BC%82%E5%99%A8"><span class="toc-number">1.3.2.3.1.</span> <span class="toc-text">基于数据类型的变异器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%B6%88%E6%81%AF%E5%A4%B4%E7%9A%84%E5%8F%98%E5%BC%82%E5%99%A8"><span class="toc-number">1.3.2.3.2.</span> <span class="toc-text">基于消息头的变异器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E5%93%8D%E5%BA%94%E6%8E%A8%E7%90%86"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">3.2.4 响应推理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-%E6%B5%8B%E8%AF%95%E9%9B%86%E6%89%A9%E5%85%85"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">3.2.5 测试集扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-6-%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">3.2.6 模糊测试工具实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.4.</span> <span class="toc-text">4. 实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BC%98%E5%8A%BF"><span class="toc-number">1.5.</span> <span class="toc-text">5. 优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%8D%E8%B6%B3"><span class="toc-number">1.6.</span> <span class="toc-text">6. 不足</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: '01a54d0891aa2ec64c316bc48c980528',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
