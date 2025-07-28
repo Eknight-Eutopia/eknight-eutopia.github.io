@@ -2785,7 +2785,7 @@
 <p><strong>正常的mitmproxy日志信息（供参考）</strong></p>
 <img src="/posts/5fd89f19/image-20241121194208884.png" class="" title="image-20241121194208884">
 
-<h2 id="使用已有服务器源码运行"><a href="#使用已有服务器源码运行" class="headerlink" title="使用已有服务器源码运行"></a>使用已有服务器源码运行</h2><p>服务器源码为C#编写</p>
+<h2 id="使用已有服务器源码运行"><a href="#使用已有服务器源码运行" class="headerlink" title="使用已有服务器源码运行"></a>使用已有服务器源码运行</h2><p>服务器源码为C#编写，需要.Net</p>
 <h3 id="服务端运行"><a href="#服务端运行" class="headerlink" title="服务端运行"></a>服务端运行</h3><p>运行源码中的<code>Program.cs</code>文件，发现服务端成功启动，监听在80和443端口</p>
 <img src="/posts/5fd89f19/image-20241121185853651.png" class="" title="image-20241121185853651">
 
@@ -4474,7 +4474,127 @@
 
 ]]></content>
       <categories>
-        <category>漏洞</category>
+        <category>漏洞分析</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>V8内存回收机制</title>
+    <url>/posts/f020ea55.html</url>
+    <content><![CDATA[<h2 id="V8内存回收机制"><a href="#V8内存回收机制" class="headerlink" title="V8内存回收机制"></a>V8内存回收机制</h2><h3 id="V8-采用的垃圾回收算法（2019年）"><a href="#V8-采用的垃圾回收算法（2019年）" class="headerlink" title="V8 采用的垃圾回收算法（2019年）"></a>V8 采用的垃圾回收算法（2019年）</h3><p><strong>内存回收机制的基本组成部分</strong></p>
+<ol>
+<li>识别存活&#x2F;已死亡对象</li>
+<li>回收死亡对象的内存</li>
+<li>整合分片化内存（可选）</li>
+</ol>
+<p>v8垃圾回收机制分为<strong>Major GC</strong>和<strong>Minor GC</strong>两种内存回收器</p>
+<ul>
+<li>Major GC：Mark Compact（针对整个堆空间）</li>
+<li>Minor GC：<strong>Scavenge</strong> &amp; Minor Mark Sweep（针对新生代）</li>
+</ul>
+<h4 id="Major-GC-Full-Mark-Compact"><a href="#Major-GC-Full-Mark-Compact" class="headerlink" title="Major GC (Full Mark-Compact)"></a>Major GC (Full Mark-Compact)</h4><p>major gc负责从整个堆内存中回收垃圾内存。</p>
+<img src="/posts/f020ea55/image-20250716132400706.png" class="" title="image-20250716132400706">
+
+<p>上图为最简单的版本，将Major GC 分为三个阶段: marking, sweeping和compacting，存在很大的延迟，影响性能。</p>
+<h5 id="Marking"><a href="#Marking" class="headerlink" title="Marking"></a>Marking</h5><p>通过可达性判断对象是否存活（可达：当前运行状态可引用的对象；不可达：其他所有不被引用对象）<br>首先从已知对象指针根集合（执行栈、全局对象）开始查找指针对应对象并将其标记为可达，然后递归遍历。<br>V8使用三色标记法来标记对象，每个对象通过两个标记位和一个标记列表来实现标记，两个标记为标识三种颜色：白色（00）、灰色（10）和黑色（11）。最初所有对象都是白色，当垃圾回收器发现白色物体并将其推送到标记列表时，它会变成灰色。当收集器从标记工作列表弹出对象并访问其所有字段时，灰色对象变为黑色。当不再有灰色对象时，标记完成，所有剩余白色物体都无法到达，可以安全地回收。</p>
+<h6 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h6><ul>
+<li>黑色表示正在使用的对象，不能回收</li>
+<li>灰色表示通过黑色对象可以被访问的对象，需要加入worklist；在worklist的对象会在下一次迭代中标记为黑色</li>
+<li>白色表示在当前状态下，不能被访问到的对象<br>GC算法标记结束后，白色对象将被释放。当前漏洞成因是一个能够被访问到的对象在GC算法结束时，被错误地标记为白色，导致被释放，出现UAF。</li>
+</ul>
+<h5 id="Sweeping"><a href="#Sweeping" class="headerlink" title="Sweeping"></a>Sweeping</h5><p>将死亡对象（不可达对象）添加到free-lists。每一段内存区域对应一个free-list，方便后续查找死亡对象进行释放以及重新申请内存。</p>
+<h5 id="Compaction"><a href="#Compaction" class="headerlink" title="Compaction"></a>Compaction</h5><p>major gc在此阶段根据该内存页的分片情况选择是否进行Compact。<br>Compact策略是将分片比较严重的内存页中的存活对象复制到其他内存页，从而保证该内存页仅剩死亡对象，方便后续的内存回收。<br>弊端：需要复制大量的存活对象，因此仅当内存页分片比较严重时才会这样做。其他情况则仅做sweeping操作。</p>
+<a href="/posts/f020ea55.html" title="V8内存回收机制">Major GC源码分析</a>
+<h4 id="Minor-GC-Scavenger"><a href="#Minor-GC-Scavenger" class="headerlink" title="Minor GC (Scavenger)"></a>Minor GC (Scavenger)</h4><h5 id="Generational-layout"><a href="#Generational-layout" class="headerlink" title="Generational layout"></a>Generational layout</h5><p>V8中的堆内存被分为不同的区域，称为“generations”。分为新生代（young generation，分为nursery和intermediate）和老生代（old generation）。<br>初始申请对象的堆内存时，将其申请在nursery空间。如果在下一次GC后，该对象仍然标记为存活，则将其<strong>移动</strong>到intermediate区域。如果再一次GC后，该对象仍然存活，则将其<strong>移动</strong>到老生代区域。（基于大部分申请对象的存活周期都比较短的现象）。</p>
+
+<h5 id="Cheney’s-Semispace-Copy"><a href="#Cheney’s-Semispace-Copy" class="headerlink" title="Cheney’s Semispace Copy"></a>Cheney’s Semispace Copy</h5><p>分为三步（Marking，Evacuating，Pointer-updating）<br>每次gc后存活对象会被迁移到新的内存页。使用”semi-space”设计，一半为全空（<strong>To-Space，intermediate</strong>），另一半为Nursery区域（<strong>From-Space</strong>）。<br>在scavenge过程中，需要额外维护一个根集合（<strong>Old-to-young generation references：老生代的指针引用新生代的对象</strong>）。使用remebered set、write-barriers来维护该集合。</p>
+<blockquote>
+<p>When combined with the stack and globals, we know every reference into the young generation, without the need to trace through the entire old generation.</p>
+</blockquote>
+
+
+<p><strong>Marking</strong>：以调用栈以及old-to-young generation reference作为根集合开始递归搜索并移动。<br><strong>Evacuation</strong>：将所有存活对象移动到一段连续内存，可以解决内存分片的问题。然后将两个空间翻转重新开始下一轮gc。</p>
+
+<p>两轮都存活则移动到old-space。<br><strong>Pointer-Updating：</strong> 最后更新指向移动过的对象的指针。每一个拷贝的对象都会遗留一个forwarding-address来更新原指针指向新地址。</p>
+<a href="/posts/f020ea55.html" title="V8内存回收机制">Minor GC源码分析</a>
+<h5 id="Write-barriers"><a href="#Write-barriers" class="headerlink" title="Write-barriers"></a>Write-barriers</h5>
+<p>具体见[[2025-07-25-Write Barrier.md|Write-barriers]]</p>
+<h5 id="parallel-Mark-Evacuate（Since-V6-2）"><a href="#parallel-Mark-Evacuate（Since-V6-2）" class="headerlink" title="parallel Mark-Evacuate（Since V6.2）"></a>parallel Mark-Evacuate（Since V6.2）</h5><p>基于Major GC的Mark-Sweep-Compact垃圾回收器实现。分为三步（Marking， Copying，Updating pointers）<br>没有使用sweep机制，仍然使用semispace机制来保证compact特性。<br>分为多个线程，分别负责一段内存区域；每一个阶段完成进入下一阶段前需要进行线程间同步。</p>
+<h5 id="parallel-Scavenge"><a href="#parallel-Scavenge" class="headerlink" title="parallel Scavenge"></a>parallel Scavenge</h5><p>将parallel Mark-Evacuate的三个阶段合并起来，每个内存页维护remembered set。对象并行处理，新发现的对象被添加到global work list用于gc线程处理。<strong>write barrier确保了当前处理对象不适合gc处理时，不会过早终止</strong><br>parallel Mark Evacuate与parallel Scavenge的区别见：[[2025-07-25-parallel Mark-Evaculate vs parallel Scavenge|Parallel Mark-Evaculate vs Parallel Scavenge]]</p>
+<h4 id="Orinoco-Google-GC项目名称"><a href="#Orinoco-Google-GC项目名称" class="headerlink" title="Orinoco(Google GC项目名称)"></a>Orinoco(Google GC项目名称)</h4><p>介绍了一些gc里面的名词</p>
+<h5 id="Parallel"><a href="#Parallel" class="headerlink" title="Parallel"></a>Parallel</h5><p>主线程与其他工作线程一起完成gc工作：</p>
+
+
+<h5 id="Incremental"><a href="#Incremental" class="headerlink" title="Incremental"></a>Incremental</h5><p>分为多个小阶段</p>
+
+
+<h5 id="Concurrent"><a href="#Concurrent" class="headerlink" title="Concurrent"></a>Concurrent</h5><p>交由工作线程处理，等结果返回后交付给主线程处理</p>
+
+
+<h3 id="垃圾回收机制的创新，哪些时候引入的"><a href="#垃圾回收机制的创新，哪些时候引入的" class="headerlink" title="垃圾回收机制的创新，哪些时候引入的"></a>垃圾回收机制的创新，哪些时候引入的</h3><h5 id="Jank-Busters-Part-One（2015）"><a href="#Jank-Busters-Part-One（2015）" class="headerlink" title="Jank Busters Part One（2015）"></a>Jank Busters Part One（2015）</h5><p>原始版本：Chrome 41 -&gt; 46<br>优化前：</p>
+
+
+<p>优化后：</p>
+
+
+<h4 id="Jank-Busters-Part-Two（2016）"><a href="#Jank-Busters-Part-Two（2016）" class="headerlink" title="Jank Busters Part Two（2016）"></a>Jank Busters Part Two（2016）</h4><p><strong>优化1</strong>：实现 <a href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)#Generational">generational garbage collector</a>parallel处理。<br>优化前：</p>
+
+<p>优化后：</p>
+
+
+<p><strong>优化2</strong>：更新了跟踪指针方式（rememberd set），改变指针方向，避免指针重复以及race。</p>
+
+
+
+
+<p><strong>优化3</strong>：black allocation（Since V8 5.1），对垃圾回收的标记阶段的提升，所有位于old generations的对象都被标记为黑色，表示该对象为存活对象，对应三色标记法。</p>
+<ul>
+<li>可以直接申请到black page上；</li>
+<li>无需sweep；</li>
+<li>加速了incremental marking，因为通过black allocation的不会增加其工作量；</li>
+</ul>
+<h4 id="State-of-GC-in-V8"><a href="#State-of-GC-in-V8" class="headerlink" title="State of GC in V8"></a>State of GC in V8</h4><h5 id="Scavenging"><a href="#Scavenging" class="headerlink" title="Scavenging"></a>Scavenging</h5><p>parallel scavenging</p>
+
+
+<h5 id="Major-GC"><a href="#Major-GC" class="headerlink" title="Major GC"></a>Major GC</h5><p>concurrent Marking，concurrent Sweeping &#x2F; parallel compaction + pointer updating</p>
+
+
+<h5 id="Idle-time-GC"><a href="#Idle-time-GC" class="headerlink" title="Idle-time GC"></a>Idle-time GC</h5><p>空闲时间gc</p>
+
+
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>源码位置在<code>//v8/src/heap/</code>目录下。<br>需要关注分析的文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">some basic utils</span></span><br><span class="line">heap.cc -&gt; heap definition</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">minor gc</span></span><br><span class="line">scavenger.cc -&gt; minor gc scavenger</span><br><span class="line">minor-mark-sweep.cc -&gt; minor gc mark sweep</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">major gc</span></span><br><span class="line">mark-compact.cc -&gt; major gc mark compact</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">some techniques</span></span><br><span class="line">evacuation-allocator.cc -&gt; minor gc evacuation</span><br><span class="line">incremental-marking.cc -&gt; incremental-marking</span><br></pre></td></tr></table></figure>
+
+<p><code>GarbageCollector</code>类定义<code>//v8/src/heap/heap.cc</code></p>
+<img src="/posts/f020ea55/image-20250715215021268.png" class="" title="image-20250715215021268">
+<p>选择GarbageCollector函数<code>Heap::SelectGarbageCollector</code>，<code>//v8/src/heap/heap.cc</code></p>
+<img src="/posts/f020ea55/image-20250715214723482.png" class="" title="image-20250715214723482">
+
+<h4 id="Mark-Compact"><a href="#Mark-Compact" class="headerlink" title="Mark-Compact"></a>Mark-Compact</h4><p>CollectGarbage函数（<code>//v8/src/heap/mark-compact.cc</code>），包含基本流程：<br>![[2025-07-14-V8内存回收机制&#x2F;file-20250725163835844.png]]</p>
+<ul>
+<li>Mark相关函数，详见：<a href="/posts/null.html" title="Mark Compact: Mark功能解析">Mark Compact: Mark</a></li>
+<li>Sweep相关函数，详见：<a href="/posts/null.html" title="Mark Compact Sweep">Mark Compact: Sweep</a></li>
+<li>Evacuate相关函数，详见：<a href="/posts/null.html" title="Mark Compact: Evacuate">Mark Compact: Evacuate</a></li>
+<li>Finish函数：收尾工作，将延迟释放的释放掉，以及释放申请的资源等。</li>
+</ul>
+<h4 id="Scavenger"><a href="#Scavenger" class="headerlink" title="Scavenger"></a>Scavenger</h4><p>CollectGarbage函数（<code>//v8/src/heap/scavenger.cc</code>），包含基本流程（swap semispace, iterate marking, promote, update）：<br>该函数详见：<a href="/posts/null.html" title="Scavenger CollectGarbage">Scavenger CollectGarbage</a></p>
+<h4 id="Mark-Sweep"><a href="#Mark-Sweep" class="headerlink" title="Mark-Sweep"></a>Mark-Sweep</h4><p>CollectGarbage函数（<code>//v8/src/heap/minor-mark-sweep.cc</code>），包含基本流程：<br>![[2025-07-14-V8内存回收机制&#x2F;file-20250726143701519.png]]</p>
+<ul>
+<li>MarkLiveObjects函数：与Mark Compact的MarkLiveObject函数类似，但更关注于Young Generation对象。</li>
+<li>Sweep函数：sweep+update</li>
+</ul>
+<h3 id="历史漏洞分析"><a href="#历史漏洞分析" class="headerlink" title="历史漏洞分析"></a>历史漏洞分析</h3><h4 id="Chrome-V8漏洞（CVE-2021-37975）分析"><a href="#Chrome-V8漏洞（CVE-2021-37975）分析" class="headerlink" title="Chrome V8漏洞（CVE-2021-37975）分析"></a>Chrome V8漏洞（CVE-2021-37975）分析</h4><p>详细分析见：<a href="/posts/null.html" title="CVE-2021-37975复现">CVE-2021-37075复现</a></p>
+<h4 id="Chrome-V8漏洞（CVE-2022-1310）分析"><a href="#Chrome-V8漏洞（CVE-2022-1310）分析" class="headerlink" title="Chrome V8漏洞（CVE-2022-1310）分析"></a>Chrome V8漏洞（CVE-2022-1310）分析</h4><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a href="https://v8.dev/blog/trash-talk">Trash talk: the Orinoco garbage collector</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/688350947">[V8引擎]内存管理和垃圾回收(GC)</a></li>
+<li><a href="https://v8.dev/blog/jank-busters">jank-busters</a></li>
+<li><a href="https://v8.dev/blog/orinoco">orinoco</a></li>
+<li><a href="https://v8.dev/blog/orinoco-parallel-scavenger">Orinoco: young generation garbage collection</a></li>
+<li><a href="https://www.freebuf.com/vuls/339684.html">Chrome V8命令执行漏洞（CVE-2022-1310）分析</a></li>
+<li><a href="https://bbs.kanxue.com/thread-281657.htm">[原创]chrome v8漏洞CVE-2021-37975浅析</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>CTF</category>
       </categories>
   </entry>
   <entry>
@@ -4493,7 +4613,7 @@
 <p>发送POC，测试程序ASAN检测到空指针引用错误，产生崩溃时的函数调用链如下图：</p>
 <img src="/posts/f34a8b40/image-20250725094424353.png" class="" title="image-20250725094424353">]]></content>
       <categories>
-        <category>漏洞</category>
+        <category>漏洞分析</category>
       </categories>
   </entry>
 </search>

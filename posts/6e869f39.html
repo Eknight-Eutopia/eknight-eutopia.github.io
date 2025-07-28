@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Mark Compact: Mark功能解析 | Small Utopia</title><meta name="robots" content="noindex"><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="直接贴下Copilot的分析结果： MarkLiveObjects函数的标记工作实现1. 函数总体结构MarkLiveObjects()是Mark-Compact垃圾回收中的标记阶段，负责标记所有可达的存活对象。该函数按照特定的顺序执行标记工作： 123456789void MarkCompactCollector::MarkLiveObjects() &#123;  &#x2F;&#x2F; 1. 处理增量标记的结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mark Compact: Mark功能解析">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/6e869f39.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="直接贴下Copilot的分析结果： MarkLiveObjects函数的标记工作实现1. 函数总体结构MarkLiveObjects()是Mark-Compact垃圾回收中的标记阶段，负责标记所有可达的存活对象。该函数按照特定的顺序执行标记工作： 123456789void MarkCompactCollector::MarkLiveObjects() &#123;  &#x2F;&#x2F; 1. 处理增量标记的结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(18).jpg">
+<meta property="article:published_time" content="2025-07-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-26T06:04:47.018Z">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(18).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/6e869f39.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mark Compact: Mark功能解析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-07-26 14:04:47'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">74</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">Mark Compact: Mark功能解析</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Mark Compact: Mark功能解析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-25T16:00:00.000Z" title="发表于 2025-07-26 00:00:00">2025-07-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-26T06:04:47.018Z" title="更新于 2025-07-26 14:04:47">2025-07-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>直接贴下Copilot的分析结果：</p>
+<h2 id="MarkLiveObjects函数的标记工作实现"><a href="#MarkLiveObjects函数的标记工作实现" class="headerlink" title="MarkLiveObjects函数的标记工作实现"></a>MarkLiveObjects函数的标记工作实现</h2><h3 id="1-函数总体结构"><a href="#1-函数总体结构" class="headerlink" title="1. 函数总体结构"></a>1. 函数总体结构</h3><p><code>MarkLiveObjects()</code>是Mark-Compact垃圾回收中的标记阶段，负责标记所有可达的存活对象。该函数按照特定的顺序执行标记工作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MarkCompactCollector::MarkLiveObjects</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 处理增量标记的结束</span></span><br><span class="line">  <span class="comment">// 2. 标记根对象</span></span><br><span class="line">  <span class="comment">// 3. 标记客户端堆对象</span></span><br><span class="line">  <span class="comment">// 4. 保留Maps</span></span><br><span class="line">  <span class="comment">// 5. 并行标记传递闭包</span></span><br><span class="line">  <span class="comment">// 6. 保守栈扫描</span></span><br><span class="line">  <span class="comment">// 7. 串行标记传递闭包</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-增量标记的完成处理"><a href="#2-增量标记的完成处理" class="headerlink" title="2. 增量标记的完成处理"></a>2. 增量标记的完成处理</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">bool</span> was_marked_incrementally = !heap_-&gt;<span class="built_in">incremental_marking</span>()-&gt;<span class="built_in">IsStopped</span>();</span><br><span class="line"><span class="keyword">if</span> (was_marked_incrementally) &#123;</span><br><span class="line">  <span class="keyword">auto</span>* incremental_marking = heap_-&gt;<span class="built_in">incremental_marking</span>();</span><br><span class="line">  incremental_marking-&gt;<span class="built_in">Stop</span>();</span><br><span class="line">  MarkingBarrier::<span class="built_in">PublishAll</span>(heap_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>功能</strong>：</p>
+<ul>
+<li>检查是否之前进行了增量标记</li>
+<li>如果有增量标记，则停止增量标记并发布所有标记屏障的结果</li>
+<li>这确保了增量标记期间的所有标记工作都被正确合并</li>
+</ul>
+<h3 id="3-标记根对象"><a href="#3-标记根对象" class="headerlink" title="3. 标记根对象"></a>3. 标记根对象</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RootMarkingVisitor <span class="title">root_visitor</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_ROOTS);</span><br><span class="line">  <span class="built_in">MarkRoots</span>(&amp;root_visitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我查看<code>MarkRoots</code>的实现： </p>
+<h3 id="4-并行标记与传递闭包"><a href="#4-并行标记与传递闭包" class="headerlink" title="4. 并行标记与传递闭包"></a>4. 并行标记与传递闭包</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (v8_flags.parallel_marking &amp;&amp; <span class="built_in">UseBackgroundThreadsInCycle</span>()) &#123;</span><br><span class="line">  <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_FULL_CLOSURE_PARALLEL);</span><br><span class="line">  parallel_marking_ = <span class="literal">true</span>;</span><br><span class="line">  heap_-&gt;<span class="built_in">concurrent_marking</span>()-&gt;<span class="built_in">RescheduleJobIfNeeded</span>(</span><br><span class="line">      GarbageCollector::MARK_COMPACTOR, TaskPriority::kUserBlocking);</span><br><span class="line">  <span class="built_in">MarkTransitiveClosure</span>();</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_FULL_CLOSURE_PARALLEL_JOIN);</span><br><span class="line">    <span class="built_in">FinishConcurrentMarking</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  parallel_marking_ = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>让我查看<code>MarkTransitiveClosure</code>的实现： 现在让我查看<code>MarkTransitiveClosureUntilFixpoint</code>： </p>
+<h3 id="5-标记工作列表处理"><a href="#5-标记工作列表处理" class="headerlink" title="5. 标记工作列表处理"></a>5. 标记工作列表处理</h3><p>让我查看<code>ProcessMarkingWorklist</code>函数： </p>
+<h2 id="标记工作实现的核心机制"><a href="#标记工作实现的核心机制" class="headerlink" title="标记工作实现的核心机制"></a>标记工作实现的核心机制</h2><h3 id="1-根对象标记"><a href="#1-根对象标记" class="headerlink" title="1. 根对象标记"></a>1. <strong>根对象标记</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 标记堆根对象，包括全局变量、栈变量等</span></span><br><span class="line">heap_-&gt;<span class="built_in">IterateRoots</span>(root_visitor, skip_weak_and_conservative);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义标记顶层优化帧</span></span><br><span class="line"><span class="built_in">ProcessTopOptimizedFrame</span>(&amp;custom_root_body_visitor, isolate);</span><br></pre></td></tr></table></figure>
+
+<p><strong>工作原理</strong>：</p>
+<ul>
+<li>遍历所有根对象（全局变量、栈变量、句柄等）</li>
+<li>通过<code>RootMarkingVisitor</code>标记这些根对象</li>
+<li>特别处理优化代码帧，确保相关代码对象不被回收</li>
+</ul>
+<h3 id="2-工作列表驱动的标记传播"><a href="#2-工作列表驱动的标记传播" class="headerlink" title="2. 工作列表驱动的标记传播"></a>2. <strong>工作列表驱动的标记传播</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (local_marking_worklists_-&gt;<span class="built_in">Pop</span>(&amp;object)) &#123;</span><br><span class="line">  Tagged&lt;Map&gt; map = object-&gt;<span class="built_in">map</span>(cage_base);</span><br><span class="line">  <span class="type">const</span> <span class="keyword">auto</span> visited_size = marking_visitor_-&gt;<span class="built_in">Visit</span>(map, object);</span><br><span class="line">  <span class="comment">// 标记对象的所有引用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心机制</strong>：</p>
+<ul>
+<li>使用工作列表（worklist）来管理待标记的对象</li>
+<li>从工作列表中取出对象，标记该对象，并将其引用的对象加入工作列表</li>
+<li>这是一个迭代过程，直到工作列表为空</li>
+</ul>
+<h3 id="3-并行标记"><a href="#3-并行标记" class="headerlink" title="3. 并行标记"></a>3. <strong>并行标记</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (v8_flags.parallel_marking &amp;&amp; <span class="built_in">UseBackgroundThreadsInCycle</span>()) &#123;</span><br><span class="line">  parallel_marking_ = <span class="literal">true</span>;</span><br><span class="line">  heap_-&gt;<span class="built_in">concurrent_marking</span>()-&gt;<span class="built_in">RescheduleJobIfNeeded</span>(</span><br><span class="line">      GarbageCollector::MARK_COMPACTOR, TaskPriority::kUserBlocking);</span><br><span class="line">  <span class="built_in">MarkTransitiveClosure</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>并行化策略</strong>：</p>
+<ul>
+<li>启动后台线程参与标记工作</li>
+<li>主线程和后台线程共享工作列表</li>
+<li>使用原子操作确保线程安全</li>
+</ul>
+<h3 id="4-弱引用和Ephemeron处理"><a href="#4-弱引用和Ephemeron处理" class="headerlink" title="4. 弱引用和Ephemeron处理"></a>4. <strong>弱引用和Ephemeron处理</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MarkTransitiveClosureUntilFixpoint</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="comment">// 处理wrapper追踪</span></span><br><span class="line">    <span class="built_in">PerformWrapperTracing</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 移动ephemeron对象进行处理</span></span><br><span class="line">    weak_objects_.current_ephemerons.<span class="built_in">Merge</span>(weak_objects_.next_ephemerons);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 处理ephemeron语义</span></span><br><span class="line">    another_ephemeron_iteration_main_thread = <span class="built_in">ProcessEphemerons</span>();</span><br><span class="line">    </span><br><span class="line">  &#125; <span class="keyword">while</span> (还有工作要做);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Ephemeron处理</strong>：</p>
+<ul>
+<li>Ephemeron是一种特殊的弱引用（如WeakMap）</li>
+<li>只有当key被标记时，value才会被标记</li>
+<li>需要多轮迭代直到达到不动点</li>
+</ul>
+<h3 id="5-保守栈扫描"><a href="#5-保守栈扫描" class="headerlink" title="5. 保守栈扫描"></a>5. <strong>保守栈扫描</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_ROOTS);</span><br><span class="line">  <span class="built_in">MarkRootsFromConservativeStack</span>(&amp;root_visitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>保守扫描</strong>：</p>
+<ul>
+<li>扫描栈上可能包含对象指针的位置</li>
+<li>由于无法确定栈上的值是否真的是指针，采用保守策略</li>
+<li>将看起来像指针的值都当作潜在的对象引用</li>
+</ul>
+<h3 id="6-串行收尾阶段"><a href="#6-串行收尾阶段" class="headerlink" title="6. 串行收尾阶段"></a>6. <strong>串行收尾阶段</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_FULL_CLOSURE_SERIAL);</span><br><span class="line">  <span class="built_in">CHECK</span>(heap_-&gt;<span class="built_in">concurrent_marking</span>()-&gt;<span class="built_in">IsStopped</span>());</span><br><span class="line">  <span class="built_in">MarkTransitiveClosure</span>();</span><br><span class="line">  <span class="built_in">CHECK</span>(local_marking_worklists_-&gt;<span class="built_in">IsEmpty</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>串行化原因</strong>：</p>
+<ul>
+<li>避免多线程处理弱引用时的竞争条件</li>
+<li>确保所有标记工作完全完成</li>
+<li>处理嵌入器堆（如C++堆）的标记</li>
+</ul>
+<h3 id="7-标记状态管理"><a href="#7-标记状态管理" class="headerlink" title="7. 标记状态管理"></a>7. <strong>标记状态管理</strong></h3><p>标记使用位图来跟踪对象状态：</p>
+<ul>
+<li><strong>未标记</strong>：对象可能是垃圾</li>
+<li><strong>已标记</strong>：对象是可达的，应该保留</li>
+<li><strong>原子操作</strong>：确保并发标记的正确性</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>V8的标记实现采用了多层次的优化策略：</p>
+<ol>
+<li><strong>增量标记</strong>：在程序执行过程中逐步进行标记，减少停顿时间</li>
+<li><strong>并行标记</strong>：利用多核CPU并行处理，提高标记效率</li>
+<li><strong>工作列表</strong>：高效管理待处理对象，支持并发访问</li>
+<li><strong>特殊引用处理</strong>：正确处理弱引用、Ephemeron等复杂情况</li>
+<li><strong>保守扫描</strong>：确保不遗漏任何可能的对象引用</li>
+</ol>
+<p>这种设计既保证了垃圾回收的正确性，又最大化了性能，是现代垃圾回收器的典型实现。</p>
+<p>Similar code found with 1 license type</p>
+<p>Eknight-Eutopia: 如何实现从根集合递归扫描的</p>
+<p>GitHub Copilot: 我来详细解释V8中如何实现从根集合开始的递归扫描标记过程。</p>
+<h2 id="根集合递归扫描的实现机制"><a href="#根集合递归扫描的实现机制" class="headerlink" title="根集合递归扫描的实现机制"></a>根集合递归扫描的实现机制</h2><h3 id="1-工作列表驱动的递归扫描"><a href="#1-工作列表驱动的递归扫描" class="headerlink" title="1. 工作列表驱动的递归扫描"></a>1. 工作列表驱动的递归扫描</h3><p>V8使用<strong>工作列表（worklist）</strong>而非传统的递归调用来实现递归扫描，这样可以避免栈溢出并支持并发标记： ### 2. 根对象标记访问器</p>
+<p>让我查看<code>RootMarkingVisitor</code>的实现： 现在让我查看头文件中的<code>RootMarkingVisitor</code>定义： 现在让我查看MarkingHelper来了解具体的标记机制： 现在让我查看MainMarkingVisitor来了解对象遍历的具体实现： ## 根集合递归扫描的完整实现流程</p>
+<p>基于代码分析，我来详细解释V8如何实现从根集合开始的递归扫描：</p>
+<h3 id="1-初始化阶段"><a href="#1-初始化阶段" class="headerlink" title="1. 初始化阶段"></a>1. <strong>初始化阶段</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在MarkLiveObjects函数中</span></span><br><span class="line"><span class="function">RootMarkingVisitor <span class="title">root_visitor</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line">local_marking_worklists_ = std::<span class="built_in">make_unique</span>&lt;MarkingWorklists::Local&gt;(</span><br><span class="line">    marking_worklists_.<span class="built_in">get</span>());</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-根对象标记阶段"><a href="#2-根对象标记阶段" class="headerlink" title="2. 根对象标记阶段"></a>2. <strong>根对象标记阶段</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">TRACE_GC</span>(heap_-&gt;<span class="built_in">tracer</span>(), GCTracer::Scope::MC_MARK_ROOTS);</span><br><span class="line">  <span class="built_in">MarkRoots</span>(&amp;root_visitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>MarkRoots</code>函数执行</strong>：</p>
+<ul>
+<li>调用<code>heap_-&gt;IterateRoots()</code>遍历所有根对象</li>
+<li>使用<code>RootMarkingVisitor</code>访问每个根对象</li>
+<li>对于每个根指针调用<code>VisitRootPointer</code>或<code>VisitRootPointers</code></li>
+</ul>
+<h3 id="3-根访问器的标记逻辑"><a href="#3-根访问器的标记逻辑" class="headerlink" title="3. 根访问器的标记逻辑"></a>3. <strong>根访问器的标记逻辑</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RootMarkingVisitor的核心方法</span></span><br><span class="line"><span class="function">V8_INLINE <span class="type">void</span> <span class="title">VisitRootPointer</span><span class="params">(Root root, <span class="type">const</span> <span class="type">char</span>* description,</span></span></span><br><span class="line"><span class="params"><span class="function">                                FullObjectSlot p)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">MarkObjectByPointer</span>(root, p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">V8_INLINE <span class="type">void</span> <span class="title">MarkObjectByPointer</span><span class="params">(Root root, FullObjectSlot p)</span> </span>&#123;</span><br><span class="line">  Tagged&lt;Object&gt; object = *p;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">IsHeapObject</span>(object)) <span class="keyword">return</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 使用MarkingHelper将对象标记并加入工作列表</span></span><br><span class="line">  MarkingHelper::<span class="built_in">TryMarkAndPush</span>(heap_, local_marking_worklists_.<span class="built_in">get</span>(),</span><br><span class="line">                                marking_state_, WorklistTarget::kRegular,</span><br><span class="line">                                <span class="built_in">Cast</span>&lt;HeapObject&gt;(object));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-工作列表驱动的递归扫描"><a href="#4-工作列表驱动的递归扫描" class="headerlink" title="4. 工作列表驱动的递归扫描"></a>4. <strong>工作列表驱动的递归扫描</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;MarkCompactCollector::MarkingWorklistProcessingMode mode&gt;</span><br><span class="line"><span class="function">std::pair&lt;<span class="type">size_t</span>, <span class="type">size_t</span>&gt; <span class="title">MarkCompactCollector::ProcessMarkingWorklist</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    v8::base::TimeDelta max_duration, <span class="type">size_t</span> max_bytes_to_process)</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  Tagged&lt;HeapObject&gt; object;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 循环处理工作列表中的对象</span></span><br><span class="line">  <span class="keyword">while</span> (local_marking_worklists_-&gt;<span class="built_in">Pop</span>(&amp;object) ||</span><br><span class="line">         local_marking_worklists_-&gt;<span class="built_in">PopOnHold</span>(&amp;object)) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取对象的Map（类型信息）</span></span><br><span class="line">    Tagged&lt;Map&gt; map = object-&gt;<span class="built_in">map</span>(cage_base);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 使用MainMarkingVisitor访问对象，标记其引用的所有对象</span></span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> visited_size = marking_visitor_-&gt;<span class="built_in">Visit</span>(map, object);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更新统计信息</span></span><br><span class="line">    <span class="keyword">if</span> (visited_size) &#123;</span><br><span class="line">      MutablePageMetadata::<span class="built_in">FromHeapObject</span>(object)-&gt;<span class="built_in">IncrementLiveBytesAtomically</span>(</span><br><span class="line">          <span class="built_in">ALIGN_TO_ALLOCATION_ALIGNMENT</span>(visited_size));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    bytes_processed += visited_size;</span><br><span class="line">    objects_processed++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">make_pair</span>(bytes_processed, objects_processed);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-对象访问器的递归标记"><a href="#5-对象访问器的递归标记" class="headerlink" title="5. 对象访问器的递归标记"></a>5. <strong>对象访问器的递归标记</strong></h3><p><code>MainMarkingVisitor::Visit(map, object)</code>的工作流程：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 伪代码展示Visit方法的逻辑</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">MainMarkingVisitor::Visit</span><span class="params">(Tagged&lt;Map&gt; map, Tagged&lt;HeapObject&gt; object)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (map-&gt;<span class="built_in">instance_type</span>()) &#123;</span><br><span class="line">    <span class="keyword">case</span> JS_OBJECT_TYPE:</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">VisitJSObject</span>(map, <span class="built_in">Cast</span>&lt;JSObject&gt;(object));</span><br><span class="line">    <span class="keyword">case</span> JS_ARRAY_TYPE:</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">VisitJSArray</span>(map, <span class="built_in">Cast</span>&lt;JSArray&gt;(object));</span><br><span class="line">    <span class="keyword">case</span> STRING_TYPE:</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">VisitString</span>(map, <span class="built_in">Cast</span>&lt;String&gt;(object));</span><br><span class="line">    <span class="comment">// ... 其他对象类型</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以JSObject为例</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">VisitJSObject</span><span class="params">(Tagged&lt;Map&gt; map, Tagged&lt;JSObject&gt; object)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 标记对象的Map</span></span><br><span class="line">  <span class="built_in">MarkObject</span>(object, object-&gt;<span class="built_in">map</span>());</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2. 遍历对象的所有属性槽</span></span><br><span class="line">  object-&gt;<span class="built_in">IterateBody</span>(map, [<span class="keyword">this</span>](FullObjectSlot slot) &#123;</span><br><span class="line">    Tagged&lt;Object&gt; value = *slot;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">IsHeapObject</span>(value)) &#123;</span><br><span class="line">      <span class="comment">// 尝试标记并加入工作列表</span></span><br><span class="line">      MarkingHelper::<span class="built_in">TryMarkAndPush</span>(heap_, local_marking_worklists_,</span><br><span class="line">                                    marking_state_, WorklistTarget::kRegular,</span><br><span class="line">                                    <span class="built_in">Cast</span>&lt;HeapObject&gt;(value));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> object-&gt;<span class="built_in">SizeFromMap</span>(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-MarkingHelper的核心标记逻辑"><a href="#6-MarkingHelper的核心标记逻辑" class="headerlink" title="6. MarkingHelper的核心标记逻辑"></a>6. <strong>MarkingHelper的核心标记逻辑</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> MarkingState&gt;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MarkingHelper::TryMarkAndPush</span><span class="params">(Heap* heap,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   MarkingWorklists::Local* marking_worklist,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   MarkingState* marking_state,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   WorklistTarget target_worklist,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   Tagged&lt;HeapObject&gt; object)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">DCHECK</span>(heap-&gt;<span class="built_in">Contains</span>(object));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 尝试原子性地标记对象（设置标记位）</span></span><br><span class="line">  <span class="keyword">if</span> (marking_state-&gt;<span class="built_in">TryMark</span>(object)) &#123;</span><br><span class="line">    <span class="comment">// 标记成功，将对象加入工作列表等待处理其引用</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">V8_LIKELY</span>(target_worklist == WorklistTarget::kRegular)) &#123;</span><br><span class="line">      marking_worklist-&gt;<span class="built_in">Push</span>(object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 对象已经被标记过</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-传递闭包计算"><a href="#7-传递闭包计算" class="headerlink" title="7. 传递闭包计算"></a>7. <strong>传递闭包计算</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MarkCompactCollector::MarkTransitiveClosure</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 发布本地缓冲的ephemeron到全局池</span></span><br><span class="line">  <span class="built_in">local_weak_objects</span>()-&gt;next_ephemerons_local.<span class="built_in">Publish</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">MarkTransitiveClosureUntilFixpoint</span>()) &#123;</span><br><span class="line">    <span class="comment">// 如果不动点迭代失败，使用线性算法</span></span><br><span class="line">    <span class="keyword">if</span> (!parallel_marking_) <span class="built_in">MarkTransitiveClosureLinear</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>传递闭包的计算过程</strong>：</p>
+<ul>
+<li>重复调用<code>ProcessMarkingWorklist</code>直到工作列表为空</li>
+<li>处理弱引用和Ephemeron（如WeakMap）</li>
+<li>确保所有可达对象都被标记</li>
+</ul>
+<h2 id="递归扫描的关键特性"><a href="#递归扫描的关键特性" class="headerlink" title="递归扫描的关键特性"></a>递归扫描的关键特性</h2><h3 id="1-避免栈溢出"><a href="#1-避免栈溢出" class="headerlink" title="1. 避免栈溢出"></a>1. <strong>避免栈溢出</strong></h3><ul>
+<li>使用工作列表而非递归调用栈</li>
+<li>支持暂停和恢复标记过程</li>
+</ul>
+<h3 id="2-并发安全"><a href="#2-并发安全" class="headerlink" title="2. 并发安全"></a>2. <strong>并发安全</strong></h3><ul>
+<li>使用原子操作进行标记</li>
+<li>工作列表支持多线程并发访问</li>
+</ul>
+<h3 id="3-增量处理"><a href="#3-增量处理" class="headerlink" title="3. 增量处理"></a>3. <strong>增量处理</strong></h3><ul>
+<li>可以分批处理对象，避免长时间停顿</li>
+<li>支持时间和字节数限制</li>
+</ul>
+<h3 id="4-类型特化"><a href="#4-类型特化" class="headerlink" title="4. 类型特化"></a>4. <strong>类型特化</strong></h3><ul>
+<li>针对不同对象类型使用专门的访问方法</li>
+<li>优化常见对象类型的处理路径</li>
+</ul>
+<h3 id="5-弱引用处理"><a href="#5-弱引用处理" class="headerlink" title="5. 弱引用处理"></a>5. <strong>弱引用处理</strong></h3><ul>
+<li>特殊处理WeakMap、WeakSet等弱引用结构</li>
+<li>使用多轮迭代确保正确的可达性语义</li>
+</ul>
+<p>这种设计既保证了标记的完整性和正确性，又通过工作列表机制避免了传统递归可能导致的栈溢出问题，同时支持并发和增量处理，是现代垃圾回收器的典型实现方式。</p>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/6e869f39.html">https://eknight-eutopia.github.io/posts/6e869f39.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(18).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MarkLiveObjects%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%87%E8%AE%B0%E5%B7%A5%E4%BD%9C%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">MarkLiveObjects函数的标记工作实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">1. 函数总体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A2%9E%E9%87%8F%E6%A0%87%E8%AE%B0%E7%9A%84%E5%AE%8C%E6%88%90%E5%A4%84%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">2. 增量标记的完成处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A0%87%E8%AE%B0%E6%A0%B9%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.</span> <span class="toc-text">3. 标记根对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B9%B6%E8%A1%8C%E6%A0%87%E8%AE%B0%E4%B8%8E%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85"><span class="toc-number">1.4.</span> <span class="toc-text">4. 并行标记与传递闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%A0%87%E8%AE%B0%E5%B7%A5%E4%BD%9C%E5%88%97%E8%A1%A8%E5%A4%84%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">5. 标记工作列表处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E5%B7%A5%E4%BD%9C%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">标记工作实现的核心机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B9%E5%AF%B9%E8%B1%A1%E6%A0%87%E8%AE%B0"><span class="toc-number">2.1.</span> <span class="toc-text">1. 根对象标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B7%A5%E4%BD%9C%E5%88%97%E8%A1%A8%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%A0%87%E8%AE%B0%E4%BC%A0%E6%92%AD"><span class="toc-number">2.2.</span> <span class="toc-text">2. 工作列表驱动的标记传播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B9%B6%E8%A1%8C%E6%A0%87%E8%AE%B0"><span class="toc-number">2.3.</span> <span class="toc-text">3. 并行标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BC%B1%E5%BC%95%E7%94%A8%E5%92%8CEphemeron%E5%A4%84%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">4. 弱引用和Ephemeron处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BF%9D%E5%AE%88%E6%A0%88%E6%89%AB%E6%8F%8F"><span class="toc-number">2.5.</span> <span class="toc-text">5. 保守栈扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%B8%B2%E8%A1%8C%E6%94%B6%E5%B0%BE%E9%98%B6%E6%AE%B5"><span class="toc-number">2.6.</span> <span class="toc-text">6. 串行收尾阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%A0%87%E8%AE%B0%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="toc-number">2.7.</span> <span class="toc-text">7. 标记状态管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.8.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E9%9B%86%E5%90%88%E9%80%92%E5%BD%92%E6%89%AB%E6%8F%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">根集合递归扫描的实现机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B7%A5%E4%BD%9C%E5%88%97%E8%A1%A8%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%80%92%E5%BD%92%E6%89%AB%E6%8F%8F"><span class="toc-number">3.1.</span> <span class="toc-text">1. 工作列表驱动的递归扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5"><span class="toc-number">3.2.</span> <span class="toc-text">1. 初始化阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A0%B9%E5%AF%B9%E8%B1%A1%E6%A0%87%E8%AE%B0%E9%98%B6%E6%AE%B5"><span class="toc-number">3.3.</span> <span class="toc-text">2. 根对象标记阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A0%B9%E8%AE%BF%E9%97%AE%E5%99%A8%E7%9A%84%E6%A0%87%E8%AE%B0%E9%80%BB%E8%BE%91"><span class="toc-number">3.4.</span> <span class="toc-text">3. 根访问器的标记逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B7%A5%E4%BD%9C%E5%88%97%E8%A1%A8%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%80%92%E5%BD%92%E6%89%AB%E6%8F%8F"><span class="toc-number">3.5.</span> <span class="toc-text">4. 工作列表驱动的递归扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AF%B9%E8%B1%A1%E8%AE%BF%E9%97%AE%E5%99%A8%E7%9A%84%E9%80%92%E5%BD%92%E6%A0%87%E8%AE%B0"><span class="toc-number">3.6.</span> <span class="toc-text">5. 对象访问器的递归标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-MarkingHelper%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A0%87%E8%AE%B0%E9%80%BB%E8%BE%91"><span class="toc-number">3.7.</span> <span class="toc-text">6. MarkingHelper的核心标记逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85%E8%AE%A1%E7%AE%97"><span class="toc-number">3.8.</span> <span class="toc-text">7. 传递闭包计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E6%89%AB%E6%8F%8F%E7%9A%84%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">递归扫描的关键特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%81%BF%E5%85%8D%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="toc-number">4.1.</span> <span class="toc-text">1. 避免栈溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8"><span class="toc-number">4.2.</span> <span class="toc-text">2. 并发安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A2%9E%E9%87%8F%E5%A4%84%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">3. 增量处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E7%89%B9%E5%8C%96"><span class="toc-number">4.4.</span> <span class="toc-text">4. 类型特化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%BC%B1%E5%BC%95%E7%94%A8%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">5. 弱引用处理</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: '8b7a455814ee4d8e745ea4e692c936a5',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
