@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GoogleCTF 2022 d8 Write Up | Small Utopia</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="有一位大佬分享了当时的wp思路，网上似乎没找到中文版的wp，在此做翻译记录和学习。 概览题目目录文件： 12345678910base ❯ tree -L 1.├── build.Dockerfile├── challenge├── launcher.py├── Makefile.txt├── snapshot_blob.bin└── v8.patch0 directories, 6 files">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogleCTF 2022 d8 Write Up">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/dc9665bb.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="有一位大佬分享了当时的wp思路，网上似乎没找到中文版的wp，在此做翻译记录和学习。 概览题目目录文件： 12345678910base ❯ tree -L 1.├── build.Dockerfile├── challenge├── launcher.py├── Makefile.txt├── snapshot_blob.bin└── v8.patch0 directories, 6 files">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(30).jpg">
+<meta property="article:published_time" content="2025-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-18T01:10:45.619Z">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(30).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/dc9665bb.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GoogleCTF 2022 d8 Write Up',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-18 09:10:45'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">GoogleCTF 2022 d8 Write Up</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GoogleCTF 2022 d8 Write Up</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-08T16:00:00.000Z" title="发表于 2025-09-09 00:00:00">2025-09-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-18T01:10:45.619Z" title="更新于 2025-09-18 09:10:45">2025-09-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>有一位大佬分享了当时的wp思路，网上似乎没找到中文版的wp，在此做翻译记录和学习。</p>
+<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p>题目目录文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">base ❯ tree -L 1</span><br><span class="line">.</span><br><span class="line">├── build.Dockerfile</span><br><span class="line">├── challenge</span><br><span class="line">├── launcher.py</span><br><span class="line">├── Makefile.txt</span><br><span class="line">├── snapshot_blob.bin</span><br><span class="line">└── v8.patch</span><br><span class="line"></span><br><span class="line">0 directories, 6 files</span><br></pre></td></tr></table></figure>
+<p>根据v8.patch文件可知定义了<code>/srv/challenge/runner.cc</code>文件作为题目。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-DEFINE_BOOL(wasm_write_protect_code_memory, true,</span></span><br><span class="line"></span><br><span class="line"><span class="addition">+DEFINE_BOOL(wasm_write_protect_code_memory, false,</span></span><br><span class="line"></span><br><span class="line">             &quot;write protect code memory on the wasm native heap with mprotect&quot;)</span><br></pre></td></tr></table></figure>
+<p>主要逻辑为challenge二进制程序接收用户输入（大小不超过65536）binary data到<code>v8::ScriptCompiler::CachedData</code>，后续会调用script-&gt;Run()函数执行目标。即可以利用<code>challenge</code>执行任意 v8 bytecode。由于 v8 对于字节码为信任输入，字节码执行存在很多的越界读原语。最终通过<code>CreateArrayLiteral</code>的越界读来获取到 <code>faked ArrayBoilerplateDescription</code>，从而触发 fake object 原语，然后获取到任意代码执行。</p>
+<h2 id="0x01-V8-Code-Caching"><a href="#0x01-V8-Code-Caching" class="headerlink" title="0x01 V8 Code Caching"></a>0x01 V8 Code Caching</h2><p>code-caching相关文档：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://v8.dev/blog/code-caching">Code caching</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/thlorenz/v8-perf/blob/master/snapshots%2Bcode-caching.md">Snapshots and Code Caching</a><br>总结了中文文档：<a href="2025-09-09-Code-caching.md">Code-caching</a><br>该功能是对javascript编译执行的优化。</li>
+</ul>
+<h3 id="Code-Cache生成"><a href="#Code-Cache生成" class="headerlink" title="Code Cache生成"></a>Code Cache生成</h3><p>根据以上文档，需要使用<code>v8::ScriptCompiler::kProduceCodeCache</code>或者<code>v8::ScriptCompiler::GetCodeCache</code>来产生cache。然而在给定的v8版本中均没有以上api。通过检查<code>test-api.cc</code>文件代码，发现使用了<code>v8::ScriptCompiler::CreateCodeCache</code>来为script生成cache data。需要注意必须在<code>script-&gt;Run(context)</code>后调用<code>CreateCodeCache</code>，否则一些懒编译函数不会生成cache。<br>另外，可以使用<code>v8::V8::SetFlagsFromCommandLine</code>来允许script来使用<code>%DebugPrint</code>等参数，便于调试。需要注意<code>%DebugPrint</code>会被编译进code cache，因此<code>runner.cc</code>中cache执行时，仍然会展示<code>%DebugPrint</code>的内容。<br>另外一个需要注意的点是<code>runner.cc</code>装载cache时，会提供一个空的script string。cache loader会检查binary cache的hash与script的hash是否相同。通过调试发现，空script的hash值为0,并且binary cache的hash位于+8偏移处，占四字节大小。因此如果要允许cache执行需要控制该域为0。</p>
+<h3 id="debug调试"><a href="#debug调试" class="headerlink" title="debug调试"></a>debug调试</h3><p>生成的cache在debug&#x2F;release版本之间是不能共享的。在debug版本，会设置<code>Flag_verify_snapshot_checksum</code>标志位来进行额外的校验和检查，需要手动通过<code>SerializedCodeData::SanityCheckWithoutSource</code>函数来禁用该标志位。</p>
+<img src="/posts/dc9665bb/file-20250912175139421.png" class="">
+<p>在flag_definitions.h文件中修改该flag定义为false，然后禁用DCHECK以及CSA_CHECK后即可使用DEBUG调试。<br>通过runner.cc，我们可以提供JavaScript代码生成Code cache。完整代码为：<a target="_blank" rel="noopener" href="https://github.com/Mem2019/Mem2019.github.io/blob/master/codes/Google2022/gen.cc">gen.cc</a>。可以使用<code>./gen exp.js --allow-native-syntax --print-bytecode</code>来编译JavaScript进cache并存储二进制cache到.&#x2F;blob.bin。使用<code>--print-bytecode</code>可以看到生成的v8 bytecode，并且这些bytecode可以在生成的cache中查看。</p>
+<h2 id="0x02-v8字节码漏洞分析利用"><a href="#0x02-v8字节码漏洞分析利用" class="headerlink" title="0x02 v8字节码漏洞分析利用"></a>0x02 v8字节码漏洞分析利用</h2><p>一开始我们思考的是JIT产生的raw machine code是否也能够保存到cache中，如果可以我们就可以通过修改cache直接执行shellcode。然而经过数次尝试无法实现。因此我们需要使用v8 bytecode来实现攻击。<br>通过任意修改bytecode，v8会直接crash掉。作者想到了三种攻击方式，不过只有最后一个利用成功：</p>
+<ol>
+<li>使用字节码泄漏JavaScript的<a href="2025-09-09-V8-Map%E5%AF%B9%E8%B1%A1%E5%AD%A6%E4%B9%A0.md">Hole</a>，之前使用过的一个攻击原语。然而在当前版本可能已经被修复了。</li>
+<li>v8字节码访问参数寄存器时，在指令字节序列中存在一个索引值字节。通过修改该字节，可以导致OOB。然而通过进一步调查，发现OOB发生在栈上，并且后面的数据不容易控制。另外参数数组不是以压缩指针的形式保存的而是64位指针形式，因此难以简单的通过写入Smi数组到栈上。</li>
+<li>我们发现<code>CreateArrayLiteral</code>也有一个索引值可以用于去访问<code>OldSpace</code>的<code>FixedArray</code>对象。该值是指向<code>ArrayBoilerplateDescription</code>的指针，描述了数组的初始化。通过控制<code>FixedArray</code>后面的内容，我们可以伪造<code>ArrayBoilerplateDescription</code>实例，从而获取对象伪造原语。</li>
+</ol>
+<h3 id="CreateArrayLiteral"><a href="#CreateArrayLiteral" class="headerlink" title="CreateArrayLiteral"></a>CreateArrayLiteral</h3><p><code>CreateArrayLiteral</code>是用于创建JavaScript数组的字节码。<br>gpt给出的解释：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">在 V8 的字节码中，`CreateArrayLiteral [0], [0], #4` 是一个字节码指令，用于创建一个数组字面量（Array Literal）。我们需要分析这条指令的含义，特别是第一个 `[0]` 是如何控制指向 `ArrayBoilerplateDescription` 的偏移的。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## **字节码指令解释**</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">### **1. CreateArrayLiteral**</span></span></span><br><span class="line"></span><br><span class="line">- 这是 V8 中的一条字节码指令，用于创建一个数组字面量（`ArrayLiteral`）。</span><br><span class="line">- 它的格式通常是：</span><br><span class="line">    </span><br><span class="line">    `CreateArrayLiteral [index_in_constant_pool], [flags], [length]`</span><br><span class="line">    </span><br><span class="line">    - **`[index_in_constant_pool]`**: 指向常量池（Constant Pool）中的索引，用于获取 `ArrayBoilerplateDescription`。</span><br><span class="line">    - **`[flags]`**: 一些标志位，用于描述数组的特性（如是否为浅拷贝等）。</span><br><span class="line">    - **`[length]`**: 数组的长度。</span><br></pre></td></tr></table></figure>
+<p>以下是测试代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">const</span> o = [[], <span class="number">1.1</span>, <span class="number">0x123</span>];</span><br><span class="line">	<span class="keyword">return</span> o[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>();</span><br><span class="line"><span class="title function_">readline</span>();</span><br><span class="line"><span class="comment">// ./d8 test.js --print-bytecode</span></span><br></pre></td></tr></table></figure>
+<p>foo函数生成字节码如下：</p>
+<img src="/posts/dc9665bb/file-20250910091935673.png" class="">
+<p><code>CreateArrayLiteral</code>指令负责数组创建。放入数组的元素由[0]控制。该值为用于访问OldSpace的FixedArray的索引。<br>索引0访问了<code>ArrayBoilerplateDescription</code>实例，该实例用于描述数组元素如何初始化。</p>
+<img src="/posts/dc9665bb/file-20250910092306118.png" class="">
+<p><code>ArrayBoilerplateDescription</code>示例包含了一个<code>constant elements</code>字段指向另一个FixedArray[0]。该<code>FixedArray</code>包含了新创建数组的初始化元素。另外一个有趣的点是第一个元素是另一个<code>ArrayBoilerplateDescription</code>指针而非<code>JSArray</code>指针，不过可以理解：每次创建一个数组时，我们都会新建一个数组实例，而非沿用老的<code>JSArray</code>的引用。<br>主要关注的点是是否可以伪造<code>CreateArrayLiteral</code>对象中的<code>ArrayBoilerplateDescription</code>，从而实现对象伪造原语。通过手动修改<code>constant elements</code>使其指向另外一个已存在的JavaScript对象指针即可。因此只需要关注如何通过<code>CreateArrayLiteral</code>越界读来伪造<code>ArrayBilerplateDescription</code>。</p>
+<h3 id="控制FixedArray后的内存"><a href="#控制FixedArray后的内存" class="headerlink" title="控制FixedArray后的内存"></a>控制FixedArray后的内存</h3><p>由于<code>FixedArray</code>位于<code>OldSpace</code>中，需要创建一个存放<code>double</code>元素<code>Array</code>并触发内存回收来将其放入<code>OldSpace</code>，然后要确定其数组元素要位于<code>FixedArray</code>后。然而该元素地址一般距离<code>FixedArray</code>较远。<br>然后我们发现<code>constant elements</code>的内容是接近<code>FixedArray</code>的，但是其位于<code>FixedArray</code>前。然而，如果我们创建另外一个也包含<code>CreatArrayLiteral</code>指令的函数（<strong>需要满足函数声明位于目标函数后</strong>），其<code>constatn elements</code>则会位于目标<code>FixedArray</code>后。另外如果数组只包含<code>double</code>类型，则其<code>constant elements</code>为<code>FixedDoubleArray</code>类型，其表明<code>unboxed double</code>存放在内存中，因此我们可以完全控制FixedArray后的内存内容。</p>
+<blockquote>
+<p>注：auto box，unbox为Java的语言特性，auto box即将基础数据类型（eg：int, double）自动装箱为Integer，Double对象。unbox则与之相反</p>
+</blockquote>
+<p>对应的OOB index是通过调试尝试来计算得到的。开始时我们设置<code>unboxed double</code>为<code>AAAA...</code>，然后在<code>gen.cc</code>进程中检查<code>FixedArray</code>后内存。注意我们不能在<code>run.cc</code>中完成以上任务（由于无法打印字节码），但是两个内存布局很相似。然后可以将其作为<code>CreateArrayLiteral</code>的索引值，然后运行.&#x2F;challenge程序。如果发生<code>0x????41414141</code>的crash，则表明发生了OOB。</p>
+<img src="/posts/dc9665bb/file-20250910102925509.png" class="">
+<p>计算偏移：<code>(0x1b6a00253c39 - 0x1b6a00253b99) = 0x14</code>，修改生成的cache二进制文件的对应字节码即可，以下为生成字节码的对应<code>CreateArrayLiteral</code>。</p>
+<img src="/posts/dc9665bb/file-20250910104605987.png" class="">
+
+<blockquote>
+<p>Debug与Release的差异<br>debug版本的challenge会直接reject掉patch的cache，但是release不会；<br>debug版本与release对应的偏移可能不同</p>
+</blockquote>
+<p>在debug版本调试，发现执行到CreateArrayLiteral函数时其rsi值即ArrayBiolerplateDescription。</p>
+<img src="/posts/dc9665bb/file-20250911111254821.png" class="">
+<p>在release版本中调试，发现两个<code>ArrayBoilerplateDescription1</code>相差0x14c，其索引值是以4字节为一个单位的，因此可以修改为0x53，从而使其指向要伪造的目标。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">victim</span>(<span class="params"></span>)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="keyword">const</span> o = [[], <span class="number">1.1</span>, <span class="number">0x123</span>];</span><br><span class="line">        %<span class="title class_">DebugPrint</span>(o);</span><br><span class="line">        <span class="comment">// console.log(o);</span></span><br><span class="line">        <span class="keyword">return</span> o[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">target</span>(<span class="params"></span>)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="keyword">const</span> target_arr = [<span class="number">0x4141414141414141</span>, <span class="number">0x4141414141414141</span>, <span class="number">0x4141414141414141</span>, <span class="number">0x4141414141414141</span>];</span><br><span class="line">        %<span class="title class_">DebugPrint</span>(target_arr);</span><br><span class="line">        <span class="comment">// console.log[target_arr];</span></span><br><span class="line">        <span class="keyword">return</span> target_arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">victim</span>();</span><br><span class="line"><span class="title function_">target</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[*] Finished!&quot;</span>)</span><br><span class="line"><span class="comment">// readline();</span></span><br><span class="line"><span class="comment">// ./d8 test.js --print-bytecode</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Final-Exploit"><a href="#Final-Exploit" class="headerlink" title="Final Exploit"></a>Final Exploit</h3><p>具体步骤如下：</p>
+<ol>
+<li>准备一个足够大的double数组，并且其低32位的元素地址需要是固定的（V8指针压缩）。该数组用于提供伪造实例例如<code>ArrayBoilerplateDescription</code>, <code>FixedArray</code>, <code>Uint32Array</code>…（让其指向了constant number）</li>
+<li>喷射低32位元素地址令其作为位于<code>FixedArray</code>后的越界读<code>FixedDoubleArray</code>。注意对于内置类型Map值是固定的。</li>
+<li>调用victim函数，其<code>CreateArrayLiteral</code>指令已被修改来进行越界读，然后将其返回获取到伪造对象。</li>
+<li>后续常规做法即可</li>
+</ol>
+<p>创建了big_array，其内容地址为0x1c2149，同时在foo函数后定义foo2创建内容为<code>0x1c2149</code>的<code>FixedDoubleArray</code>数组，其内容会位于<code>FixedArray</code>后，因此设置victim函数创建的数组可以溢出<code>ArrayBoilerplateDescription</code>到foo2定义的数组，然后指向0x1c2149。<br>foo2定义数组的constant elements地址</p>
+<img src="/posts/dc9665bb/file-20250917104708378.png" class="">
+<p>victim定义数组的ArrayBoilerplateDescription地址</p>
+<img src="/posts/dc9665bb/file-20250917104745545.png" class="">
+<p>通过伪造<code>ArrayBoilerplateDescription</code>使其指向受控的big_array后，目标数组定义为<code>[&#123;&#125;, 0x1337]</code>，指定第一个对象为{a: wmain}，即定义的wasm函数，然后定义fake_object &#x3D; arr[0]获取其引用，然后其内容fake_object.a定义位于big_array中，因此可以控制其内容<br>然后定义了wasm函数并篡改其为shellcode并执行。<br>直接用作者提供的exp，发现会出现segmentation fault，界面如下：</p>
+<img src="/posts/dc9665bb/file-20250910161632427.png" class="">
+<p>可以发现执行到最后的写入shellcode时出现问题<br>似乎是这里的问题，现代cpu开了<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/translations/zh_CN/core-api/protection-keys.html">pku保护</a>。</p>
+<img src="/posts/dc9665bb/file-20250915213208986.png" class="">
+<p>关闭该保护对应的的flag标识即可</p>
+<img src="/posts/dc9665bb/file-20250917102140585.png" class="">
+<p>成功执行注入shellcode，执行了<code>/catflag</code></p>
+<img src="/posts/dc9665bb/file-20250917150653692.png" class="">
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://mem2019.github.io/jekyll/update/2022/07/03/Google-CTF.html">Google CTF 2022 d8: From V8 Bytecode to Code Execution</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/pzread/2ceb4d507d23db91d83b3bfeb1a1f58b">Google CTF 2022 Pwn d8 Author’s Write-up</a></li>
+<li><a target="_blank" rel="noopener" href="https://v8.dev/blog/code-caching">Code caching</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/thlorenz/v8-perf/blob/master/snapshots%2Bcode-caching.md">Snapshots and Code Caching</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/translations/zh_CN/core-api/protection-keys.html">内存保护密钥</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/dc9665bb.html">https://eknight-eutopia.github.io/posts/dc9665bb.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(30).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/fda95e8.html" title="Client V8学习"><img class="cover" src="/img/cover/default_cover%20(19).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Client V8学习</div></div><div class="info-2"><div class="info-item-1">V8 V8-ignition指令 V8内存回收机制 Code-caching V8 Hole V8指针压缩 V8 数据结构  </div></div></div></a><a class="pagination-related" href="/posts/6e2e0982.html" title="honggfuzz学习笔记"><img class="cover" src="/img/cover/default_cover%20(5).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">honggfuzz学习笔记</div></div><div class="info-2"><div class="info-item-1">Honggfuzz特性 多进程-多线程； pesistent fuzzing mode：fuzz api时，在同一进程中输入新的数据。可以显著提升模糊测试效率 crash track记录完整准确 使用底层（eg：ptrace）接口监视进程状态。可以检测到被劫持、忽视的信号 支持多种基于硬件指令级以及软件层的覆盖率测量方式；同时支持qemu mode的黑盒测试。 persistent fuzzing mode：长期存活的进程重复调用fuzz接口  lets you fuzz your target persistently between two addresses - without forking for every fuzzing attempt.    参考链接 honggfuzz  </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-V8-Code-Caching"><span class="toc-number">2.</span> <span class="toc-text">0x01 V8 Code Caching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Code-Cache%E7%94%9F%E6%88%90"><span class="toc-number">2.1.</span> <span class="toc-text">Code Cache生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#debug%E8%B0%83%E8%AF%95"><span class="toc-number">2.2.</span> <span class="toc-text">debug调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-v8%E5%AD%97%E8%8A%82%E7%A0%81%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%88%A9%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">0x02 v8字节码漏洞分析利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CreateArrayLiteral"><span class="toc-number">3.1.</span> <span class="toc-text">CreateArrayLiteral</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6FixedArray%E5%90%8E%E7%9A%84%E5%86%85%E5%AD%98"><span class="toc-number">3.2.</span> <span class="toc-text">控制FixedArray后的内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Final-Exploit"><span class="toc-number">3.3.</span> <span class="toc-text">Final Exploit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: '6c7aabe995c0b749133e79f05cb6d350',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
