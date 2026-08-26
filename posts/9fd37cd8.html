@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>bad epoll漏洞学习复现 | Small Utopia</title><meta name="robots" content="noindex"><meta name="author" content="Eutopia"><meta name="copyright" content="Eutopia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习一下近期出现的 bad epoll 漏洞，该漏洞位于 fs&#x2F;eventpoll.c，在 linux 内核以及 安卓内核中均存在该漏洞。 漏洞原理漏洞位于 fs&#x2F;eventpoll.c 的 ep_remove() 函数中。file 对象没有使用引用计数追踪或者加锁保护，导致可以通过构造一个 eventpoll fd 监视另一个 eventpoll fd，然后多线程竞争 close，导致 file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bad epoll漏洞学习复现">
+<meta property="og:url" content="https://eknight-eutopia.github.io/posts/9fd37cd8.html">
+<meta property="og:site_name" content="Small Utopia">
+<meta property="og:description" content="学习一下近期出现的 bad epoll 漏洞，该漏洞位于 fs&#x2F;eventpoll.c，在 linux 内核以及 安卓内核中均存在该漏洞。 漏洞原理漏洞位于 fs&#x2F;eventpoll.c 的 ep_remove() 函数中。file 对象没有使用引用计数追踪或者加锁保护，导致可以通过构造一个 eventpoll fd 监视另一个 eventpoll fd，然后多线程竞争 close，导致 file">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(8).jpg">
+<meta property="article:published_time" content="2026-08-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-25T07:39:25.323Z">
+<meta property="article:author" content="Eutopia">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eknight-eutopia.github.io/img/cover/default_cover%20(8).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://eknight-eutopia.github.io/posts/9fd37cd8.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b2bb076b3ca994b59d55f4681f7e3427";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'bad epoll漏洞学习复现',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-25 15:39:25'
+}</script><link rel="stylesheet" href="/config/css/transparancy.css"><link rel="stylesheet" href="/config/css/edit-icon-anime.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/background.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">139</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Small Utopia</span></a><a class="nav-page-title" href="/"><span class="site-name">bad epoll漏洞学习复现</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-blog"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/sitetime"><i class="fa-fw fas fa-hourglass-end"></i><span> 时间轴</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw far fa-paper-plane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">bad epoll漏洞学习复现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-02T16:00:00.000Z" title="发表于 2026-08-03 00:00:00">2026-08-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-25T07:39:25.323Z" title="更新于 2026-08-25 15:39:25">2026-08-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>学习一下近期出现的 bad epoll 漏洞，该漏洞位于 <code>fs/eventpoll.c</code>，在 linux 内核以及 安卓内核中均存在该漏洞。</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>漏洞位于 <code>fs/eventpoll.c</code> 的 <code>ep_remove()</code> 函数中。file 对象没有使用引用计数追踪或者加锁保护，导致可以通过构造一个 eventpoll fd 监视另一个 eventpoll fd，然后多线程竞争 close，导致 file 结构体的 UAF。<br>其存在问题源码位置，在 <code>ep_remove</code> 函数中，file 为传入 epitem 的 ffd.file 对象。对其继续调用 ep_remove_file() 函数。在该函数中会写入 <code>file-&gt;f_ep</code> 成员为 NULL。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * ep_remove variant for callers owing an additional reference to the ep</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ep_remove</span><span class="params">(<span class="keyword">struct</span> eventpoll *ep, <span class="keyword">struct</span> epitem *epi)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">file</span> =</span> epi-&gt;ffd.file;</span><br><span class="line"></span><br><span class="line">	lockdep_assert_irqs_enabled();</span><br><span class="line">	lockdep_assert_held(&amp;ep-&gt;mtx);</span><br><span class="line"></span><br><span class="line">	ep_unregister_pollwait(ep, epi);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* sync with eventpoll_release_file() */</span></span><br><span class="line">	<span class="keyword">if</span> (unlikely(READ_ONCE(epi-&gt;dying)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	spin_lock(&amp;file-&gt;f_lock);</span><br><span class="line">	<span class="keyword">if</span> (epi-&gt;dying) &#123;</span><br><span class="line">		spin_unlock(&amp;file-&gt;f_lock);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	ep_remove_file(ep, epi, file);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (ep_remove_epi(ep, epi))</span><br><span class="line">		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Called with &amp;file-&gt;f_lock held,</span></span><br><span class="line"><span class="comment"> * returns with it released</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ep_remove_file</span><span class="params">(<span class="keyword">struct</span> eventpoll *ep, <span class="keyword">struct</span> epitem *epi,</span></span><br><span class="line"><span class="params">			     <span class="keyword">struct</span> file *file)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">epitems_head</span> *<span class="title">to_free</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hlist_head</span> *<span class="title">head</span> =</span> file-&gt;f_ep;</span><br><span class="line"></span><br><span class="line">	lockdep_assert_held(&amp;ep-&gt;mtx);</span><br><span class="line">	lockdep_assert_held(&amp;file-&gt;f_lock);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (hlist_is_singular_node(&amp;epi-&gt;fllink, head)) &#123;</span><br><span class="line">		<span class="comment">/* See eventpoll_release() for details. */</span></span><br><span class="line">		WRITE_ONCE(file-&gt;f_ep, <span class="literal">NULL</span>);</span><br><span class="line">		<span class="keyword">if</span> (!is_file_epoll(file)) &#123;</span><br><span class="line">			<span class="class"><span class="keyword">struct</span> <span class="title">epitems_head</span> *<span class="title">v</span>;</span></span><br><span class="line">			v = container_of(head, <span class="keyword">struct</span> epitems_head, epitems);</span><br><span class="line">			<span class="keyword">if</span> (!smp_load_acquire(&amp;v-&gt;next))</span><br><span class="line">				to_free = v;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	hlist_del_rcu(&amp;epi-&gt;fllink);</span><br><span class="line">	spin_unlock(&amp;file-&gt;f_lock);</span><br><span class="line">	free_ephead(to_free);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而另一条路径上（或者应该说是上层调用链上）通过竞争抢占执行。<code>__fput</code> 函数调用 eventpoll_release 函数（开启 <code>CONFIG_KCMP</code>定义）会查看 file-&gt;f_ep 的内容。如果该 fast_check 检查到 f_ep 为空，则直接返回。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This is called from inside fs/file_table.c:__fput() to unlink files</span></span><br><span class="line"><span class="comment"> * from the eventpoll interface. We need to have this facility to cleanup</span></span><br><span class="line"><span class="comment"> * correctly files that are closed without being removed from the eventpoll</span></span><br><span class="line"><span class="comment"> * interface.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">eventpoll_release</span><span class="params">(<span class="keyword">struct</span> file *file)</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * Fast check to avoid the get/release of the semaphore. Since</span></span><br><span class="line"><span class="comment">	 * we&#x27;re doing this outside the semaphore lock, it might return</span></span><br><span class="line"><span class="comment">	 * false negatives, but we don&#x27;t care. It&#x27;ll help in 99.99% of cases</span></span><br><span class="line"><span class="comment">	 * to avoid the semaphore lock. False positives simply cannot happen</span></span><br><span class="line"><span class="comment">	 * because the file in on the way to be removed and nobody ( but</span></span><br><span class="line"><span class="comment">	 * eventpoll ) has still a reference to this file.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (likely(!READ_ONCE(file-&gt;f_ep)))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * The file is being closed while it is still linked to an epoll</span></span><br><span class="line"><span class="comment">	 * descriptor. We need to handle this by correctly unlinking it</span></span><br><span class="line"><span class="comment">	 * from its containers.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	eventpoll_release_file(file);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后续调用 <code>file-&gt;f_op-&gt;release</code> 即 <code>eventpoll_fops-&gt;release</code>，即 <code>ep_eventpoll_release</code> 函数。其继续向下调用至 <code>ep_free</code>，然后会直接 kfree epoll_target，在 file_free 中 kmem_cache_free file_target。<br>其调用链如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__fput</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">eventpoll_release(file_target)</span></span><br><span class="line"><span class="meta prompt_">	-&gt; </span><span class="language-bash">fastcheck pass and <span class="built_in">return</span></span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">file-&gt;f_op-&gt;release (ep_eventpoll_release)</span></span><br><span class="line"><span class="meta prompt_">	-&gt; </span><span class="language-bash">ep_clear_and_put</span></span><br><span class="line"><span class="meta prompt_">		-&gt; </span><span class="language-bash">ep_free</span></span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">file_free</span></span><br></pre></td></tr></table></figure>
+<p>此时，原进程继续向下执行，会查看<code>is_file_epoll(file)</code>，这里由于 file 已经被释放，可以将其重新申请为非 eventfd。从而进入该分支。写入 to_free &#x3D; epoll_target-&gt;refs，然后再 hlist_del_rcu() 会写入 0 到 <code>epi-&gt;fllink.pprev</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">ep_remove_file</span><span class="params">(<span class="keyword">struct</span> eventpoll *ep, <span class="keyword">struct</span> epitem *epi,</span></span><br><span class="line"><span class="params">			     <span class="keyword">struct</span> file *file)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">epitems_head</span> *<span class="title">to_free</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hlist_head</span> *<span class="title">head</span> =</span> file-&gt;f_ep;</span><br><span class="line"></span><br><span class="line">	lockdep_assert_held(&amp;ep-&gt;mtx);</span><br><span class="line">	lockdep_assert_held(&amp;file-&gt;f_lock);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (hlist_is_singular_node(&amp;epi-&gt;fllink, head)) &#123;</span><br><span class="line">		<span class="comment">/* See eventpoll_release() for details. */</span></span><br><span class="line">		WRITE_ONCE(file-&gt;f_ep, <span class="literal">NULL</span>);</span><br><span class="line">		<span class="keyword">if</span> (!is_file_epoll(file)) &#123;</span><br><span class="line">			<span class="class"><span class="keyword">struct</span> <span class="title">epitems_head</span> *<span class="title">v</span>;</span></span><br><span class="line">			v = container_of(head, <span class="keyword">struct</span> epitems_head, epitems);</span><br><span class="line">			<span class="keyword">if</span> (!smp_load_acquire(&amp;v-&gt;next))</span><br><span class="line">				to_free = v;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	hlist_del_rcu(&amp;epi-&gt;fllink);</span><br><span class="line">	spin_unlock(&amp;file-&gt;f_lock);</span><br><span class="line">	free_ephead(to_free);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>由于该漏洞发现者声称该漏洞可以实现手机的 root 提权。因此会着重分析其漏洞利用思路并尝试进行迁移（其只提供了 x86 下 linux 内核的利用脚本）。<br>竞争时序如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">CPU 0   racer                                     CPU 1   main</span><br><span class="line">================================================  ================================================</span><br><span class="line"></span><br><span class="line">timerfd_settime(.., TFD_TIMER_ABSTIME)</span><br><span class="line"></span><br><span class="line">                                                  // CPU 1 spins close(dup(ep_race_target)) to write f_count, </span><br><span class="line">                                                  // invalidating CPU 0&#x27;s cache line containing f_op</span><br><span class="line">close(ep_race_waiter)                             close(dup(ep_race_target))</span><br><span class="line">  __ep_remove(epi)                                close(dup(ep_race_target))</span><br><span class="line">    spin_lock(&amp;file_race_target-&gt;f_lock)          close(dup(ep_race_target))</span><br><span class="line">                                                  ...</span><br><span class="line">                                                  ...</span><br><span class="line">    WRITE_ONCE(file_race_target-&gt;f_ep, NULL)      ...</span><br><span class="line">    ======== RACE WINDOW BEGIN ========           ...</span><br><span class="line">                                                  ...</span><br><span class="line">    is_file_epoll(file_race_target)               close(dup(ep_race_target))</span><br><span class="line">      reads f_op -&gt; CACHE MISS, CPU 0 stalls      close(dup(ep_race_target))</span><br><span class="line"></span><br><span class="line">    timerfd expiry IRQ on CPU 0</span><br><span class="line">      handler wakes epoll waiters                 close(ep_race_target)</span><br><span class="line">      |                                             __fput(file_race_target)</span><br><span class="line">      |                                               eventpoll_release()       // lockless fast path</span><br><span class="line">      |                                                 READ f_ep == NULL -&gt; return</span><br><span class="line">      |                                               ep_free</span><br><span class="line">      |                                                 kfree(epoll_race_target)          // FREED</span><br><span class="line">    IRQ handler returns</span><br><span class="line"></span><br><span class="line">    ======== RACE WINDOW END ========</span><br><span class="line">    hlist_del_rcu(&amp;epi-&gt;fllink)</span><br><span class="line">      *epi-&gt;fllink.pprev = 0  =&gt;  freed epoll_race_target-&gt;refs.first = 0     // offset 160 of kmalloc-192, Race UAF write-0</span><br><span class="line"></span><br><span class="line">    spin_unlock(&amp;file_race_target-&gt;f_lock)</span><br></pre></td></tr></table></figure>
+
+<p>该漏洞提交者还给出了 kernelctf 中的 exp ，这里我们也简单分析下其利用过程：</p>
+<h3 id="Stage1：环境初始化"><a href="#Stage1：环境初始化" class="headerlink" title="Stage1：环境初始化"></a>Stage1：环境初始化</h3><p>该部分在 race_setup() 函数中：<br>创建共享的 timerfd 以及深度为 3 的 epoll chain。</p>
+<ul>
+<li>先创建一个 <code>timerfd_wakeup</code> 的 timer，然后通过 <code>race_enqueue_waiters</code> 向其绑定大量的 eventpoll fd。这样当 time up 时可以触发大量的 event poll 事件，如果这个time刚好在窗口内，可以有效延长时间的窗口，并导致中断发生。</li>
+<li>然后创建一个 深度为 3 的 epoll 链条 <code>ep_race_fds[3]</code>。该链条用于评判 race 是否成功（<code>ep_race_oracle</code>），如果 race 成功会导致 epoll 的深度变为1。</li>
+<li>然后简单测了一下 false sharing 的耗时，用于后续的 race half time window。</li>
+</ul>
+<h3 id="Stage2-漏洞触发与-cross-cache"><a href="#Stage2-漏洞触发与-cross-cache" class="headerlink" title="Stage2: 漏洞触发与 cross cache"></a>Stage2: 漏洞触发与 cross cache</h3><p>该部分在 <code>vuln_trigger_and_cross_cache()</code> 函数中<br>实现了 close-vs-close race 并使用 pipe_buffer reclaim 该 slab page。</p>
+<ul>
+<li>首先申请了 pipe，并 fcntl 设置其 PIPE_SZ 为 <code>0x100 * 0x1000</code>，也就是 0x100 页。</li>
+<li>新创建 racer_thread，其会调用 <code>race_close_thread</code> 。在 CPU 0 上运行，会设置 absolute-time timer 设置为中断发生时间，然后忙等待(time_interrupt_fire - time_racer_launch_ahead)，直到要发生中断的时候 close，期待中断会发生在 <code>close</code> 甚至是 竞争窗口内部。进入 for loop，分为两种阶段，<code>PHASE_STAT</code> 遍历 [LO,HI]，筛选最容易发生 中断的 ahead idx；<code>PHASE_EXEC</code> 从 STAT 阶段给定的窗口中随机挑选一个值进行尝试。在 PHASE 开始前，会先设置了 <code>timerfd_wakeup</code> timerfd，令其在窗口内触发大量的 waitqueue 等待延长时间窗口。然后调用 close(ep_race_waiter)，同时会测量其调用 close 所使用的指令数，如果大于了一个阈值则认为发生了中断。如果是 <code>PHASE_STAT</code> 会将该 ahead_idx 加入记录；如果是 <code>PHASE_EXEC</code> 也会执行记录，并重新继续 <code>PHASE_STAT</code>。</li>
+<li>主进程会继续向下执行，绑定 CPU 1 运行。首先会打开<code>/dev/null</code> 填满 CPU partial_list。然后创建两个 epitem，<code>ep_race_waiter</code>，<code>ep_race_target</code>。<code>ep_race_waiter</code> 会 watch <code>ep_race_target</code>，CPU1 会释放 <code>ep_race_target</code>。然后再打开 <code>/dev/null</code> 填充 slab。然后启动 race 过程。不过主进程会进行 false sharing 延长时间窗口。</li>
+<li>检测是否race成功，如果 race 成功，目标的 refs 会被清空为0，尝试将 ep_race_oracle 添加到 ep_uaf_target 链表中，如果 refs 为空可以添加成功，如果 refs 不为空则会报错 <code>MAX_NESTS</code>。</li>
+<li>接下来就是 cross cache。将前面的 file 全部释放掉（除了与 ep_uaf_target 对应的 filefd）。然后 write(pipe_fd) 将释放的 file page 重新申请回来。通过一次受限的任意地址8字节读来判定是否 pipe_buffer reclaim 成功。</li>
+<li>后续就是任意8字节读写转化为任意地址读写</li>
+</ul>
+<h3 id="Stage3-ROP-提权"><a href="#Stage3-ROP-提权" class="headerlink" title="Stage3: ROP 提权"></a>Stage3: ROP 提权</h3><ul>
+<li>新建 rop_pipe 用于写入 ROP 链</li>
+<li>通过任意地址读获取 rop_pipe 的 page 虚拟地址。</li>
+<li>填写page的ROP链</li>
+<li>调用 epoll_wait，该地址的 waiter-&gt;vfs_poll-&gt;fake fop 已经被修改，从而进入 rop_pipe page 链。</li>
+</ul>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="x86-64"><a href="#x86-64" class="headerlink" title="x86_64"></a>x86_64</h3><p>首先考虑 x86_64 架构。使用 android-kernel <code>android16-6.12</code> 分支进行复现。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://android.googlesource.com/kernel/manifest -b common-android16-6.12</span><br></pre></td></tr></table></figure>
+<p>切换到存在漏洞的 commit。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout a9f45c382a77076062801a9379c22858e4bb903a</span><br></pre></td></tr></table></figure>
+<p>使用 bazel 进行编译带 KASAN 内核：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bazel run //common:kernel_x86_64_dist --kasan</span><br></pre></td></tr></table></figure>
+<p>使用 <code>./exploit --vuln-trigger</code> 命令来尝试触发 KASAN 警告。<br>直接运行似乎并没有触发 KASAN 警告。作者提到在 CVE-2026-43074 修复后，KASAN 无法检测到 file 的 UAF。其 exp 中的 vuln-trigger 选项采用的是触发 free_ephead() 时 file 非 eventfd  时，eventfd-&gt;refs 已经被 free 导致的 warning。<br>不过尝试后也没有发现任何 warning 日志。猜测可能是窗口过短，使用 gdb 查看目标的竞争窗口（应该是在 write_once 后，if_file_epoll 前）：</p>
+<img src="/posts/null/799895b3d8626388184b07fab67194d9.png" class="">
+<p>尝试在竞争代码窗口之间添加 nop 指令来增大窗口，插入100行nop指令也没有效果（（（</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">asm</span> <span class="title function_">volatile</span><span class="params">(</span></span><br><span class="line"><span class="params">	<span class="string">&quot;.rept 5\n&quot;</span></span></span><br><span class="line"><span class="params">	<span class="string">&quot;nop\n&quot;</span></span></span><br><span class="line"><span class="params">	<span class="string">&quot;.endr\n&quot;</span></span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>尝试断在 <code>to_free = v</code> 行未果。<br><del>中间插入 500 条指令后</del>gdb插桩调试后，发现 interrupts 数量大幅增加，同时 best range 开始有变化。但是 gdb 无法触发 file-&gt;f_op 不为 eventpoll_fops 的情况。然后发现启动脚本开启了 KVM 加速，关闭 KVM 后，似乎就很容易触发 interrupts，原来是 kvm 加速的问题吗。<br>不过虽然变得容易触发中断，但是还是很难出现 file uaf。<br>sb了，没有细致看原作者分析文档，其说明了需要关闭 KASAN 来确保能够观察到 warn 日志，应该是因为 KASAN 会导致目标的 freed object 的复用时机，导致无法触发 UAF 告警以及后续的 is_file_epoll()。然后重新编译了一版并添加了 kprobe trap 放大窗口，可以实现 warn 的稳定触发。即以下代码部分由于 file uaf 导致 head 已经不属于 ephead_cache。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">free_ephead</span><span class="params">(<span class="keyword">struct</span> epitems_head *head)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head)</span><br><span class="line">		kmem_cache_free(ephead_cache, head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>kprobe 命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">instrument the race window</span></span><br><span class="line">mount -t debugfs debugfs /sys/kernel/debug 2&gt;/dev/null || true</span><br><span class="line">mount -t tracefs tracefs /sys/kernel/tracing 2&gt;/dev/null || true</span><br><span class="line"></span><br><span class="line">cd /sys/kernel/tracing 2&gt;/dev/null || cd /sys/kernel/debug/tracing</span><br><span class="line"></span><br><span class="line">echo 0 &gt; events/kprobes/epwin/enable 2&gt;/dev/null || true</span><br><span class="line">echo &#x27;-:kprobes/epwin&#x27; &gt;&gt; kprobe_events 2&gt;/dev/null || true</span><br><span class="line"></span><br><span class="line">echo &#x27;p:epwin __ep_remove+0xa5&#x27; &gt;&gt; kprobe_events</span><br><span class="line">echo 1 &gt; events/kprobes/epwin/enable</span><br></pre></td></tr></table></figure>
+
+
+<p><em>附：</em><br><em>切到 CVE-2026-43074 之前的commit代码，重新编译。</em></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout ba7833622fc3581c388d0da922aaab529aec43b3</span><br></pre></td></tr></table></figure>
+
+<p><em>该 poc 在该版本不需要修改可以稳定触发 KASAN UAF 警告。</em></p>
+<h3 id="TODO-aarch64"><a href="#TODO-aarch64" class="headerlink" title="TODO: aarch64"></a>TODO: aarch64</h3><h2 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="x86-64-1"><a href="#x86-64-1" class="headerlink" title="x86_64"></a>x86_64</h3><p>尝试修改以上 exp 的偏移适配到当前编译的内核上。<br>另外需要注意，以上漏洞复现部分的时间窗口实际上要比利用部分的时间窗口小。<br>因为漏洞利用部分的时间窗口应该位于 <code>WRITE_ONCE</code> 与 <code>hlist_del_rcu</code> 之间。而非 <code>is_file_epoll()</code>，或者更准确地说在 <code>is_file_epoll</code> 与 <code>hlist_del_rcu</code> 之间，因此相较于漏洞复现，该部分其实理论上成功率会更高一些。</p>
+<p>要成功迁移以上exp到新编译内核。首先需要修改大量的内核偏移值。不过原作者提供 exp 的内部数据使用了 <a target="_blank" rel="noopener" href="https://github.com/google/kernel-research/blob/main/kxdb_tool/README.md">libxdk</a> 以数据库的形式来保存各种偏移以及配置信息。只有少量的偏移配置硬编码在 exp 内。<br>因此，我们最好还是直接借助 libxdk 库来附加我们编译的内核到 kxdb 中。</p>
+<blockquote>
+<p>在看 <code>image_db</code> 的时候发现可以下载 kxdb 的 kernelctf 的指定版本内核。用以模拟启动运行 exp，发现可以执行到 ROP，不过最后在执行 execve 前栈未平衡，简单修改了 RopUtils.cpp 中的 Ret2Usr 函数，可以成功执行并拿到 root shell （注意需要修改 <code>bash</code> 为 <code>sh</code>，因为模拟的文件系统中没有该项）。（当然，也尝试了 <code>--vuln-trigger</code> 选项，不出意料的没有触发）</p>
+</blockquote>
+<p>不过还是要尝试迁移到新的内核上。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/J-jaeyoung/bad-epoll">bad epoll - github</a></li>
+</ul>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io">Eutopia</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://eknight-eutopia.github.io/posts/9fd37cd8.html">https://eknight-eutopia.github.io/posts/9fd37cd8.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://eknight-eutopia.github.io" target="_blank">Small Utopia</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a></div><div class="post-share"><div class="social-share" data-image="/img/cover/default_cover%20(8).jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/79cf6a0f.html" title="CVE-2022-20421 漏洞复现"><img class="cover" src="/img/cover/default_cover%20(3).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-27</div><div class="info-item-2">CVE-2022-20421 漏洞复现</div></div><div class="info-2"><div class="info-item-1">CVE漏洞编号：CVE-2022-20421google bulletin：https://source.android.com/docs/security/bulletin/2022-10-01?hl=zh-cn相关patch commit：https://android.googlesource.com/kernel/common/+/19bb609b45fb 环境搭建aosp编译报错：not found libncurses.so.5debian 版本太新，需要下载较老的库并放入 &#x2F;lib&#x2F;x86-…&#x2F; 中  libncurses.so.5 libtinfo.so.5  android-kernel 选择较老的分支：android-gs-raviole-5.10-android12-d1 1234repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/kernel/manifest -b android-gs-raviole-5.10-android12-d1repo init...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stage1%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">Stage1：环境初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stage2-%E6%BC%8F%E6%B4%9E%E8%A7%A6%E5%8F%91%E4%B8%8E-cross-cache"><span class="toc-number">2.2.</span> <span class="toc-text">Stage2: 漏洞触发与 cross cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stage3-ROP-%E6%8F%90%E6%9D%83"><span class="toc-number">2.3.</span> <span class="toc-text">Stage3: ROP 提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">漏洞复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-64"><span class="toc-number">3.1.</span> <span class="toc-text">x86_64</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TODO-aarch64"><span class="toc-number">3.2.</span> <span class="toc-text">TODO: aarch64</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-1"><span class="toc-number">4.</span> <span class="toc-text">漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-64-1"><span class="toc-number">4.1.</span> <span class="toc-text">x86_64</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By Eutopia</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '4c4d7e363cc61fad04a9',
+      clientSecret: '93995fa6ff1a993b19e99287b2c362230cb33f11',
+      repo: 'eknight-eutopia.github.io',
+      owner: 'Eknight-Eutopia',
+      admin: ['Eknight-Eutopia'],
+      id: '843a60002dc47e2cb555d919266fe76b',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
